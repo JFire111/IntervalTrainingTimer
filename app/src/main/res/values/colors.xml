@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorOfAction">#F44336</color>
+    <color name="colorOfRestBetweenRounds">#4caf50</color>
+    <color name="colorOfRestBetweenExercises">#ffc107</color>
+    <color name="colorOfMenu">#FFFFFF</color>
+
+    <color name="darkThemeColorPrimary">#484848</color>
+    <color name="darkThemeColorPrimaryDark">#212121</color>
+    <color name="darkThemeColorSecondary">#F44336</color>
+    <color name="darkThemeColorSecondaryVariant">#FF7961</color>
+
+    <color name="fontColor">#FFFFFF</color>
+    <color name="fontColorDark">#999999</color>
+
+</resources>

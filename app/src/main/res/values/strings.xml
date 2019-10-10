@@ -1,0 +1,58 @@
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Interval Training Timer</string>
+    <string name="numberOfRoundsText">Number of rounds</string>
+    <string name="startButton">Start</string>
+    <string name="remainingTimeInfo">00</string>
+    <!-- Default values General -->
+    <string name="numberOfRoundsButtonDefaultValue">0</string>
+
+    <!-- Tab Layout -->
+    <string name="oneExerciseTabItem">One\nexercise</string>
+    <string name="someExercisesTabItem">Some\nexercises</string>
+    <string name="savedTimersTabItem">Saved\ntimers</string>
+
+    <!-- Fragment One Exercise -->
+    <string name="timeOfWorkText">Time of work</string>
+    <string name="timeOfRestText">Time of rest</string>
+    <string name="additionalOptions">Additional options</string>
+    <string name="startFromRestSwitchText">Start from rest</string>
+    <!-- Default values One Exercise -->
+    <string name="timeOfWorkButtonDefaultValue">00:00</string>
+    <string name="timeOfRestButtonDefaultValue">00:00</string>
+
+    <!-- Fragment Some Exercises -->
+    <string name="numberOfExercisesText">Number of exercises</string>
+    <string name="timeOfRestBetweenExercisesText">Time of rest between exercises</string>
+    <string name="timeOfRestBetweenRoundsText">Time of rest between rounds</string>
+    <!-- Default values Some Exercises -->
+    <string name="numberOfExercisesButtonDefaultValue">0</string>
+    <string name="timeOfRestBetweenExercisesButtonDefaultValue">00:00</string>
+    <string name="timeOfRestBetweenRoundsButtonDefaultValue">00:00</string>
+
+    <!-- ZeroValueAlertDialogFragment strings -->
+    <string name="zeroValueAlertTitle">Attention</string>
+    <string name="zeroValueAlertMessage">Please enter non-zero values</string>
+    <string name="zeroValueAlertOkButton">Ok</string>
+
+    <!-- Keyboard -->
+    <string name="keyboardButton0">0</string>
+    <string name="keyboardButton1">1</string>
+    <string name="keyboardButton2">2</string>
+    <string name="keyboardButton3">3</string>
+    <string name="keyboardButton4">4</string>
+    <string name="keyboardButton5">5</string>
+    <string name="keyboardButton6">6</string>
+    <string name="keyboardButton7">7</string>
+    <string name="keyboardButton8">8</string>
+    <string name="keyboardButton9">9</string>
+    <string name="keyboardButtonOk">Ok</string>
+    <string name="keyboardButtonCancel">Cancel</string>
+    <string name="hintMinutes">min</string>
+    <string name="hintSeconds">sec</string>
+    <string name="hintNumbers">num</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
