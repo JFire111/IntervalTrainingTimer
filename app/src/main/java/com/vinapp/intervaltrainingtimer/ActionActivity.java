@@ -55,9 +55,6 @@ public class ActionActivity extends Activity {
 
         training = (Training) getIntent().getParcelableExtra("training");
 
-        //startFromRest = getIntent().getBooleanExtra("startFromRest", false);
-        //delay = getIntent().getIntExtra("delay", 0);
-
         numberOfRounds = training.getNumberOfRounds();
         numberOfExercises = training.getNumberOfExercises();
         timeOfWork = training.getTimeOfWork();

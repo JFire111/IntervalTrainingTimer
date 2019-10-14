@@ -10,8 +10,8 @@
     <color name="colorOfRestBetweenExercises">#ffc107</color>
     <color name="colorOfMenu">#FFFFFF</color>
 
-    <color name="darkThemeColorPrimary">#484848</color>
-    <color name="darkThemeColorPrimaryDark">#212121</color>
+    <color name="darkThemeColorPrimary">#212121</color>
+    <color name="darkThemeColorPrimaryDark">#484848</color>
     <color name="darkThemeColorSecondary">#F44336</color>
     <color name="darkThemeColorSecondaryVariant">#FF7961</color>
 

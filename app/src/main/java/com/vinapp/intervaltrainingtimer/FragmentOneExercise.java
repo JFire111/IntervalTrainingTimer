@@ -110,7 +110,6 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         return view;
     }
 
-
     private void isStartFromRest() {
         startFromRestSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -163,7 +162,6 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         }
     }
 
-
     @Override
     public int getNumberOfRounds() {
         return convertButtonValueToInt(numberOfRoundsButton);
@@ -214,5 +212,10 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
             }
         }
         return value;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

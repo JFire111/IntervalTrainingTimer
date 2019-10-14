@@ -12,7 +12,6 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
     FragmentSomeExercise fragmentSomeExercise = new FragmentSomeExercise();
     FragmentSavedTimers fragmentSavedTimers = new FragmentSavedTimers();
 
-
     public SectionPageAdapter(FragmentManager fm, int tabCounts) {
         super(fm);
         this.tabCounts = tabCounts;

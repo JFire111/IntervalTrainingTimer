@@ -9,14 +9,17 @@
     android:divider="?attr/dividerHorizontal"
     tools:context=".MainActivity">
 
-
-    <LinearLayout
-        android:id="@+id/tabLinearLayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/darkThemeColorPrimaryDark"
-        android:elevation="10dp"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,11 +27,13 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             style="@style/Widget.Design.TabLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|start"
             app:tabTextAppearance="@style/TabLayoutStyle"
-            app:tabTextColor="@color/darkThemeColorSecondary">
+            app:tabTextColor="@color/darkThemeColorSecondary"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="4dp">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/oneExerciseTabItem"
@@ -49,28 +54,16 @@
                 android:text="@string/savedTimersTabItem" />
         </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/settingsButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:elevation="0dp"
-            android:focusable="auto"
-            app:backgroundTint="@color/darkThemeColorPrimaryDark"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabCustomSize="40dp"
-            app:srcCompat="@drawable/settings_icon" />
+    </androidx.appcompat.widget.Toolbar>
 
-    </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tabLinearLayout">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMain">
 
         <fragment
             android:id="@+id/fragment"
@@ -97,6 +90,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.986"
         app:srcCompat="@drawable/play" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveTimerSettingsButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:onClick="onSaveTimerSettingsButtonClick"
+        android:text="@string/saveTimerSettingsButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/startButton"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

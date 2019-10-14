@@ -8,6 +8,9 @@
     <!-- Default values General -->
     <string name="numberOfRoundsButtonDefaultValue">0</string>
 
+    <!-- Main Activity -->
+    <string name="saveTimerSettingsButton">Save</string>
+
     <!-- Tab Layout -->
     <string name="oneExerciseTabItem">One\nexercise</string>
     <string name="someExercisesTabItem">Some\nexercises</string>
@@ -30,6 +33,11 @@
     <string name="numberOfExercisesButtonDefaultValue">0</string>
     <string name="timeOfRestBetweenExercisesButtonDefaultValue">00:00</string>
     <string name="timeOfRestBetweenRoundsButtonDefaultValue">00:00</string>
+
+    <!-- Fragment Saved Timers -->
+    <string name="totalTimeText">Total time</string>
+    <string name="typeOneExercise">One exercise</string>
+    <string name="typeSomeExercise">Some exercise</string>
 
     <!-- ZeroValueAlertDialogFragment strings -->
     <string name="zeroValueAlertTitle">Attention</string>

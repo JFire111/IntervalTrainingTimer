@@ -223,30 +223,28 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="00:00" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/keyboardButtonOk"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:elevation="0dp"
         android:onClick="onClickKeyboardButton"
         android:text="@string/keyboardButtonOk"
-        android:textColor="@color/darkThemeColorSecondary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/keyboardButtonCancel"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:onClick="onClickKeyboardButton"
         android:text="@string/keyboardButtonCancel"
-        android:textColor="@color/darkThemeColorSecondary"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
