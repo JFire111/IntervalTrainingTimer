@@ -208,12 +208,10 @@
 
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/emptyConstraintLayoutForFAB"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/data_layouts_height">
+                android:layout_height="@dimen/space_for_fab_height" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
 

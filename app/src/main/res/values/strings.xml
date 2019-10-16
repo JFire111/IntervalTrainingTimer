@@ -10,6 +10,8 @@
 
     <!-- Main Activity -->
     <string name="saveTimerSettingsButton">Save</string>
+    <string name="deleteTimerSettingsButton">Delete</string>
+    <string name="loadTimerSettingsButton">Load</string>
 
     <!-- Tab Layout -->
     <string name="oneExerciseTabItem">One\nexercise</string>

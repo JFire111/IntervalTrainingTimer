@@ -35,9 +35,7 @@ public class ActionActivity extends Activity {
     Training training;
 
     ColorSwitch colorSwitch;
-
     SoundSwitch soundSwitch;
-
     SoundPool soundPool;
     private int sound;
 

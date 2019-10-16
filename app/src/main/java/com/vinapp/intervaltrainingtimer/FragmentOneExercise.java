@@ -1,11 +1,14 @@
 package com.vinapp.intervaltrainingtimer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +39,8 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
     private int defaultDelayValue = 3;
     private int delay = defaultDelayValue;
     private SeekBar delaySeekBar;
+
+    private static final String TAG = "FRAGMENT ONE LOG";
 
     public FragmentOneExercise() {
         // Required empty public constructor
@@ -107,6 +112,7 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
             }
         });
 
+        Log.i(TAG, "onCreateView");
         return view;
     }
 
@@ -214,8 +220,4 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         return value;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

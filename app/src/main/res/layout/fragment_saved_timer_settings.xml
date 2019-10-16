@@ -2,9 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
+    android:id="@+id/savedTimerSettingsLayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/data_layouts_height">
+    android:layout_height="@dimen/data_layouts_height"
+    android:clickable="false"
+    android:focusableInTouchMode="false"
+    android:onClick="onFragmentSavedTimerSettingsClick">
 
     <TextView
         android:id="@+id/totalTimeTextView"
