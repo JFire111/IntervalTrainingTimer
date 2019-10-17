@@ -46,6 +46,12 @@
     <string name="zeroValueAlertMessage">Please enter non-zero values</string>
     <string name="zeroValueAlertOkButton">Ok</string>
 
+    <!-- SaveTimerDialogFragment strings -->
+    <string name="saveTimerDialogTitle">Save timer</string>
+    <string name="saveTimerDialogMessage">Name of timer</string>
+    <string name="saveTimerDialogOkButton">Save</string>
+    <string name="saveTimerDialogCancelButton">Cancel</string>
+
     <!-- Keyboard -->
     <string name="keyboardButton0">0</string>
     <string name="keyboardButton1">1</string>
@@ -63,6 +69,4 @@
     <string name="hintSeconds">sec</string>
     <string name="hintNumbers">num</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

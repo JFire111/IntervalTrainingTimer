@@ -39,6 +39,20 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
         // Required empty public constructor
     }
 
+    private View createFooter() {
+        View footer = getLayoutInflater().inflate(R.layout.saved_timers_list_footer, null);
+        return footer;
+    }
+
+    private void saveInSharedPreferences() {
+        SharedPreferences.Editor editor = savedTimerSettingsSharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(trainings);
+        Log.i(TAG, json);
+        editor.putString(SAVED_TIMERS_SETTINGS, json);
+        editor.commit();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,12 +60,12 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
 
         savedTimersAdapter = new SavedTimersAdapter(getContext(), trainings);
         listView = (ListView) view.findViewById(R.id.savedTimersListView);
+        listView.addFooterView(createFooter());
         listView.setAdapter(savedTimersAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.i(TAG, "click");
                 savedTimersAdapter.selectItem(position);
             }
         });
@@ -78,22 +92,27 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
     public void saveTimer(Training training) {
         if (training != null) {
             this.trainings.add(training);
-            SharedPreferences.Editor editor = savedTimerSettingsSharedPreferences.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(trainings);
-            editor.putString(SAVED_TIMERS_SETTINGS, json);
-            editor.commit();
         }
     }
 
     @Override
     public Training loadTimer() {
-        return null;
+        training = savedTimersAdapter.getSelectedItem();
+        return training;
     }
 
     @Override
     public void deleteTimer() {
+        training = savedTimersAdapter.getSelectedItem();
+        trainings.remove(training);
+        saveInSharedPreferences();
+    }
 
+    @Override
+    public void setTimerName(Training training, String name) {
+        int timerPosition = trainings.indexOf(training);
+        trainings.get(timerPosition).setTrainingName(name);
+        saveInSharedPreferences();
     }
 
     @Override

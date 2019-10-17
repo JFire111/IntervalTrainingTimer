@@ -3,6 +3,7 @@ package com.vinapp.intervaltrainingtimer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+//Training is a settings of timer
 public class Training implements Parcelable {
 
     private int numberOfRounds;
@@ -13,6 +14,7 @@ public class Training implements Parcelable {
     private int totalTime;
     private int delay;
     private boolean startFromRest;
+    private String trainingName; //Not used, needed for future versions
 
     private int trainingType; //0 for one exercise, 1 for some exercises
     private final int ONE_EXERCISE_TRAINING = 0;
@@ -53,6 +55,7 @@ public class Training implements Parcelable {
         parcel.writeInt(delay);
         parcel.writeByte((byte) (startFromRest ? 1 : 0));
         parcel.writeInt(totalTime);
+        parcel.writeString(trainingName);
     }
 
     public static final Parcelable.Creator<Training> CREATOR = new Parcelable.Creator<Training>() {
@@ -67,6 +70,7 @@ public class Training implements Parcelable {
             int delay = parcel.readInt();
             boolean startFromRest = parcel.readByte() != 0;
             int totalTime = parcel.readInt();
+            String trainingName = parcel.readString();
 
             switch (trainingType) {
                 case 0:
@@ -74,7 +78,6 @@ public class Training implements Parcelable {
                 case 1:
                     return new Training(numberOfRounds, numberOfExercises, timeOfWork, timeOfRestBetweenExercises, timeOfRestBetweenRounds, delay);
                 default:
-                    // TODO: add error message
                     return null;
             }
         }
@@ -129,5 +132,13 @@ public class Training implements Parcelable {
 
     public int getTrainingType() {
         return trainingType;
+    }
+
+    public String getTrainingName() {
+        return trainingName;
+    }
+
+    public void setTrainingName(String name) {
+        this.trainingName = name;
     }
 }

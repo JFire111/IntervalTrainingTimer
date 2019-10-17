@@ -17,9 +17,10 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
 
     private final Context context;
     private ArrayList<Training> trainings;
-    private static final String TAG = "SAVED ADAPTER LOG";
     private boolean[] selections;
     private boolean isSelected;
+
+    private static final String TAG = "SAVED ADAPTER LOG";
 
     public SavedTimersAdapter(@NonNull Context context, ArrayList<Training> trainings) {
         super(context, R.layout.saved_timers_list_item, trainings);
@@ -29,13 +30,24 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
     }
 
     public void selectItem(int position) {
-        selections[position] = !selections[position];
-        for (int i = 0; i < trainings.size(); i++) {
-            if (i != position) {
-                selections[i] = false;
+        if (position < trainings.size()) {
+            selections[position] = !selections[position];
+            for (int i = 0; i < trainings.size(); i++) {
+                if (i != position) {
+                    selections[i] = false;
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    public Training getSelectedItem() {
+        for (int i = 0; i < selections.length; i++) {
+            if (selections[i]) {
+                return trainings.get(i);
             }
         }
-        notifyDataSetChanged();
+        return null;
     }
 
     @NonNull
@@ -51,7 +63,7 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
         TextView numberOfSavedTimerTextView = view.findViewById(R.id.numberOfSavedTimerTextView);
 
         totalTimeTextView.setText(String.valueOf(trainings.get(position).getTotalTime()));
-        savedTimerNameTextView.setText("asdasdas asdasd");
+        savedTimerNameTextView.setText(trainings.get(position).getTrainingName());
         numberOfSavedTimerTextView.setText((position + 1) + "/" + trainings.size());
         switch (trainings.get(position).getTrainingType()) {
             case 0:

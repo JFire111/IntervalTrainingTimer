@@ -72,6 +72,7 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
 
         delaySeekBar = view.findViewById(R.id.delaySeekBar);
         delaySeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        delaySeekBar.setProgress(defaultDelayValue);
 
         numberOfRoundsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +169,58 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         }
     }
 
+    private int convertButtonValueToInt(Button button) {
+        int value;
+        int minutes;
+        int seconds;
+        String buttonValue;
+
+        if (button.equals(numberOfRoundsButton)){
+            buttonValue = String.valueOf(button.getText());
+            try {
+                value = Integer.parseInt(buttonValue);
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+                value = 0;
+            }
+        } else {
+            buttonValue = String.valueOf(button.getText()).replaceAll(":", "");
+            try {
+                minutes = Integer.parseInt(buttonValue.substring(0, 2));
+                seconds = Integer.parseInt(buttonValue.substring(2));
+                value = minutes * 60 + seconds;
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+                value = 0;
+            }
+        }
+        return value;
+    }
+
+    private String convertIntToButtonValue(int intValue, Button button) {
+        String value;
+        int minutes;
+        int seconds;
+
+        if (button.equals(numberOfRoundsButton)){
+            value = String.valueOf(intValue);
+        } else {
+            minutes = intValue / 60;
+            seconds = intValue % 60;
+            if (minutes < 10) {
+                value = "0" + minutes;
+            } else {
+                value = String.valueOf(minutes);
+            }
+            if (seconds < 10) {
+                value += ":0" + seconds;
+            } else {
+                value += ":" + seconds;
+            }
+        }
+        return value;
+    }
+
     @Override
     public int getNumberOfRounds() {
         return convertButtonValueToInt(numberOfRoundsButton);
@@ -193,31 +246,35 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         return startFromRest;
     }
 
-    private int convertButtonValueToInt(Button button) {
-        int value;
-        int minutes;
-        int seconds;
-        String buttonValue;
-
-        if (button.equals(numberOfRoundsButton)){
-            buttonValue = String.valueOf(button.getText());
-            try {
-                value = Integer.parseInt(buttonValue);
-            } catch (NumberFormatException nfe) {
-                value = 0;
-            }
-        } else {
-            buttonValue = String.valueOf(button.getText()).replaceAll(":", "");
-
-            try {
-                minutes = Integer.parseInt(buttonValue.substring(0, 2));
-                seconds = Integer.parseInt(buttonValue.substring(2));
-                value = minutes * 60 + seconds;
-            } catch (NumberFormatException nfe) {
-                value = 0;
-            }
-        }
-        return value;
+    @Override
+    public void setNumberOfRounds(int numberOfRounds) {
+        numberOfRoundsButton.setText(convertIntToButtonValue(numberOfRounds, numberOfRoundsButton));
+        numberOfRoundIsChanged = true;
     }
+
+    @Override
+    public void setTimeOfWork(int timeOfWork) {
+        timeOfWorkButton.setText(convertIntToButtonValue(timeOfWork, timeOfWorkButton));
+        timeOfWorkIsChanged = true;
+    }
+
+    @Override
+    public void setTimeOfRestBetweenRounds(int timeOfRestBetweenRounds) {
+        timeOfRestButton.setText(convertIntToButtonValue(timeOfRestBetweenRounds, timeOfRestButton));
+        timeOfRestIsChanged = true;
+    }
+
+    @Override
+    public void setDelay(int delay) {
+        this.delay = delay;
+        this.delaySeekBar.setProgress(delay);
+    }
+
+    @Override
+    public void setStartFromRest(boolean startFromRest) {
+        this.startFromRest = startFromRest;
+        this.startFromRestSwitch.setChecked(startFromRest);
+    }
+
 
 }

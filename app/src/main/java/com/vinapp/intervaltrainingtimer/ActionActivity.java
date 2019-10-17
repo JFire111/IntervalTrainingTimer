@@ -150,6 +150,7 @@ public class ActionActivity extends Activity {
                 timeUntilStart = convertMillisecondsToSeconds(timeUntilStart);
                 // TODO: change changeBackgroundColor for menuColor
                 changeBackgroundColor(0);
+                // TODO: Add new text view for "ready title" and set visibility
                 infoAboutRemainingTime.setText("Start\n   in\n   " + (timeUntilStart + 1));
             }
 

@@ -224,6 +224,42 @@ public class FragmentSomeExercise extends Fragment implements MainActivity.DataP
         return delay;
     }
 
+    @Override
+    public void setNumberOfRounds(int numberOfRounds) {
+        numberOfRoundsButton.setText(convertIntToButtonValue(numberOfRounds, numberOfRoundsButton));
+        numberOfRoundIsChanged = true;
+    }
+
+    @Override
+    public void setNumberOfExercises(int numberOfExercises) {
+        numberOfExercisesButton.setText(convertIntToButtonValue(numberOfExercises, numberOfExercisesButton));
+        numberOfExercisesIsChanged = true;
+    }
+
+    @Override
+    public void setTimeOfWork(int timeOfWork) {
+        timeOfWorkButton.setText(convertIntToButtonValue(timeOfWork, timeOfWorkButton));
+        timeOfWorkIsChanged = true;
+    }
+
+    @Override
+    public void setTimeOfRestBetweenRounds(int timeOfRestBetweenRounds) {
+        timeOfRestBetweenRoundsButton.setText(convertIntToButtonValue(timeOfRestBetweenRounds, timeOfRestBetweenRoundsButton));
+        timeOfRestBetweenRoundsIsChanged = true;
+    }
+
+    @Override
+    public void setTimeOfRestBetweenExercises(int timeOfRestBetweenExercises) {
+        timeOfRestBetweenExercisesButton.setText(convertIntToButtonValue(timeOfRestBetweenExercises, timeOfRestBetweenExercisesButton));
+        timeOfRestBetweenExercisesIsChanged = true;
+    }
+
+    @Override
+    public void setDelay(int delay) {
+        this.delay = delay;
+        this.delaySeekBar.setProgress(delay);
+    }
+
     private int convertButtonValueToInt(Button button) {
         int value;
         int minutes;
@@ -246,6 +282,30 @@ public class FragmentSomeExercise extends Fragment implements MainActivity.DataP
                 value = minutes * 60 + seconds;
             } catch (NumberFormatException nfe) {
                 value = 0;
+            }
+        }
+        return value;
+    }
+
+    private String convertIntToButtonValue(int intValue, Button button) {
+        String value;
+        int minutes;
+        int seconds;
+
+        if (button.equals(numberOfRoundsButton) || button.equals(numberOfExercisesButton)){
+            value = String.valueOf(intValue);
+        } else {
+            minutes = intValue / 60;
+            seconds = intValue % 60;
+            if (minutes < 10) {
+                value = "0" + minutes;
+            } else {
+                value = String.valueOf(minutes);
+            }
+            if (seconds < 10) {
+                value += ":0" + seconds;
+            } else {
+                value += ":" + seconds;
             }
         }
         return value;
