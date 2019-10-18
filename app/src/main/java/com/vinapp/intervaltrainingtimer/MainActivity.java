@@ -4,42 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.transition.ChangeBounds;
-import android.transition.Fade;
-import android.transition.Scene;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ConstraintLayout mainMenuLayout;
-
     private TabLayout tabLayout;
-    private TabItem oneExerciseTabItem;
-    private TabItem someExerciseTabItem;
-    private TabItem savedTimersTabItem;
     private ViewPager viewPager;
     private SectionPageAdapter sectionPageAdapter;
     private AppCompatButton saveButton;
@@ -50,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private int position;
-    private final int ONE_EXERCISE_FRAGMENT_ID = 0;
-    private final int SOME_EXERCISES_FRAGMENT_ID = 1;
-    private final int SAVED_TIMERS_FRAGMENT_ID = 2;
+    public final int ONE_EXERCISE_FRAGMENT_ID = 0;
+    public final int SOME_EXERCISES_FRAGMENT_ID = 1;
+    public final int SAVED_TIMERS_FRAGMENT_ID = 2;
 
-    private SharedPreferences savedTimerSettingsSharedPreferences;
+    private final String SAVED_TIMERS_SETTINGS = "SAVED_TIMERS_SETTINGS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainMenuLayout = findViewById(R.id.mainLayout);
-
         tabLayout = findViewById(R.id.tabLayout);
-        oneExerciseTabItem = findViewById(R.id.oneExerciseTabItem);
-        someExerciseTabItem = findViewById(R.id.someExerciseTabItem);
-        savedTimersTabItem = findViewById(R.id.savedTimersTabItem);
         viewPager = findViewById(R.id.viewPager);
 
         saveButton = findViewById(R.id.saveTimerSettingsButton);
@@ -76,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         startButton = findViewById(R.id.startButton);
         loadButton.setVisibility(View.GONE); //set invisibility on start page
         deleteButton.setVisibility(View.GONE); //set invisibility on start page
-
-        savedTimerSettingsSharedPreferences = getPreferences(MODE_PRIVATE);
 
         sectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(sectionPageAdapter);
@@ -90,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.settingsItem:
+                        showSettings();
                     default:
                         break;
                 }
@@ -106,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                     saveButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.VISIBLE);
                     loadButton.setVisibility(View.VISIBLE);
+
+                    updateFragment(SAVED_TIMERS_FRAGMENT_ID); //Update saved timers fragment to display new saved timers;
                 } else {
                     saveButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.GONE);
@@ -122,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+
+    private void showSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     public void onStartButtonClick(View view) {
@@ -146,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("training", training);
                     startActivity(intent);
                 } else {
-                    // TODO: Change alert dialog, make custom dialog
+                    // TODO: Change alert dialog, make custom dialog.
                     zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
                 }
             }
@@ -188,9 +172,8 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveTimerSettingsButtonClick(View view) {
         int currentTabID = position;
         ZeroValueAlertDialogFragment zeroValueAlertDialogFragment = new ZeroValueAlertDialogFragment();
-        SaveTimerDialogFragment saveTimerDialogFragment = new SaveTimerDialogFragment();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        final DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
         switch (currentTabID) {
             case ONE_EXERCISE_FRAGMENT_ID: {
                 DataProviderOneExercise dataProviderOneExercise = (DataProviderOneExercise) sectionPageAdapter.getItem(ONE_EXERCISE_FRAGMENT_ID);
@@ -202,11 +185,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (numberOfRounds != 0 && timeOfWork != 0 && timeOfRestBetweenRounds != 0) {
                     Training training = new Training(numberOfRounds, timeOfWork, timeOfRestBetweenRounds, delay, startFromRest);
-                    dataProviderSavedTimers.saveTimer(training); //Save timer settings before set name of timer
+                    SaveTimerDialogFragment saveTimerDialogFragment = new SaveTimerDialogFragment();
+                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
                     saveTimerDialogFragment.show(fragmentManager, "saveTimerDialog");
-                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for find this instance of Training in FragmentSavedTimers for set timer name
-                    saveTimerDialogFragment.setDataProvider(dataProviderSavedTimers); //Set dataprovider in dialog fragment for send timer name to FragmentSavedTimers
-                    updateFragment(SAVED_TIMERS_FRAGMENT_ID);
                 } else {
                     zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
                 }
@@ -223,11 +204,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (numberOfRounds != 0 && numberOfExercises !=0 && timeOfWork != 0 && timeOfRestBetweenExercises !=0 && timeOfRestBetweenRounds != 0) {
                     Training training = new Training(numberOfRounds, numberOfExercises, timeOfWork, timeOfRestBetweenExercises, timeOfRestBetweenRounds, delay);
-                    dataProviderSavedTimers.saveTimer(training); //Save timer settings before set name of timer
+                    SaveTimerDialogFragment saveTimerDialogFragment = new SaveTimerDialogFragment();
+                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
                     saveTimerDialogFragment.show(fragmentManager, "saveTimerDialog");
-                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for find this instance of Training in FragmentSavedTimers for set timer name
-                    saveTimerDialogFragment.setDataProvider(dataProviderSavedTimers); //Set dataprovider in dialog fragment for send timer name to FragmentSavedTimers
-                    updateFragment(SAVED_TIMERS_FRAGMENT_ID);
                 } else {
                     zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
                 }
@@ -275,12 +254,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void onDeleteTimerSettingsButtonClick(View view) {
         DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
-        // TODO: Add delete dialog
+        // TODO: Add delete dialog.
         dataProviderSavedTimers.deleteTimer();
         updateFragment(SAVED_TIMERS_FRAGMENT_ID);
     }
 
-    private void updateFragment(int fragmentID){
+    public void saveTimer(Training training) {
+        final DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
+        dataProviderSavedTimers.saveTimer(training);
+    }
+
+    public void updateFragment(int fragmentID){
         Fragment fragment = sectionPageAdapter.getItem(fragmentID);
         getSupportFragmentManager().beginTransaction()
                 .detach(fragment)
@@ -319,8 +303,19 @@ public class MainActivity extends AppCompatActivity {
 
     public interface DataProviderSavedTimers {
         void saveTimer(Training training);
-        void setTimerName(Training training, String name);
         Training loadTimer();
         void deleteTimer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startButton.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startButton.hide();
     }
 }

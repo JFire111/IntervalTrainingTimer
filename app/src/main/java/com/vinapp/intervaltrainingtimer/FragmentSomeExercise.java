@@ -15,9 +15,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentSomeExercise extends Fragment implements MainActivity.DataProviderSomeExercises {
 
     private Button numberOfRoundsButton;

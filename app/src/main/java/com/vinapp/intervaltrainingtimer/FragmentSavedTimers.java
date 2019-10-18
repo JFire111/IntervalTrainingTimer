@@ -16,24 +16,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class FragmentSavedTimers extends Fragment implements MainActivity.DataProviderSavedTimers {
 
+    // TODO: set max 3 saved timers
     private ArrayList<Training> trainings;
     private Training training;
-    private final String SAVED_TIMERS_SETTINGS = "SAVED_TIMERS_SETTINGS";
     int numberOfSavedTimer = 0;
     private SavedTimersAdapter savedTimersAdapter;
     private static final String TAG = "FRAGMENT SAVED LOG";
     private ListView listView;
     private SharedPreferences savedTimerSettingsSharedPreferences;
+    private final String SAVED_TIMERS = "SAVED_TIMERS";
+    private final String SAVED_TIMERS_SETTINGS = "SAVED_TIMERS_SETTINGS";
 
     public FragmentSavedTimers() {
         // Required empty public constructor
@@ -49,7 +48,7 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
         Gson gson = new Gson();
         String json = gson.toJson(trainings);
         Log.i(TAG, json);
-        editor.putString(SAVED_TIMERS_SETTINGS, json);
+        editor.putString(SAVED_TIMERS, json);
         editor.commit();
     }
 
@@ -77,12 +76,12 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        savedTimerSettingsSharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        savedTimerSettingsSharedPreferences = getActivity().getSharedPreferences(SAVED_TIMERS_SETTINGS, Context.MODE_PRIVATE);
 
         trainings = new ArrayList<Training>();
         Gson gson = new Gson();
-        if (savedTimerSettingsSharedPreferences.contains(SAVED_TIMERS_SETTINGS)){
-            String json = savedTimerSettingsSharedPreferences.getString(SAVED_TIMERS_SETTINGS, "");
+        if (savedTimerSettingsSharedPreferences.contains(SAVED_TIMERS)){
+            String json = savedTimerSettingsSharedPreferences.getString(SAVED_TIMERS, "");
             Type listType = new TypeToken<ArrayList<Training>>(){}.getType();
             this.trainings = gson.fromJson(json, listType);
         }
@@ -92,6 +91,9 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
     public void saveTimer(Training training) {
         if (training != null) {
             this.trainings.add(training);
+            saveInSharedPreferences();
+            onDetach();
+            onAttach(getContext());
         }
     }
 
@@ -105,13 +107,6 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
     public void deleteTimer() {
         training = savedTimersAdapter.getSelectedItem();
         trainings.remove(training);
-        saveInSharedPreferences();
-    }
-
-    @Override
-    public void setTimerName(Training training, String name) {
-        int timerPosition = trainings.indexOf(training);
-        trainings.get(timerPosition).setTrainingName(name);
         saveInSharedPreferences();
     }
 

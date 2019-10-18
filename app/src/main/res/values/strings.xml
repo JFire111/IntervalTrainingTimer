@@ -13,6 +13,17 @@
     <string name="deleteTimerSettingsButton">Delete</string>
     <string name="loadTimerSettingsButton">Load</string>
 
+    <!-- Settings Activity -->
+    <string name="settingsTitle">Settings</string>
+    <string name="appearanceCategory">Appearance settings</string>
+    <string name="soundCategory">Sound settings</string>
+    <string name="darkThemeSwitch">Dark theme</string>
+    <string name="timeFormatList">Time format</string>
+    <string name="soundOnSwitch">Sound on</string>
+    <!-- Settings Activity Keys -->
+    <string name="prefKeyDarkThemeOn"></string>
+    <string name="prefKeySoundOn"></string>
+
     <!-- Tab Layout -->
     <string name="oneExerciseTabItem">One\nexercise</string>
     <string name="someExercisesTabItem">Some\nexercises</string>

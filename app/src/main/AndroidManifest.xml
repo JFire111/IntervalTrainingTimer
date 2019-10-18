@@ -24,6 +24,11 @@
         <activity android:name=".KeyboardActivity"
             android:label="Keyboard Activity">
         </activity>
+        <activity android:name=".SettingsActivity"
+            android:label="@string/settingsTitle"
+            android:theme="@style/DarkSettingsTheme"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

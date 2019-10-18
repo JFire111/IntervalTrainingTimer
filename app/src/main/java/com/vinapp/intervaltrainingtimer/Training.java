@@ -14,7 +14,7 @@ public class Training implements Parcelable {
     private int totalTime;
     private int delay;
     private boolean startFromRest;
-    private String trainingName; //Not used, needed for future versions
+    private String trainingName;
 
     private int trainingType; //0 for one exercise, 1 for some exercises
     private final int ONE_EXERCISE_TRAINING = 0;

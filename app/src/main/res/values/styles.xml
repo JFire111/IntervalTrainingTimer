@@ -21,6 +21,13 @@
         <item name="android:colorControlActivated">@color/darkThemeColorSecondary</item>
     </style>
 
+    <style name="DarkSettingsTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/darkThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkThemeColorPrimary</item>
+        <item name="colorAccent">@color/darkThemeColorSecondary</item>
+        <item name="android:windowBackground">@color/darkThemeColorPrimary</item>
+    </style>
+
     <style name="TabLayoutStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">18sp</item>
     </style>

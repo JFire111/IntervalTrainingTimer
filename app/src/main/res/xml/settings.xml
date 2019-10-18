@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/appearanceCategory">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefKeyDarkThemeOn"
+            android:title="@string/darkThemeSwitch" />
+        <!--For next versions -->
+        <!--<ListPreference
+            android:defaultValue="false"
+            android:entries="@array/timeDisplayStyle"
+            android:entryValues="@array/timeDisplayStyle"
+            android:key="prefTimeFormatList"
+            android:title="@string/timeFormatList" />-->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/soundCategory">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefKeySoundOn"
+            android:title="@string/soundOnSwitch" />
+    </PreferenceCategory>
+</PreferenceScreen>

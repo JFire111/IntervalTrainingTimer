@@ -1,17 +1,26 @@
 package com.vinapp.intervaltrainingtimer;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ActionActivity extends Activity {
 
@@ -24,23 +33,29 @@ public class ActionActivity extends Activity {
     private int timeOfRestBetweenRounds;
     private int timeOfRestBetweenExercises;
     private int totalTime;
-    private int timeOfLap; //one lap is sum of one round and one rest
+    private int remainingTime;
+    private boolean pause; //if timer on pause = true, else pause = false
+    private boolean finish;
     private int oneSecond = 1000; //1 second is 1000 milliseconds
     private boolean startFromRest;
     private int delay;
     private int trainingType;
     private final int ONE_EXERCISE_TRAINING = 0;
     private final int SOME_EXERCISES_TRAINING = 1;
+    private SharedPreferences currentSettings;
+    private boolean soundOn;
 
-    Training training;
+    private Training training;
 
-    ColorSwitch colorSwitch;
-    SoundSwitch soundSwitch;
-    SoundPool soundPool;
+    private ColorSwitch colorSwitch;
+    private SoundSwitch soundSwitch;
+    private SoundPool soundPool;
     private int sound;
 
-    CountDownTimer delayCountDownTimer;
-    CountDownTimer trainingCountDownTimer;
+    private FloatingActionButton timerButton;
+
+    private CountDownTimer delayCountDownTimer;
+    private CountDownTimer trainingCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +63,11 @@ public class ActionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        timerButton = findViewById(R.id.timerButton);
+        timerButton.hide();
+        currentSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        soundOn = currentSettings.getBoolean("prefSoundSwitchKey", false);
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
@@ -86,7 +106,7 @@ public class ActionActivity extends Activity {
     }
 
     private int convertMillisecondsToSeconds(long timeInMilliseconds) {
-        int timeInSeconds = (int) timeInMilliseconds / oneSecond;
+        int timeInSeconds = (int) Math.ceil((double)timeInMilliseconds / oneSecond);
         return timeInSeconds;
     }
 
@@ -100,19 +120,30 @@ public class ActionActivity extends Activity {
             constraintLayout.setBackgroundColor(ContextCompat.getColor(this, colorSwitch.getColor()));
         }
         else {
-            // TODO: change getColor() for auto set menu color
+            // TODO: change getColor() for auto set menu color.
             constraintLayout.setBackgroundColor(ContextCompat.getColor(this, colorSwitch.getMenuColor()));
         }
     }
 
+    private void changeTimerButtonImageColor(int remainingTime) {
+        if (remainingTime > 0) {
+            //timerButton.setColorFilter(colorSwitch.getColor());
+        }
+        else {
+            // TODO: change getColor() for auto set menu color.
+            //timerButton.setColorFilter(colorSwitch.getMenuColor());
+        }
+    }
+
     private void playSound() {
-        if (soundSwitch.isPlaySound()) {
+        if (soundSwitch.isPlaySound() && soundOn) {
             soundPool.play(sound, 1, 1, 0, 0, 1);
         }
     }
 
+    //sound play_main method for finish delay timer
     private void playSound(boolean isPlay){
-        if (isPlay){
+        if (isPlay && soundOn){
             soundPool.play(sound, 1, 1, 0, 0, 1);
         }
     }
@@ -148,40 +179,41 @@ public class ActionActivity extends Activity {
             @Override
             public void onTick(long timeUntilStart) {
                 timeUntilStart = convertMillisecondsToSeconds(timeUntilStart);
-                // TODO: change changeBackgroundColor for menuColor
+                // TODO: change changeBackgroundColor for menuColor.
                 changeBackgroundColor(0);
-                // TODO: Add new text view for "ready title" and set visibility
-                infoAboutRemainingTime.setText("Start\n   in\n   " + (timeUntilStart + 1));
+                // TODO: Add new text view for "ready title" and set visibility.
+                infoAboutRemainingTime.setText("Start\n   in\n   " + (timeUntilStart));
             }
 
             @Override
             public void onFinish() {
                 playSound(true);
-                startTimer();
+                startTimer(totalTime);
             }
         }.start();
     }
 
-    private void startTimer(){
-        trainingCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(totalTime), oneSecond) {
-            int remainingTime = totalTime;
-
+    private void startTimer(final int startTime){
+        trainingCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(startTime), oneSecond) {
             @Override
             public void onTick(long timeUntilFinished) {
+                remainingTime = convertMillisecondsToSeconds(timeUntilFinished);
                 playSound();
                 changeBackgroundColor(remainingTime);
+                changeTimerButtonImageColor(remainingTime);
                 infoAboutRemainingTime.setText("" + remainingTime);
-                remainingTime--;
             }
 
             @Override
             public void onFinish() {
+                finish = true;
                 playSound();
                 changeBackgroundColor(remainingTime);
+                changeTimerButtonImageColor(remainingTime);
                 infoAboutRemainingTime.setText("Finish");
             }
         }.start();
-
+        timerButton.show();
     }
 
     @Override
@@ -193,5 +225,29 @@ public class ActionActivity extends Activity {
             trainingCountDownTimer.cancel();
         }
         this.finish();
+    }
+
+    public void onTimerButtonClick(View view) {
+        if (!finish) {
+            if (!pause) {
+                if (trainingCountDownTimer != null) {
+                    trainingCountDownTimer.cancel();
+                    pause = true;
+                    timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.play));
+                }
+            } else {
+                startTimer(remainingTime);
+                pause = false;
+                timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pause));
+            }
+        } else {
+            finish = false;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timerButton.hide();
     }
 }

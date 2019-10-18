@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class SaveTimerDialogFragment extends AppCompatDialogFragment {
 
-    public Button saveButton;
-    Button cancelButton;
-    EditText nameOfTimerTextInput;
-    String nameOfTimer;
-    Training training;
-    MainActivity.DataProviderSavedTimers dataProvider;
+    private Button saveButton;
+    private Button cancelButton;
+    private EditText nameOfTimerTextInput;
+    private String nameOfTimer;
+    private Training training;
 
     @Nullable
     @Override
@@ -31,8 +30,11 @@ public class SaveTimerDialogFragment extends AppCompatDialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
                 nameOfTimer = String.valueOf(nameOfTimerTextInput.getText());
-                dataProvider.setTimerName(training, nameOfTimer);
+                training.setTrainingName(nameOfTimer);
+                activity.saveTimer(training);
+                activity.updateFragment(activity.SAVED_TIMERS_FRAGMENT_ID);
                 dismiss();
             }
         });
@@ -47,9 +49,5 @@ public class SaveTimerDialogFragment extends AppCompatDialogFragment {
 
     public void setTraining(Training training){
         this.training = training;
-    }
-
-    public void setDataProvider(MainActivity.DataProviderSavedTimers dataProvider) {
-        this.dataProvider = dataProvider;
     }
 }

@@ -40,8 +40,6 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
     private int delay = defaultDelayValue;
     private SeekBar delaySeekBar;
 
-    private static final String TAG = "FRAGMENT ONE LOG";
-
     public FragmentOneExercise() {
         // Required empty public constructor
     }
@@ -113,7 +111,6 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
             }
         });
 
-        Log.i(TAG, "onCreateView");
         return view;
     }
 
