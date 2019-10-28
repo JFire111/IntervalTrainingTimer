@@ -3,7 +3,6 @@ package com.vinapp.intervaltrainingtimer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -28,15 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatButton loadButton;
     private AppCompatButton deleteButton;
     private FloatingActionButton startButton;
-
     private Toolbar toolbar;
 
     private int position;
     public final int ONE_EXERCISE_FRAGMENT_ID = 0;
     public final int SOME_EXERCISES_FRAGMENT_ID = 1;
     public final int SAVED_TIMERS_FRAGMENT_ID = 2;
-
-    private final String SAVED_TIMERS_SETTINGS = "SAVED_TIMERS_SETTINGS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         startButton = findViewById(R.id.startButton);
         loadButton.setVisibility(View.GONE); //set invisibility on start page
         deleteButton.setVisibility(View.GONE); //set invisibility on start page
+
+        //set default settings values
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         sectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(sectionPageAdapter);
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStartButtonClick(View view) {
 
         int currentTabID = position;
-        ZeroValueAlertDialogFragment zeroValueAlertDialogFragment = new ZeroValueAlertDialogFragment();
+        DialogFragmentZeroValueAlert dialogFragmentZeroValueAlert = new DialogFragmentZeroValueAlert();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         // TODO: Refactor this trash!...
@@ -130,8 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("training", training);
                     startActivity(intent);
                 } else {
-                    // TODO: Change alert dialog, make custom dialog.
-                    zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
+                    dialogFragmentZeroValueAlert.show(fragmentManager, "dialog");
                 }
             }
             break;
@@ -150,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("training", training);
                     startActivity(intent);
                 } else {
-                    zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
+                    dialogFragmentZeroValueAlert.show(fragmentManager, "dialog");
                 }
             }
             break;
@@ -171,9 +169,11 @@ public class MainActivity extends AppCompatActivity {
     // TODO: And refactor this...
     public void onSaveTimerSettingsButtonClick(View view) {
         int currentTabID = position;
-        ZeroValueAlertDialogFragment zeroValueAlertDialogFragment = new ZeroValueAlertDialogFragment();
-
+        DialogFragmentZeroValueAlert dialogFragmentZeroValueAlert = new DialogFragmentZeroValueAlert();
+        DialogFragmentSaveTimer dialogFragmentSaveTimer = new DialogFragmentSaveTimer();
+        DialogFragmentSavedTimerLimit dialogFragmentSavedTimerLimit = new DialogFragmentSavedTimerLimit();
         FragmentManager fragmentManager = getSupportFragmentManager();
+        DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
         switch (currentTabID) {
             case ONE_EXERCISE_FRAGMENT_ID: {
                 DataProviderOneExercise dataProviderOneExercise = (DataProviderOneExercise) sectionPageAdapter.getItem(ONE_EXERCISE_FRAGMENT_ID);
@@ -184,12 +184,15 @@ public class MainActivity extends AppCompatActivity {
                 boolean startFromRest = dataProviderOneExercise.getStartFromRest();
 
                 if (numberOfRounds != 0 && timeOfWork != 0 && timeOfRestBetweenRounds != 0) {
-                    Training training = new Training(numberOfRounds, timeOfWork, timeOfRestBetweenRounds, delay, startFromRest);
-                    SaveTimerDialogFragment saveTimerDialogFragment = new SaveTimerDialogFragment();
-                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
-                    saveTimerDialogFragment.show(fragmentManager, "saveTimerDialog");
+                    if (dataProviderSavedTimers.getTrainingsSize() < 3) {
+                        Training training = new Training(numberOfRounds, timeOfWork, timeOfRestBetweenRounds, delay, startFromRest);
+                        dialogFragmentSaveTimer.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
+                        dialogFragmentSaveTimer.show(fragmentManager, "saveTimerDialog");
+                    } else {
+                        dialogFragmentSavedTimerLimit.show(fragmentManager, "saveTimerLimitDialog");
+                    }
                 } else {
-                    zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
+                    dialogFragmentZeroValueAlert.show(fragmentManager, "dialog");
                 }
             }
             break;
@@ -203,12 +206,15 @@ public class MainActivity extends AppCompatActivity {
                 int delay = dataProviderSomeExercises.getDelay();
 
                 if (numberOfRounds != 0 && numberOfExercises !=0 && timeOfWork != 0 && timeOfRestBetweenExercises !=0 && timeOfRestBetweenRounds != 0) {
-                    Training training = new Training(numberOfRounds, numberOfExercises, timeOfWork, timeOfRestBetweenExercises, timeOfRestBetweenRounds, delay);
-                    SaveTimerDialogFragment saveTimerDialogFragment = new SaveTimerDialogFragment();
-                    saveTimerDialogFragment.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
-                    saveTimerDialogFragment.show(fragmentManager, "saveTimerDialog");
+                    if (dataProviderSavedTimers.getTrainingsSize() < 3) {
+                        Training training = new Training(numberOfRounds, numberOfExercises, timeOfWork, timeOfRestBetweenExercises, timeOfRestBetweenRounds, delay);
+                        dialogFragmentSaveTimer.setTraining(training); //Set training in dialog fragment for save this instance of Training in FragmentSavedTimers
+                        dialogFragmentSaveTimer.show(fragmentManager, "saveTimerDialog");
+                    } else {
+                        dialogFragmentSavedTimerLimit.show(fragmentManager, "saveTimerLimitDialog");
+                    }
                 } else {
-                    zeroValueAlertDialogFragment.show(fragmentManager, "dialog");
+                    dialogFragmentZeroValueAlert.show(fragmentManager, "zeroValueAlertDialog");
                 }
             }
             break;
@@ -254,9 +260,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onDeleteTimerSettingsButtonClick(View view) {
         DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
-        // TODO: Add delete dialog.
-        dataProviderSavedTimers.deleteTimer();
-        updateFragment(SAVED_TIMERS_FRAGMENT_ID);
+        DialogFragmentDeleteTimer dialogFragmentDeleteTimer = new DialogFragmentDeleteTimer();
+        if (dataProviderSavedTimers.isTimerSelect()) {
+            dialogFragmentDeleteTimer.show(getSupportFragmentManager(), "deleteTimerDialog");
+            dialogFragmentDeleteTimer.setDataProvider(dataProviderSavedTimers);
+        }
     }
 
     public void saveTimer(Training training) {
@@ -264,7 +272,12 @@ public class MainActivity extends AppCompatActivity {
         dataProviderSavedTimers.saveTimer(training);
     }
 
-    public void updateFragment(int fragmentID){
+    public void deleteTimer() {
+        DataProviderSavedTimers dataProviderSavedTimers = (DataProviderSavedTimers) sectionPageAdapter.getItem(SAVED_TIMERS_FRAGMENT_ID);
+        dataProviderSavedTimers.deleteTimer();
+    }
+
+    public void updateFragment(int fragmentID) {
         Fragment fragment = sectionPageAdapter.getItem(fragmentID);
         getSupportFragmentManager().beginTransaction()
                 .detach(fragment)
@@ -303,8 +316,10 @@ public class MainActivity extends AppCompatActivity {
 
     public interface DataProviderSavedTimers {
         void saveTimer(Training training);
+        boolean isTimerSelect();
         Training loadTimer();
         void deleteTimer();
+        int getTrainingsSize();
     }
 
     @Override

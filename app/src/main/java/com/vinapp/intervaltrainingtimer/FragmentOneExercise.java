@@ -1,14 +1,11 @@
 package com.vinapp.intervaltrainingtimer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +60,7 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         timeOfRestIsChanged = false;
 
         delayTextView = view.findViewById(R.id.delayTextView);
-        delayTextView.setText("Start in " + delay + "s");
+        delayTextView.setText(getResources().getString(R.string.delaySeekBarText) + " " + delay + getResources().getString(R.string.delaySeekBarTextSecondSymbol));
 
         startFromRestSwitch = view.findViewById(R.id.startFromRestSwitch);
         isStartFromRest();
@@ -131,7 +128,7 @@ public class FragmentOneExercise extends Fragment implements MainActivity.DataPr
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             delay = seekBar.getProgress();
-            delayTextView.setText("Start in " + delay + "s");
+            delayTextView.setText(getResources().getString(R.string.delaySeekBarText) + " " + delay + getResources().getString(R.string.delaySeekBarTextSecondSymbol));
         }
 
         @Override

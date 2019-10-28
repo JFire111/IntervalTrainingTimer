@@ -2,8 +2,6 @@ package com.vinapp.intervaltrainingtimer;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -11,21 +9,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.ImageViewCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ActionActivity extends Activity {
+import java.text.DecimalFormat;
+
+public class ActionActivity extends AppCompatActivity {
 
     private ConstraintLayout constraintLayout;
-    private TextView infoAboutRemainingTime;
+    private TextView remainingTimeInfo;
+    private TextView startTextInfo;
+    private FloatingActionButton timerButton;
 
     private int numberOfRounds;
     private int numberOfExercises;
@@ -34,8 +37,8 @@ public class ActionActivity extends Activity {
     private int timeOfRestBetweenExercises;
     private int totalTime;
     private int remainingTime;
-    private boolean pause; //if timer on pause = true, else pause = false
-    private boolean finish;
+    private boolean pauseTimer; //if timer on pauseTimer = true, else pauseTimer = false
+    private boolean finishTimer;
     private int oneSecond = 1000; //1 second is 1000 milliseconds
     private boolean startFromRest;
     private int delay;
@@ -44,6 +47,7 @@ public class ActionActivity extends Activity {
     private final int SOME_EXERCISES_TRAINING = 1;
     private SharedPreferences currentSettings;
     private boolean soundOn;
+    private String showingTime;
 
     private Training training;
 
@@ -52,7 +56,7 @@ public class ActionActivity extends Activity {
     private SoundPool soundPool;
     private int sound;
 
-    private FloatingActionButton timerButton;
+    private final DecimalFormat showingFormat = new DecimalFormat("00");
 
     private CountDownTimer delayCountDownTimer;
     private CountDownTimer trainingCountDownTimer;
@@ -65,9 +69,12 @@ public class ActionActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         timerButton = findViewById(R.id.timerButton);
+        remainingTimeInfo = findViewById(R.id.remainingTimeText);
+        startTextInfo = findViewById(R.id.actionInfoTextView);
+
         timerButton.hide();
         currentSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        soundOn = currentSettings.getBoolean("prefSoundSwitchKey", false);
+        soundOn = currentSettings.getBoolean(getString(R.string.prefKeySoundOn), false);
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
@@ -84,9 +91,6 @@ public class ActionActivity extends Activity {
         trainingType = training.getTrainingType();
 
         isStartFromRest();
-
-        infoAboutRemainingTime = findViewById(R.id.remainingTimeText);
-
         setSoundPool();
 
         switch (trainingType) {
@@ -125,14 +129,8 @@ public class ActionActivity extends Activity {
         }
     }
 
-    private void changeTimerButtonImageColor(int remainingTime) {
-        if (remainingTime > 0) {
-            //timerButton.setColorFilter(colorSwitch.getColor());
-        }
-        else {
-            // TODO: change getColor() for auto set menu color.
-            //timerButton.setColorFilter(colorSwitch.getMenuColor());
-        }
+    private void changeButtonIconColor() {
+        timerButton.setImageResource(colorSwitch.getButtonIconColor());
     }
 
     private void playSound() {
@@ -141,9 +139,15 @@ public class ActionActivity extends Activity {
         }
     }
 
-    //sound play_main method for finish delay timer
+    private void playSoundFinish(boolean isPlay) {
+        if (soundOn) {
+            soundPool.play(sound, 1, 1, 1, 2, 1);
+        }
+    }
+
+    //sound play for delay timer
     private void playSound(boolean isPlay){
-        if (isPlay && soundOn){
+        if (soundOn){
             soundPool.play(sound, 1, 1, 0, 0, 1);
         }
     }
@@ -152,8 +156,8 @@ public class ActionActivity extends Activity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build();
             soundPool = new SoundPool.Builder()
                     .setMaxStreams(1)
@@ -164,7 +168,6 @@ public class ActionActivity extends Activity {
         }
 
         sound = soundPool.load(this, R.raw.round_beep, 1);
-
     }
 
     private void isStartFromRest(){
@@ -175,42 +178,56 @@ public class ActionActivity extends Activity {
     }
 
     private void startDelayTimer(){
-        delayCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(delay), oneSecond){
+
+        //add 500ms to millisInFuture in CountDownTimer for fix CountDownTimer bug.
+        //CountDownTimer skip last onTick on api < 26(?)
+        delayCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(delay) + 500, oneSecond){
             @Override
             public void onTick(long timeUntilStart) {
-                timeUntilStart = convertMillisecondsToSeconds(timeUntilStart);
-                // TODO: change changeBackgroundColor for menuColor.
+                //subtract 200ms for compensate added 500 milliseconds for correct showing time in textView
+                timeUntilStart = convertMillisecondsToSeconds(timeUntilStart - 500);
+                // TODO: remake changeBackgroundColor for menuColor.
                 changeBackgroundColor(0);
-                // TODO: Add new text view for "ready title" and set visibility.
-                infoAboutRemainingTime.setText("Start\n   in\n   " + (timeUntilStart));
+                remainingTimeInfo.setText(String.valueOf(timeUntilStart));
             }
 
             @Override
             public void onFinish() {
                 playSound(true);
                 startTimer(totalTime);
+                startTextInfo.setVisibility(View.INVISIBLE);
             }
         }.start();
     }
 
+
     private void startTimer(final int startTime){
-        trainingCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(startTime), oneSecond) {
+        //add 500ms to millisInFuture in CountDownTimer for fix CountDownTimer bug.
+        //CountDownTimer skip last onTick on api < 26(?)
+        trainingCountDownTimer = new CountDownTimer(convertSecondsToMilliseconds(startTime) + 500, oneSecond) {
             @Override
             public void onTick(long timeUntilFinished) {
-                remainingTime = convertMillisecondsToSeconds(timeUntilFinished);
-                playSound();
+                //subtract 200ms for compensate added 500 milliseconds for correct showing time in textView
+                remainingTime = convertMillisecondsToSeconds(timeUntilFinished - 500);
+                int minutes = remainingTime / 60;
+                int seconds = remainingTime % 60;
+                showingTime = showingFormat.format(minutes) + ":" + showingFormat.format(seconds);
+                if (remainingTime != 1) {
+                    playSound();
+                }
                 changeBackgroundColor(remainingTime);
-                changeTimerButtonImageColor(remainingTime);
-                infoAboutRemainingTime.setText("" + remainingTime);
+                changeButtonIconColor();
+                remainingTimeInfo.setText(String.valueOf(showingTime));
             }
 
             @Override
             public void onFinish() {
-                finish = true;
-                playSound();
+                finishTimer = true;
+                playSoundFinish(true);
+                remainingTime = 0; //set zero value for set correctly color in changeBackgroundColor
                 changeBackgroundColor(remainingTime);
-                changeTimerButtonImageColor(remainingTime);
-                infoAboutRemainingTime.setText("Finish");
+                changeButtonIconColor();
+                remainingTimeInfo.setText(R.string.finishInfo);
             }
         }.start();
         timerButton.show();
@@ -218,30 +235,28 @@ public class ActionActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (delayCountDownTimer != null) {
-            delayCountDownTimer.cancel();
-        }
-        if (trainingCountDownTimer != null){
-            trainingCountDownTimer.cancel();
-        }
-        this.finish();
+        DialogFragmentCloseActionActivity dialogFragmentCloseActionActivity = new DialogFragmentCloseActionActivity();
+        dialogFragmentCloseActionActivity.show(getSupportFragmentManager(), "closeActionActivityDialog");
     }
 
     public void onTimerButtonClick(View view) {
-        if (!finish) {
-            if (!pause) {
+        if (!finishTimer) {
+            if (!pauseTimer) {
                 if (trainingCountDownTimer != null) {
                     trainingCountDownTimer.cancel();
-                    pause = true;
+                    pauseTimer = true;
                     timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.play));
                 }
             } else {
+                // TODO: remake ColorSwitch.
+                //remainingTimer-- for temporary fix bug in logic of ColorSwitch. Need to remake logic in ColorSwitch.
+                remainingTime--;
                 startTimer(remainingTime);
-                pause = false;
+                pauseTimer = false;
                 timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pause));
             }
         } else {
-            finish = false;
+            finish();
         }
     }
 
@@ -249,5 +264,18 @@ public class ActionActivity extends Activity {
     protected void onPause() {
         super.onPause();
         timerButton.hide();
+    }
+
+    @Override
+    public void finish() {
+        soundPool.stop(sound);
+        soundPool.release();
+        if (delayCountDownTimer != null) {
+            delayCountDownTimer.cancel();
+        }
+        if (trainingCountDownTimer != null){
+            trainingCountDownTimer.cancel();
+        }
+        super.finish();
     }
 }

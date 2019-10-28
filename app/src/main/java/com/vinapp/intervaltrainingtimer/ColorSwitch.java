@@ -40,6 +40,7 @@ public class ColorSwitch{
     private final int ONE_EXERCISE_TRAINING = 0;
     private final int SOME_EXERCISES_TRAINING = 1;
 
+    //If in ActionActivity press on pause/resume button then here still execute toggleColor method. Need to fix it.
     public void toggleColor() {
         switch (trainingType) {
             case ONE_EXERCISE_TRAINING:
@@ -115,6 +116,26 @@ public class ColorSwitch{
     }
 
     public int getMenuColor() {
-        return R.color.colorOfMenu;
+        color = R.color.colorOfMenu;
+        return color;
+    }
+
+    public int getButtonIconColor() {
+        int buttonIconColor = R.drawable.pause;
+        switch (color) {
+            case R.color.colorOfAction:
+                buttonIconColor = R.drawable.pause_action_color;
+                break;
+            case R.color.colorOfRestBetweenRounds:
+                buttonIconColor = R.drawable.pause_rest_r_color;
+                break;
+            case R.color.colorOfRestBetweenExercises:
+                buttonIconColor = R.drawable.pause_rest_e_color;
+                break;
+            case R.color.colorOfMenu:
+                buttonIconColor = R.drawable.done;
+                break;
+        }
+        return buttonIconColor;
     }
 }

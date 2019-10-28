@@ -191,7 +191,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/fontColor"
-                    tools:text="Start in " />
+                    tools:text="Start in 3s" />
 
                 <SeekBar
                     android:id="@+id/delaySeekBar"
@@ -203,8 +203,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="10dp"
                     android:max="15"
-                    android:progress="3"
-                    android:theme="@style/SeekBarStyle" />
+                    android:progress="3" />
 
             </LinearLayout>
 

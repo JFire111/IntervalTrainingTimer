@@ -71,7 +71,7 @@ public class FragmentSomeExercise extends Fragment implements MainActivity.DataP
         timeOfRestBetweenRoundsIsChanged = false;
 
         delayTextView = view.findViewById(R.id.delayTextView);
-        delayTextView.setText("Start in " + delay + "s");
+        delayTextView.setText(getResources().getString(R.string.delaySeekBarText) + " " + delay + getResources().getString(R.string.delaySeekBarTextSecondSymbol));
         delaySeekBar = view.findViewById(R.id.delaySeekBar);
         delaySeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
@@ -147,7 +147,7 @@ public class FragmentSomeExercise extends Fragment implements MainActivity.DataP
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             delay = seekBar.getProgress();
-            delayTextView.setText("Start in " + delay + "s");
+            delayTextView.setText(getResources().getString(R.string.delaySeekBarText) + " " + delay + getResources().getString(R.string.delaySeekBarTextSecondSymbol));
         }
 
         @Override

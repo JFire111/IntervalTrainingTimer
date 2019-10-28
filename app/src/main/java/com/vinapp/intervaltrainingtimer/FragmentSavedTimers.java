@@ -23,12 +23,10 @@ import java.util.ArrayList;
 
 public class FragmentSavedTimers extends Fragment implements MainActivity.DataProviderSavedTimers {
 
-    // TODO: set max 3 saved timers
+    private static final String TAG = "FRAGMENT SAVED LOG";
     private ArrayList<Training> trainings;
     private Training training;
-    int numberOfSavedTimer = 0;
     private SavedTimersAdapter savedTimersAdapter;
-    private static final String TAG = "FRAGMENT SAVED LOG";
     private ListView listView;
     private SharedPreferences savedTimerSettingsSharedPreferences;
     private final String SAVED_TIMERS = "SAVED_TIMERS";
@@ -47,7 +45,6 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
         SharedPreferences.Editor editor = savedTimerSettingsSharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(trainings);
-        Log.i(TAG, json);
         editor.putString(SAVED_TIMERS, json);
         editor.commit();
     }
@@ -77,7 +74,6 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
         super.onCreate(savedInstanceState);
 
         savedTimerSettingsSharedPreferences = getActivity().getSharedPreferences(SAVED_TIMERS_SETTINGS, Context.MODE_PRIVATE);
-
         trainings = new ArrayList<Training>();
         Gson gson = new Gson();
         if (savedTimerSettingsSharedPreferences.contains(SAVED_TIMERS)){
@@ -92,8 +88,17 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
         if (training != null) {
             this.trainings.add(training);
             saveInSharedPreferences();
-            onDetach();
-            onAttach(getContext());
+            //onDetach();
+            //onAttach(getContext());
+        }
+    }
+
+    @Override
+    public boolean isTimerSelect() {
+        if (savedTimersAdapter.getSelectedItem() != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -106,8 +111,14 @@ public class FragmentSavedTimers extends Fragment implements MainActivity.DataPr
     @Override
     public void deleteTimer() {
         training = savedTimersAdapter.getSelectedItem();
-        trainings.remove(training);
+        trainings.remove((Training) training);
+        savedTimersAdapter.notifyDataSetChanged();
         saveInSharedPreferences();
+    }
+
+    @Override
+    public int getTrainingsSize() {
+        return trainings.size();
     }
 
     @Override

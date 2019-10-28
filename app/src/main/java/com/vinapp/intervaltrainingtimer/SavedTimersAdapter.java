@@ -1,6 +1,7 @@
 package com.vinapp.intervaltrainingtimer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SavedTimersAdapter extends ArrayAdapter <Training> {
@@ -19,6 +21,8 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
     private ArrayList<Training> trainings;
     private boolean[] selections;
     private boolean isSelected;
+
+    private final DecimalFormat showingFormat = new DecimalFormat("00");
 
     private static final String TAG = "SAVED ADAPTER LOG";
 
@@ -62,24 +66,30 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
         TextView typeOfTimerTextView = view.findViewById(R.id.typeOfTimerTextView);
         TextView numberOfSavedTimerTextView = view.findViewById(R.id.numberOfSavedTimerTextView);
 
-        totalTimeTextView.setText(String.valueOf(trainings.get(position).getTotalTime()));
+
+        int totalTime = trainings.get(position).getTotalTime();
+        int minutes = totalTime / 60;
+        int seconds = totalTime % 60;
+        String showingTime = showingFormat.format(minutes) + ":" + showingFormat.format(seconds);
+        totalTimeTextView.setText(showingTime);
         savedTimerNameTextView.setText(trainings.get(position).getTrainingName());
         numberOfSavedTimerTextView.setText((position + 1) + "/" + trainings.size());
         switch (trainings.get(position).getTrainingType()) {
             case 0:
-                typeOfTimerTextView.setText("One exercise");
+                typeOfTimerTextView.setText(R.string.typeOneExercise);
                 break;
             case 1:
-                typeOfTimerTextView.setText("Some exercises");
+                typeOfTimerTextView.setText(R.string.typeSomeExercise);
                 break;
             default:
                 break;
         }
         if (isSelected) {
-            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkThemeColorPrimaryDark));
-        } else {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkThemeColorPrimary));
+        } else {
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkThemeColorPrimaryDark));
         }
         return view;
     }
+
 }

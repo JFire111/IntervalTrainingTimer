@@ -1,0 +1,106 @@
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Interval Training Timer</string>
+    <string name="numberOfRoundsText">Количество раундов</string>
+    <string name="startButton">Старт</string>
+    <string name="timeToStartInfo">Старт\nчерез</string>
+    <string name="delaySeekBarText">Старт через</string>
+    <string name="delaySeekBarTextSecondSymbol">с</string>
+    <string name="finishInfo">Финиш</string>
+    <!-- Default values General -->
+    <string name="numberOfRoundsButtonDefaultValue">0</string>
+
+    <!-- Main Activity -->
+    <string name="saveTimerSettingsButton">Сохранить</string>
+    <string name="deleteTimerSettingsButton">Удалить</string>
+    <string name="loadTimerSettingsButton">Загрузить</string>
+
+    <!-- Settings Activity -->
+    <string name="settingsTitle">Настройки</string>
+    <string name="appearanceCategory">Настройки внешнего вида</string>
+    <string name="soundCategory">Настройки звука</string>
+    <string name="darkThemeSwitch">Тёмная тема</string>
+    <string name="timeFormatList">Формат времени</string>
+    <string name="soundOnSwitch">Включить звук</string>
+    <!-- Settings Activity Keys -->
+    <string name="prefKeyDarkThemeOn">KEY_DARK_THEME_ON</string>
+    <string name="prefKeySoundOn">KEY_SOUND_ON</string>
+
+    <!-- Tab Layout -->
+    <string name="oneExerciseTabItem">Одно\nупражнение</string>
+    <string name="someExercisesTabItem">Несколько\nупражнений</string>
+    <string name="savedTimersTabItem">Сохраненные\nтаймеры</string>
+
+    <!-- Fragment One Exercise -->
+    <string name="timeOfWorkText">Время работы</string>
+    <string name="timeOfRestText">Время отдыха</string>
+    <string name="additionalOptions">Дополнительные опции</string>
+    <string name="startFromRestSwitchText">Начать с отдыха</string>
+    <!-- Default values One Exercise -->
+    <string name="timeOfWorkButtonDefaultValue">00:00</string>
+    <string name="timeOfRestButtonDefaultValue">00:00</string>
+
+    <!-- Fragment Some Exercises -->
+    <string name="numberOfExercisesText">Количество упражнений</string>
+    <string name="timeOfRestBetweenExercisesText">Время отдыха между упражнениями</string>
+    <string name="timeOfRestBetweenRoundsText">Время отдыха между раундами</string>
+    <!-- Default values Some Exercises -->
+    <string name="numberOfExercisesButtonDefaultValue">0</string>
+    <string name="timeOfRestBetweenExercisesButtonDefaultValue">00:00</string>
+    <string name="timeOfRestBetweenRoundsButtonDefaultValue">00:00</string>
+
+    <!-- Fragment Saved Timers -->
+    <string name="totalTimeText">Общее время</string>
+    <string name="typeOneExercise">Одно упражнение</string>
+    <string name="typeSomeExercise">Несколько упражнений</string>
+
+    <!-- DialogFragmentZeroValueAlert strings -->
+    <string name="zeroValueAlertTitle">Внимание</string>
+    <string name="zeroValueAlertMessage">Пожалуйста введите ненулевые значения</string>
+    <string name="zeroValueAlertOkButton">Ок</string>
+
+    <!-- DialogFragmentZeroValueAlert strings -->
+    <string name="savedTimersLimitAlertTitle">Внимание</string>
+    <string name="savedTimersLimitAlertMessage">Достигнут лимит сохраненных таймеров.\nМаксимум 3.\n</string>
+    <string name="savedTimersLimitAlertOkButton">Ок</string>
+
+    <!-- DialogFragmentSaveTimer strings -->
+    <string name="saveTimerDialogTitle">Сохранить таймер</string>
+    <string name="saveTimerDialogMessage">Введите название таймера</string>
+    <string name="saveTimerDialogOkButton">Сохранить</string>
+    <string name="saveTimerDialogCancelButton">Отмена</string>
+
+    <!-- DialogFragmentDeleteTimer strings -->
+    <string name="deleteTimerDialogTitle">Удалить таймер</string>
+    <string name="deleteTimerDialogMessage">Вы хотите удалить этот таймер?</string>
+    <string name="deleteTimerDialogOkButton">Удалить</string>
+    <string name="deleteTimerDialogCancelButton">Отмена</string>
+
+    <!--DialogFragmentCloseActionActivity -->
+    <string name="closeActionActivityDialogTitle">Закрыть таймер</string>
+    <string name="closeActionActivityDialogMessage">Вы хотите закрыть этот таймер и вернуться в главное меню?</string>
+    <string name="closeActionActivityDialogYesButton">Да</string>>
+    <string name="closeActionActivityDialogNoButton">Нет</string>
+
+    <!-- Menu -->
+    <string name="menuSettingsItem">Настройки</string>
+
+    <!-- Keyboard -->
+    <string name="keyboardButton0">0</string>
+    <string name="keyboardButton1">1</string>
+    <string name="keyboardButton2">2</string>
+    <string name="keyboardButton3">3</string>
+    <string name="keyboardButton4">4</string>
+    <string name="keyboardButton5">5</string>
+    <string name="keyboardButton6">6</string>
+    <string name="keyboardButton7">7</string>
+    <string name="keyboardButton8">8</string>
+    <string name="keyboardButton9">9</string>
+    <string name="keyboardButtonOk">Ok</string>
+    <string name="keyboardButtonCancel">Отмена</string>
+    <string name="hintMinutes">мин</string>
+    <string name="hintSeconds">сек</string>
+    <string name="hintNumbers">кол</string>
+
+</resources>

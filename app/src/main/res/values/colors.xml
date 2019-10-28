@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Add light theme colors here -->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
@@ -10,10 +11,9 @@
     <color name="colorOfRestBetweenExercises">#ffc107</color>
     <color name="colorOfMenu">#FFFFFF</color>
 
-    <color name="darkThemeColorPrimary">#212121</color>
-    <color name="darkThemeColorPrimaryDark">#484848</color>
-    <color name="darkThemeColorSecondary">#F44336</color>
-    <color name="darkThemeColorSecondaryVariant">#FF7961</color>
+    <color name="darkThemeColorPrimary">#484848</color>
+    <color name="darkThemeColorPrimaryDark">#212121</color>
+    <color name="darkThemeColorAccent">#F44336</color>
 
     <color name="fontColor">#FFFFFF</color>
     <color name="fontColorDark">#999999</color>
