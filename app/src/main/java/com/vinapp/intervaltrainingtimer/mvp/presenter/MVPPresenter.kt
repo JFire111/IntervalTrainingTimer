@@ -2,11 +2,17 @@ package com.vinapp.intervaltrainingtimer.mvp.presenter
 
 import com.vinapp.intervaltrainingtimer.mvp.view.MVPView
 
-interface MVPPresenter<V: MVPView> {
+abstract class MVPPresenter<V: MVPView> {
 
-    fun attachView(view: V)
+    var view: V? = null
 
-    fun detachView()
+    open fun attachView(view: V) {
+        this.view = view
+    }
 
-    fun destroy()
+    open fun detachView() {
+        this.view = null
+    }
+
+    abstract fun destroy()
 }
