@@ -8,7 +8,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.vinapp.intervaltrainingtimer.databinding.ActivityMainBinding
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
-import com.vinapp.intervaltrainingtimer.mvp.view.MainView
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.TimerListPresenter
 import com.vinapp.intervaltrainingtimer.ui.sections.TimerListSection
@@ -22,9 +21,9 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     private lateinit var sectionsTabLayout: TabLayout
     private lateinit var sectionsViewPager: ViewPager2
 
-    private val mainPresenter = MainPresenterImpl()
+    private val mainPresenter = MainPresenter()
     private val sections = listOf<SectionView>(
-            TimerSettingsSection(TimerSettingsPresenter(mainPresenter)),
+            TimerSettingsSection(TimerSettingsPresenter()),
             TimerListSection(TimerListPresenter(mainPresenter))
     )
 
@@ -45,7 +44,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         }.attach()
     }
 
-    override fun setSection(position: Int) {
+    override fun showSection(position: Int) {
         sectionsViewPager.currentItem = position
     }
 

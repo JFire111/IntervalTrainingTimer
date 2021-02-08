@@ -7,7 +7,7 @@ interface MainContract {
 
     interface View: MVPView {
 
-        fun setSection(position: Int)
+        fun showSection(position: Int)
 
         fun showStartButton()
 

@@ -4,7 +4,6 @@ import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
-import com.vinapp.intervaltrainingtimer.ui.Navigator
 
 interface TimerListContract {
 
@@ -13,7 +12,7 @@ interface TimerListContract {
         fun showTimerList(timerList: List<Timer>)
     }
 
-    abstract class Presenter(navigator: Navigator): SectionPresenter<View>(navigator) {
+    abstract class Presenter: SectionPresenter<View>() {
 
         abstract val timerModel: TimerModel
 

@@ -1,11 +1,8 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import android.util.Log
-import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.TimerSettingsPresenter
-import com.vinapp.intervaltrainingtimer.mvp.view.sections.TimerSettingsSectionView
-import com.vinapp.intervaltrainingtimer.ui.Navigator
+import com.vinapp.intervaltrainingtimer.mvp.TimerSettingsContract
 
-class TimerSettingsPresenter(navigator: Navigator): TimerSettingsPresenter(navigator) {
+class TimerSettingsPresenter: TimerSettingsContract.Presenter() {
 
     override fun onAddIntervalClick() {
     }
@@ -13,7 +10,7 @@ class TimerSettingsPresenter(navigator: Navigator): TimerSettingsPresenter(navig
     override fun onDeleteIntervalClick() {
     }
 
-    override fun attachView(view: TimerSettingsSectionView) {
+    override fun attachView(view: TimerSettingsContract.View) {
         super.attachView(view)
     }
 

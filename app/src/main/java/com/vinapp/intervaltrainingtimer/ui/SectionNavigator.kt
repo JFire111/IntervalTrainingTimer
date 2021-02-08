@@ -1,6 +1,5 @@
 package com.vinapp.intervaltrainingtimer.ui
 
-interface Navigator {
-
+interface SectionNavigator {
     fun setSection(position: Int)
 }

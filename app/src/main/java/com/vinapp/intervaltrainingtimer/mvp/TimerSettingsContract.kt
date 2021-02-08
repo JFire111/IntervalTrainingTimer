@@ -2,7 +2,6 @@ package com.vinapp.intervaltrainingtimer.mvp
 
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
-import com.vinapp.intervaltrainingtimer.ui.Navigator
 
 interface TimerSettingsContract {
 
@@ -15,7 +14,7 @@ interface TimerSettingsContract {
         fun showIntervalList()
     }
 
-    abstract class Presenter(navigator: Navigator): SectionPresenter<View>(navigator) {
+    abstract class Presenter: SectionPresenter<View>() {
 
         abstract fun onAddIntervalClick()
 

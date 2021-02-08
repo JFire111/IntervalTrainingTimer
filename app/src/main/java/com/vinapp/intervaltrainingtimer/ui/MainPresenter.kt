@@ -2,12 +2,13 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
-class MainPresenterImpl: MainContract.Presenter(), Navigator {
+class MainPresenter: MainContract.Presenter(), SectionNavigator {
 
     override fun onStartTimerClick() {
     }
 
     override fun onSaveTimerClick() {
+        setSection(1)
     }
 
     override fun onDeleteTimerClick() {
@@ -20,7 +21,7 @@ class MainPresenterImpl: MainContract.Presenter(), Navigator {
     }
 
     override fun setSection(position: Int) {
-        TODO("Not yet implemented")
+        view!!.showSection(position)
     }
 
 }
