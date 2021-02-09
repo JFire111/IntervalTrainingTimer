@@ -14,7 +14,7 @@ interface TimerListContract {
 
     abstract class Presenter: SectionPresenter<View>() {
 
-        abstract val timerModel: TimerModel
+        abstract val timerModel: TimerModel?
 
         abstract fun onTimerItemClick(position: Int)
 

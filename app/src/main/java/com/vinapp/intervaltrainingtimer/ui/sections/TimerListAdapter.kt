@@ -4,38 +4,80 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vinapp.intervaltrainingtimer.databinding.AddTimerItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.TimerItemBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 
-class TimerListAdapter(private val timerList: List<Timer>, private val onTimerListener: OnTimerListener): RecyclerView.Adapter<TimerListAdapter.ViewHolder>() {
+class TimerListAdapter(private val timerList: List<Timer>, private val onTimerListener: OnTimerClickListener): RecyclerView.Adapter<TimerListAdapter.ViewHolder>() {
+
+    private val TIMER_ITEM = 0
+    private val FOOTER_ITEM = 1
+
+    interface OnTimerClickListener {
+
+        fun onTimerClick(position: Int)
+
+        fun onAddTimerClick()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = TimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, onTimerListener)
+        if (viewType == FOOTER_ITEM) {
+            val binding = AddTimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return FooterViewHolder(binding, onTimerListener)
+        } else {
+            val binding = TimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return TimerItemViewHolder(binding, onTimerListener)
+        }
     }
 
     override fun getItemCount(): Int {
-        return timerList.size
+        val footerItem = 1 //footerItem is additional list size for footer
+        if (timerList.isNullOrEmpty())
+            return footerItem
+        else
+            return timerList.size + footerItem
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder.binding) {
-            this.textView.text = timerList[position].name
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        when (viewHolder.itemViewType) {
+            TIMER_ITEM -> {
+                var holder = viewHolder as TimerItemViewHolder
+                with(holder.binding) {
+                    this.textView.text = timerList[position].name
+                }
+            }
+            FOOTER_ITEM -> {
+                var holder = viewHolder as FooterViewHolder
+                with(holder.binding) {
+                    this.textView.text = "Add interval"
+                }
+            }
         }
     }
 
-    class ViewHolder(val binding: TimerItemBinding, val onTimerListener: OnTimerListener): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-
-        init {
-            binding.root.setOnClickListener(this)
+    override fun getItemViewType(position: Int): Int {
+        if (position < timerList.size) {
+            return TIMER_ITEM
+        } else {
+            return FOOTER_ITEM
         }
+    }
 
+    class TimerItemViewHolder(val binding: TimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
         override fun onClick(view: View?) {
-            onTimerListener.onTimerClick(adapterPosition)
+            onTimerClickListener.onTimerClick(adapterPosition)
         }
     }
 
-    interface OnTimerListener {
-        fun onTimerClick(position: Int)
+    class FooterViewHolder(val binding: AddTimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
+        override fun onClick(view: View?) {
+            onTimerClickListener.onAddTimerClick()
+        }
+    }
+
+    abstract class ViewHolder(itemView: View, val onTimerClickListener: OnTimerClickListener): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
     }
 }

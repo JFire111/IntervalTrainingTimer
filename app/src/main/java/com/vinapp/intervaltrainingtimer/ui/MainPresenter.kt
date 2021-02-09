@@ -2,7 +2,7 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
-class MainPresenter: MainContract.Presenter(), SectionNavigator {
+class MainPresenter: MainContract.Presenter(), SectionsNavigator {
 
     override fun onStartTimerClick() {
     }

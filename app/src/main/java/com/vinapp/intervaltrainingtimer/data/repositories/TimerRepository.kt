@@ -5,13 +5,17 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
 
 class TimerRepository: TimerModel {
 
-    override fun addTimer(timer: Timer) {}
+    var timerList: ArrayList<Timer> = arrayListOf(
+            object : Timer {override var name = "qwe" },
+            object : Timer {override var name = "asd" },
+            object : Timer {override var name = "zxc" })
 
-    override fun getTimers(): List<Timer> {
-        return listOf(
-                object : Timer {override var name = "qwe" },
-                object : Timer {override var name = "asd" },
-                object : Timer {override var name = "zxc" })
+    override fun addTimer(timer: Timer) {
+        timerList.add(timer)
+    }
+
+    override fun getTimers(): ArrayList<Timer> {
+        return timerList
     }
 
     override fun deleteTimer(timer: Timer) {}

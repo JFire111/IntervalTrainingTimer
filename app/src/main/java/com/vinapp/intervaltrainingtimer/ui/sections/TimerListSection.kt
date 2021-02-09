@@ -12,7 +12,7 @@ import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerListContract
 import kotlinx.android.synthetic.main.fragment_timers_list.view.*
 
-class TimerListSection(private val timerListPresenter: TimerListContract.Presenter): Fragment(), TimerListContract.View, TimerListAdapter.OnTimerListener {
+class TimerListSection(private val timerListPresenter: TimerListContract.Presenter): Fragment(), TimerListContract.View, TimerListAdapter.OnTimerClickListener {
 
     override val title: String
         get() = "TimerListSection"
@@ -33,7 +33,11 @@ class TimerListSection(private val timerListPresenter: TimerListContract.Present
     }
 
     override fun showTimerList(timerList: List<Timer>) {
-        timersRecyclerView.adapter = TimerListAdapter(timerList, this)
+        if (timersRecyclerView.adapter == null) {
+            timersRecyclerView.adapter = TimerListAdapter(timerList, this)
+        } else {
+            timersRecyclerView.adapter!!.notifyDataSetChanged()
+        }
     }
 
     override fun onStart() {
@@ -54,5 +58,9 @@ class TimerListSection(private val timerListPresenter: TimerListContract.Present
 
     override fun onTimerClick(position: Int) {
         timerListPresenter.onTimerItemClick(position)
+    }
+
+    override fun onAddTimerClick() {
+        timerListPresenter.onAddTimerClick()
     }
 }
