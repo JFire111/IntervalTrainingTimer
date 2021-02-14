@@ -9,7 +9,7 @@ interface TimerListContract {
 
     interface View: SectionView {
 
-        fun showTimerList(timerList: List<Timer>)
+        fun showTimerList(timerList: ArrayList<Timer>)
     }
 
     abstract class Presenter: SectionPresenter<View>() {

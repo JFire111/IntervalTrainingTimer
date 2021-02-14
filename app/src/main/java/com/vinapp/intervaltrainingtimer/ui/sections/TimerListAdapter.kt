@@ -8,25 +8,23 @@ import com.vinapp.intervaltrainingtimer.databinding.AddTimerItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.TimerItemBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 
-class TimerListAdapter(private val timerList: List<Timer>, private val onTimerListener: OnTimerClickListener): RecyclerView.Adapter<TimerListAdapter.ViewHolder>() {
+class TimerListAdapter(private val timerList: ArrayList<Timer>, private val onTimerClickListener: OnTimerClickListener): RecyclerView.Adapter<TimerListAdapter.ViewHolder>() {
 
-    private val TIMER_ITEM = 0
-    private val FOOTER_ITEM = 1
+    private val TIMER_ITEM: Int = 0
+    private val FOOTER_ITEM: Int  = 1
 
     interface OnTimerClickListener {
-
         fun onTimerClick(position: Int)
-
         fun onAddTimerClick()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         if (viewType == FOOTER_ITEM) {
             val binding = AddTimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return FooterViewHolder(binding, onTimerListener)
+            return FooterViewHolder(binding, onTimerClickListener)
         } else {
             val binding = TimerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return TimerItemViewHolder(binding, onTimerListener)
+            return TimerItemViewHolder(binding, onTimerClickListener)
         }
     }
 
@@ -49,7 +47,7 @@ class TimerListAdapter(private val timerList: List<Timer>, private val onTimerLi
             FOOTER_ITEM -> {
                 var holder = viewHolder as FooterViewHolder
                 with(holder.binding) {
-                    this.textView.text = "Add interval"
+                    this.textView.text = "Add timer"
                 }
             }
         }

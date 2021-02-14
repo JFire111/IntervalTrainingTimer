@@ -3,7 +3,7 @@ package com.vinapp.intervaltrainingtimer.mvp
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 
-interface TimerSettingsContract {
+interface IntervalListContract {
 
     interface View: SectionView {
 

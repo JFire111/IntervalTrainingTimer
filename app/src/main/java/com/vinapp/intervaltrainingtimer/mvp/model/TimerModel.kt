@@ -6,7 +6,7 @@ interface TimerModel {
 
     fun addTimer(timer: Timer)
 
-    fun getTimers(): List<Timer>
+    fun getTimers(): ArrayList<Timer>
 
     fun deleteTimer(timer: Timer)
 }

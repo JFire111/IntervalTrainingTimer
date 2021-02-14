@@ -11,8 +11,8 @@ import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.TimerListPresenter
 import com.vinapp.intervaltrainingtimer.ui.sections.TimerListSection
-import com.vinapp.intervaltrainingtimer.ui.sections.TimerSettingsPresenter
-import com.vinapp.intervaltrainingtimer.ui.sections.TimerSettingsSection
+import com.vinapp.intervaltrainingtimer.ui.sections.IntervalListPresenter
+import com.vinapp.intervaltrainingtimer.ui.sections.IntervalListSection
 
 class MainActivity: AppCompatActivity(), MainContract.View {
 
@@ -23,7 +23,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     private val mainPresenter = MainPresenter()
     private val sections = listOf<SectionView>(
-            TimerSettingsSection(TimerSettingsPresenter()),
+            IntervalListSection(IntervalListPresenter()),
             TimerListSection(TimerListPresenter(mainPresenter))
     )
 

@@ -1,8 +1,8 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import com.vinapp.intervaltrainingtimer.mvp.TimerSettingsContract
+import com.vinapp.intervaltrainingtimer.mvp.IntervalListContract
 
-class TimerSettingsPresenter: TimerSettingsContract.Presenter() {
+class IntervalListPresenter: IntervalListContract.Presenter() {
 
     override fun onAddIntervalClick() {
     }
@@ -10,7 +10,7 @@ class TimerSettingsPresenter: TimerSettingsContract.Presenter() {
     override fun onDeleteIntervalClick() {
     }
 
-    override fun attachView(view: TimerSettingsContract.View) {
+    override fun attachView(view: IntervalListContract.View) {
         super.attachView(view)
     }
 

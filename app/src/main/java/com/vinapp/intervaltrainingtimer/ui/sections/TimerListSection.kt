@@ -32,7 +32,7 @@ class TimerListSection(private val timerListPresenter: TimerListContract.Present
         return view
     }
 
-    override fun showTimerList(timerList: List<Timer>) {
+    override fun showTimerList(timerList: ArrayList<Timer>) {
         if (timersRecyclerView.adapter == null) {
             timersRecyclerView.adapter = TimerListAdapter(timerList, this)
         } else {

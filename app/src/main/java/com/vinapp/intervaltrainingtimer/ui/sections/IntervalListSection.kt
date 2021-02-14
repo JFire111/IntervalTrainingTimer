@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerSettingsBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.mvp.TimerSettingsContract
+import com.vinapp.intervaltrainingtimer.mvp.IntervalListContract
 
-class TimerSettingsSection(private val timerSettingsPresenter: TimerSettingsContract.Presenter): Fragment(), TimerSettingsContract.View {
+class IntervalListSection(private val intervalListPresenter: IntervalListContract.Presenter): Fragment(), IntervalListContract.View, IntervalListAdapter.OnIntervalClickListener {
 
     override val title: String
         get() = "TimerSettingsSection"
@@ -28,8 +28,8 @@ class TimerSettingsSection(private val timerSettingsPresenter: TimerSettingsCont
         val view = binding.root
         intervalsRecyclerView = binding.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        var intervalList: List<Interval> = emptyList()
-        intervalsRecyclerView.adapter = TimerSettingsAdapter(intervalList)
+        var intervalList: ArrayList<Interval> = ArrayList()
+        intervalsRecyclerView.adapter = IntervalListAdapter(intervalList, this)
         return view
     }
 
@@ -52,16 +52,24 @@ class TimerSettingsSection(private val timerSettingsPresenter: TimerSettingsCont
 
     override fun onStart() {
         super.onStart()
-        timerSettingsPresenter.attachView(this)
+        intervalListPresenter.attachView(this)
     }
 
     override fun onStop() {
         super.onStop()
-        timerSettingsPresenter.detachView()
+        intervalListPresenter.detachView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        timerSettingsPresenter.destroy()
+        intervalListPresenter.destroy()
+    }
+
+    override fun onIntervalClick(position: Int) {
+
+    }
+
+    override fun onAddIntervalClick() {
+        intervalListPresenter.onAddIntervalClick()
     }
 }
