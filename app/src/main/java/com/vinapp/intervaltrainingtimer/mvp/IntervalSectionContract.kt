@@ -1,20 +1,19 @@
 package com.vinapp.intervaltrainingtimer.mvp
 
+import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 
-interface IntervalListContract {
+interface IntervalSectionContract {
 
     interface View: SectionView {
 
-        fun showHintItem()
-
-        fun showAddIntervalItem()
-
-        fun showIntervalList()
+        fun showIntervalList(intervalList: ArrayList<Interval>)
     }
 
     abstract class Presenter: SectionPresenter<View>() {
+
+        abstract fun onIntervalClick()
 
         abstract fun onAddIntervalClick()
 

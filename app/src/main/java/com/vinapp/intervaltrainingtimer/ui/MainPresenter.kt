@@ -2,16 +2,31 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
-class MainPresenter: MainContract.Presenter(), SectionsNavigator {
+class MainPresenter: MainContract.Presenter(), SectionsEventHandler {
 
-    override fun onStartTimerClick() {
+    override fun onStartButtonClick() {
     }
 
-    override fun onSaveTimerClick() {
-        setSection(1)
+    override fun onSaveButtonClick() {
+        onSaveTimerClick()
     }
 
-    override fun onDeleteTimerClick() {
+    override fun onEditButtonClick() {
+    }
+
+    override fun sectionSelected(section: Int) {
+        when (section) {
+            0 -> view!!.showRightButton("Save")
+            1 -> view!!.hideRightButton()
+        }
+        view!!.showLeftButton("Edit")
+        view!!.showStartButton()
+    }
+
+    override fun sectionScrolled() {
+        view!!.hideLeftButton()
+        view!!.hideRightButton()
+        view!!.hideStartButton()
     }
 
     override fun detachView() {
@@ -20,8 +35,12 @@ class MainPresenter: MainContract.Presenter(), SectionsNavigator {
     override fun destroy() {
     }
 
-    override fun setSection(position: Int) {
-        view!!.showSection(position)
+    override fun onSaveTimerClick() {
+        view!!.showSection(1)
+    }
+
+    override fun onAddTimerClick() {
+        view!!.showSection(0)
     }
 
 }

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimersListBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.mvp.TimerListContract
+import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import kotlinx.android.synthetic.main.fragment_timers_list.view.*
 
-class TimerListSection(private val timerListPresenter: TimerListContract.Presenter): Fragment(), TimerListContract.View, TimerListAdapter.OnTimerClickListener {
+class TimerSectionSection(private val timerListPresenter: TimerSectionContract.Presenter): Fragment(), TimerSectionContract.View, TimerSectionAdapter.OnTimerClickListener {
 
     override val title: String
         get() = "TimerListSection"
@@ -34,7 +34,7 @@ class TimerListSection(private val timerListPresenter: TimerListContract.Present
 
     override fun showTimerList(timerList: ArrayList<Timer>) {
         if (timersRecyclerView.adapter == null) {
-            timersRecyclerView.adapter = TimerListAdapter(timerList, this)
+            timersRecyclerView.adapter = TimerSectionAdapter(timerList, this)
         } else {
             timersRecyclerView.adapter!!.notifyDataSetChanged()
         }

@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerSettingsBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.mvp.IntervalListContract
+import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 
-class IntervalListSection(private val intervalListPresenter: IntervalListContract.Presenter): Fragment(), IntervalListContract.View, IntervalListAdapter.OnIntervalClickListener {
+class IntervalSectionSection(private val intervalListPresenter: IntervalSectionContract.Presenter): Fragment(), IntervalSectionContract.View, IntervalSectionAdapter.OnIntervalClickListener {
 
     override val title: String
         get() = "TimerSettingsSection"
@@ -29,7 +29,7 @@ class IntervalListSection(private val intervalListPresenter: IntervalListContrac
         intervalsRecyclerView = binding.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
         var intervalList: ArrayList<Interval> = ArrayList()
-        intervalsRecyclerView.adapter = IntervalListAdapter(intervalList, this)
+        intervalsRecyclerView.adapter = IntervalSectionAdapter(intervalList, this)
         return view
     }
 
@@ -38,15 +38,7 @@ class IntervalListSection(private val intervalListPresenter: IntervalListContrac
         _binding = null
     }
 
-    override fun showHintItem() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showAddIntervalItem() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showIntervalList() {
+    override fun showIntervalList(intervalList: ArrayList<Interval>) {
         TODO("Not yet implemented")
     }
 
@@ -66,7 +58,7 @@ class IntervalListSection(private val intervalListPresenter: IntervalListContrac
     }
 
     override fun onIntervalClick(position: Int) {
-
+        intervalListPresenter.onIntervalClick()
     }
 
     override fun onAddIntervalClick() {

@@ -11,18 +11,27 @@ interface MainContract {
 
         fun showStartButton()
 
-        fun showSaveButton()
+        fun hideStartButton()
 
-        fun showDeleteButton()
+        fun showLeftButton(text: String)
 
+        fun hideLeftButton()
+
+        fun showRightButton(text: String)
+
+        fun hideRightButton()
     }
 
     abstract class Presenter: MVPPresenter<View>() {
 
-        abstract fun onStartTimerClick()
+        abstract fun onStartButtonClick()
 
-        abstract fun onSaveTimerClick()
+        abstract fun onSaveButtonClick()
 
-        abstract fun onDeleteTimerClick()
+        abstract fun onEditButtonClick()
+
+        abstract fun sectionSelected(section: Int)
+
+        abstract fun sectionScrolled()
     }
 }

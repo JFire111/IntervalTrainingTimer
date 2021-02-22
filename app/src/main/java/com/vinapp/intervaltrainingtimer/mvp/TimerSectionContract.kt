@@ -5,7 +5,7 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 
-interface TimerListContract {
+interface TimerSectionContract {
 
     interface View: SectionView {
 

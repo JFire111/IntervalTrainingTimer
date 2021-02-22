@@ -1,11 +1,11 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
-import com.vinapp.intervaltrainingtimer.mvp.TimerListContract
+import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
-import com.vinapp.intervaltrainingtimer.ui.SectionsNavigator
+import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 
-class TimerListPresenter(val sectionNavigator: SectionsNavigator): TimerListContract.Presenter() {
+class TimerSectionPresenter(private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter() {
 
     override var timerModel: TimerModel? = TimerRepository()
 
@@ -13,10 +13,10 @@ class TimerListPresenter(val sectionNavigator: SectionsNavigator): TimerListCont
     }
 
     override fun onAddTimerClick() {
-        sectionNavigator.setSection(0)
+        sectionsEventHandler.onAddTimerClick()
     }
 
-    override fun attachView(view: TimerListContract.View) {
+    override fun attachView(view: TimerSectionContract.View) {
         super.attachView(view)
         view.showTimerList(timerModel!!.getTimers())
     }
