@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 
-class SectionsAdapter(private val sections: List<SectionView>, fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class SectionsAdapter(private val sections: List<SectionView>, fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return sections.size

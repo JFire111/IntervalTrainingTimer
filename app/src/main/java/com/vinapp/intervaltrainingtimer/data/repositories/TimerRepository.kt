@@ -1,9 +1,9 @@
 package com.vinapp.intervaltrainingtimer.data.repositories
 
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
+import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
-class TimerRepository: TimerModel {
+class TimerRepository: TimerMVPModel {
 
     var timerList: ArrayList<Timer> = arrayListOf(
             object : Timer {override var name = "qwe" },
@@ -16,6 +16,9 @@ class TimerRepository: TimerModel {
 
     override fun getTimers(): ArrayList<Timer> {
         return timerList
+    }
+
+    override fun updateTimer(timer: Timer) {
     }
 
     override fun deleteTimer(timer: Timer) {}

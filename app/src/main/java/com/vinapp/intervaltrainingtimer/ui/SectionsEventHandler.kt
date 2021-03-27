@@ -1,8 +1,21 @@
 package com.vinapp.intervaltrainingtimer.ui
 
+import com.vinapp.intervaltrainingtimer.entities.Interval
+
 interface SectionsEventHandler {
+
+    fun onAddIntervalClick(onIntervalKeyboardListener: OnIntervalKeyboardListener)
+
+    fun onCloseIntervalKeyboard()
+
+    fun onAddTimerClick()
 
     fun onSaveTimerClick()
 
-    fun onAddTimerClick()
+    interface OnIntervalKeyboardListener {
+
+        fun onSave(interval: Interval)
+
+        fun onCancel()
+    }
 }

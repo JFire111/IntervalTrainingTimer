@@ -8,7 +8,7 @@ import com.vinapp.intervaltrainingtimer.databinding.AddIntervalItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.IntervalItemBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
 
-class IntervalSectionAdapter(private val intervalList: ArrayList<Interval>, private val onIntervalClickListener: OnIntervalClickListener): RecyclerView.Adapter<IntervalSectionAdapter.ViewHolder>() {
+class IntervalsSectionAdapter(private val intervalList: ArrayList<Interval>, private val onIntervalClickListener: OnIntervalClickListener): RecyclerView.Adapter<IntervalsSectionAdapter.ViewHolder>() {
 
     private val INTERVAL_ITEM: Int  = 0
     private val FOOTER_ITEM: Int  = 1
@@ -41,7 +41,7 @@ class IntervalSectionAdapter(private val intervalList: ArrayList<Interval>, priv
             INTERVAL_ITEM -> {
             var holder = viewHolder as IntervalItemViewHolder
                 with(holder.binding) {
-                    this.textView.text = intervalList[position].toString()
+                    this.textView.text = intervalList[position].name
                 }
             }
             FOOTER_ITEM -> {
@@ -69,7 +69,7 @@ class IntervalSectionAdapter(private val intervalList: ArrayList<Interval>, priv
 
     class FooterViewHolder(val binding: AddIntervalItemBinding, onIntervalClickListener: OnIntervalClickListener): ViewHolder(binding.root, onIntervalClickListener) {
         override fun onClick(view: View?) {
-            onIntervalClickListener.onIntervalClick(adapterPosition)
+            onIntervalClickListener.onAddIntervalClick()
         }
     }
 

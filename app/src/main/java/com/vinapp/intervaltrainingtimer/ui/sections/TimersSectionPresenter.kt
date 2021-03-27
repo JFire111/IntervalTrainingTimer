@@ -2,12 +2,12 @@ package com.vinapp.intervaltrainingtimer.ui.sections
 
 import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
-import com.vinapp.intervaltrainingtimer.mvp.model.TimerModel
+import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 
-class TimerSectionPresenter(private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter() {
+class TimersSectionPresenter(private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter() {
 
-    override var timerModel: TimerModel? = TimerRepository()
+    override var timerModel: TimerMVPModel? = TimerRepository()
 
     override fun onTimerItemClick(position: Int) {
     }

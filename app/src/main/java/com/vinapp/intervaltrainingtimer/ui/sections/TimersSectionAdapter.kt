@@ -8,7 +8,7 @@ import com.vinapp.intervaltrainingtimer.databinding.AddTimerItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.TimerItemBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 
-class TimerSectionAdapter(private val timerList: ArrayList<Timer>, private val onTimerClickListener: OnTimerClickListener): RecyclerView.Adapter<TimerSectionAdapter.ViewHolder>() {
+class TimersSectionAdapter(private val timerList: ArrayList<Timer>, private val onTimerClickListener: OnTimerClickListener): RecyclerView.Adapter<TimersSectionAdapter.ViewHolder>() {
 
     private val TIMER_ITEM: Int = 0
     private val FOOTER_ITEM: Int  = 1
