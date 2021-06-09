@@ -1,6 +1,5 @@
 package com.vinapp.intervaltrainingtimer.ui
 
-import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
 class MainPresenter: MainContract.Presenter() {

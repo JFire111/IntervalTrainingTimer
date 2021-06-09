@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutKeyboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkThemeColorPrimaryDark">
+
+    <TextView
+        android:id="@+id/keyboardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/displayTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Keyboard Title" />
+
+    <GridLayout
+        android:id="@+id/keyboardGridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayTextView">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="1"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="2"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="3"
+            android:textSize="24dp" />
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="4"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="5"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="6"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="7"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="8"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="9"
+            android:textSize="24dp"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_column="1"
+            android:text="0"
+            android:textSize="24dp"/>
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/displayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:00" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/keyboardButtonOk"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:elevation="0dp"
+        android:onClick="onClickKeyboardButton"
+        android:text="@string/keyboardButtonOk"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/keyboardButtonCancel"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:onClick="onClickKeyboardButton"
+        android:text="@string/keyboardButtonCancel"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/keyboardButtonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="84dp"
+        android:clickable="true"
+        android:elevation="0dp"
+        android:onClick="onClickKeyboardButton"
+        app:backgroundTint="@color/darkThemeColorPrimaryDark"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:layout_constraintStart_toEndOf="@+id/displayTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_delete" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="130dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/hintMinutesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/hintMinutes"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/displayTextView"
+        app:layout_constraintTop_toTopOf="@+id/displayTextView" />
+
+    <TextView
+        android:id="@+id/hintSecondsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="54dp"
+        android:text="@string/hintSeconds"
+        app:layout_constraintEnd_toEndOf="@+id/displayTextView"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/displayTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

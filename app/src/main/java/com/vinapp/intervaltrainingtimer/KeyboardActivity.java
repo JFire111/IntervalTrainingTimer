@@ -37,13 +37,13 @@ public class KeyboardActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_keyboard);
+        setContentView(R.layout.fragment_keyboard);
 
         displayTextView = findViewById(R.id.displayTextView);
         titleTextView = findViewById(R.id.keyboardTitle);
         hintMinutesTextView = findViewById(R.id.hintMinutesTextView);
         hintSecondsTextView = findViewById(R.id.hintSecondsTextView);
-        hintNumbersTextView = findViewById(R.id.hintNumbersTextView);
+        //hintNumbersTextView = findViewById(R.id.hintNumbersTextView);
 
         DATA_TYPE = getIntent().getStringExtra("DATA_TYPE");
         title = getIntent().getStringExtra("title");
@@ -202,7 +202,7 @@ public class KeyboardActivity extends Activity {
         displayTextView.setText(spannableText);
     }
 
-    public void onClickKeyboardButton(View view) {
+    /*public void onClickKeyboardButton(View view) {
         switch (view.getId()){
             case R.id.keyboardButton0:
                 enteredValue = '0';
@@ -267,7 +267,7 @@ public class KeyboardActivity extends Activity {
         }
         displayTextView.setText(getCurrentValues());
         textViewColoring();
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

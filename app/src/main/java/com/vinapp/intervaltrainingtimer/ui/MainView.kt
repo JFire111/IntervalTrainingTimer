@@ -99,7 +99,7 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
 
     override fun showIntervalKeyboard(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
         val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(mainPresenter, onIntervalKeyboardListener))
-        fragmentManager!!.beginTransaction().replace(R.id.mainLayout, intervalKeyboardView).addToBackStack("").attach(intervalKeyboardView).commit()
+        fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("").attach(intervalKeyboardView).commit()
     }
 
     override fun hideIntervalKeyboard() {
@@ -130,5 +130,9 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
 
     override fun hideRightButton() {
         rightButton.visibility = View.GONE
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 }

@@ -1,6 +1,5 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import android.util.Log
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
@@ -16,7 +15,6 @@ class IntervalsSectionPresenter(private val sectionsEventHandler: SectionsEventH
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
                 intervalList.add(interval)
-                view!!.showIntervalList(intervalList)
             }
 
             override fun onCancel() {

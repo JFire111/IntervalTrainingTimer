@@ -4,11 +4,18 @@ import com.vinapp.intervaltrainingtimer.mvp.presenter.MVPPresenter
 
 interface IntervalKeyboardContract {
 
-    interface View: MVPView
+    interface View: MVPView {
+
+        fun showTimeValue(timeValue: String, valuesArray: Array<Int?>)
+    }
 
     abstract class Presenter: MVPPresenter<View>() {
 
-        abstract fun onSaveButtonClick(duration: Int)
+        abstract fun onKeyboardButtonClick(number: Int)
+
+        abstract fun onDeleteButtonClick()
+
+        abstract fun onSaveButtonClick()
 
         abstract fun onCancelButtonClick()
     }
