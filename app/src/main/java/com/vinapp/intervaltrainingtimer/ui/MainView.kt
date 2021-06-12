@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
+import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionPresenter
@@ -76,6 +77,7 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
     override fun onStart() {
         super.onStart()
         mainPresenter.attachView(this)
+        mainPresenter.sectionSelected(sectionsViewPager.currentItem)
     }
 
     override fun onStop() {
@@ -97,8 +99,8 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
         sectionsViewPager.currentItem = position
     }
 
-    override fun showIntervalKeyboard(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(mainPresenter, onIntervalKeyboardListener))
+    override fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(mainPresenter, onIntervalKeyboardListener, interval))
         fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("").attach(intervalKeyboardView).commit()
     }
 

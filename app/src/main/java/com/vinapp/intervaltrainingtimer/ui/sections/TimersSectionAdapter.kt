@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.AddTimerItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.TimerItemBinding
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 
 class TimersSectionAdapter(private val timerList: ArrayList<Timer>, private val onTimerClickListener: OnTimerClickListener): RecyclerView.Adapter<TimersSectionAdapter.ViewHolder>() {
 

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerListBinding
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import kotlinx.android.synthetic.main.fragment_timer_list.view.*
 

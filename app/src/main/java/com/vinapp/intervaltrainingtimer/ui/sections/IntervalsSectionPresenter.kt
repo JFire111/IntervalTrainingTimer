@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import com.vinapp.intervaltrainingtimer.entities.Interval
+import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 
@@ -8,7 +8,17 @@ class IntervalsSectionPresenter(private val sectionsEventHandler: SectionsEventH
 
     var intervalList: ArrayList<Interval> = ArrayList()
 
-    override fun onIntervalClick() {
+    override fun onIntervalClick(position: Int) {
+        val currentInterval = intervalList[position]
+        val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
+            override fun onSave(interval: Interval) {
+                intervalList[position] = interval
+            }
+
+            override fun onCancel() {
+            }
+        }
+        sectionsEventHandler.onIntervalClick(currentInterval, onIntervalKeyboardListener)
     }
 
     override fun onAddIntervalClick() {

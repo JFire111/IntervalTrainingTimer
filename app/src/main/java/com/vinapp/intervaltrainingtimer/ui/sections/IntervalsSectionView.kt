@@ -1,7 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
-import com.vinapp.intervaltrainingtimer.entities.Interval
+import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 
 class IntervalsSectionView(private val intervalSectionPresenter: IntervalSectionContract.Presenter): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
@@ -61,7 +60,7 @@ class IntervalsSectionView(private val intervalSectionPresenter: IntervalSection
     }
 
     override fun onIntervalClick(position: Int) {
-        intervalSectionPresenter.onIntervalClick()
+        intervalSectionPresenter.onIntervalClick(position)
     }
 
     override fun onAddIntervalClick() {

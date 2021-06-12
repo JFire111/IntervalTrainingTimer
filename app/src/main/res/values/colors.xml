@@ -19,4 +19,6 @@
     <color name="fontColor">#FFFFFF</color>
     <color name="fontColorDark">#999999</color>
 
+    <color name="inactiveGray">#AAAAAA</color>
+
 </resources>

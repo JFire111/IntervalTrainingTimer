@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.mvp.model
 
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 
 interface TimerMVPModel {
 
