@@ -7,14 +7,14 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="colorOfAction">#F44336</color>
-    <color name="colorOfRestBetweenRounds">#4caf50</color>
-    <color name="colorOfRestBetweenExercises">#ffc107</color>
+    <color name="colorOfRestGreen">#4caf50</color>
+    <color name="colorOfRestYellow">#ffc107</color>
     <color name="colorOfMenu">#FFFFFF</color>
 
-    <color name="darkThemeColorPrimary">#343434</color>
-    <color name="darkThemeColorPrimaryLight">#484848</color>
-    <color name="darkThemeColorPrimaryDark">#212121</color>
-    <color name="darkThemeColorAccent">#F44336</color>
+    <color name="primaryLightGray">#343434</color>
+    <color name="primaryMediumGray">#303030</color>
+    <color name="primaryDarkGray">#212121</color>
+    <color name="mainAccent">#F44336</color>
 
     <color name="fontColor">#FFFFFF</color>
     <color name="fontColorDark">#999999</color>

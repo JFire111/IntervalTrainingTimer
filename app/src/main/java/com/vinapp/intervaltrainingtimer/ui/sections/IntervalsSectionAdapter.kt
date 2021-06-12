@@ -41,7 +41,8 @@ class IntervalsSectionAdapter(private val intervalList: ArrayList<Interval>, pri
             INTERVAL_ITEM -> {
             var holder = viewHolder as IntervalItemViewHolder
                 with(holder.binding) {
-                    this.textView.text = intervalList[position].name
+                    this.intervalNameTextView.text = intervalList[position].name
+                    this.intervalTimeTextView.text = intervalList[position].getDurationAsString()
                 }
             }
             FOOTER_ITEM -> {

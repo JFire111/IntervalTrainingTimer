@@ -10,15 +10,15 @@
     </style>
 
     <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/darkThemeColorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/darkThemeColorPrimary</item>
-        <item name="colorAccent">@color/darkThemeColorAccent</item>
+        <item name="colorPrimary">@color/primaryDarkGray</item>
+        <item name="colorPrimaryDark">@color/primaryLightGray</item>
+        <item name="colorAccent">@color/mainAccent</item>
     </style>
 
     <style name="DarkSettingsTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/darkThemeColorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
-        <item name="colorAccent">@color/darkThemeColorAccent</item>
-        <item name="android:windowBackground">@color/darkThemeColorPrimaryDark</item>
+        <item name="colorPrimary">@color/primaryDarkGray</item>
+        <item name="colorPrimaryDark">@color/primaryDarkGray</item>
+        <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:windowBackground">@color/primaryDarkGray</item>
     </style>
 </resources>

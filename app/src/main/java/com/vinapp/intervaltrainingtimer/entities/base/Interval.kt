@@ -4,4 +4,6 @@ interface Interval {
 
     val name: String
     val duration: Int
+
+    fun getDurationAsString(): String
 }
