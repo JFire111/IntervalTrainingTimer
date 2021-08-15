@@ -1,9 +1,12 @@
 package com.vinapp.intervaltrainingtimer.entities.base
 
-interface Interval {
+import com.vinapp.intervaltrainingtimer.common.IntervalType
 
-    val name: String
-    val duration: Int
+data class Interval(val name: String, val duration: Int, val type: IntervalType) {
 
-    fun getDurationAsString(): String
+    fun getDurationAsString(): String {
+        val minutes = duration / 60
+        val seconds = duration - minutes * 60
+        return "${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}"
+    }
 }

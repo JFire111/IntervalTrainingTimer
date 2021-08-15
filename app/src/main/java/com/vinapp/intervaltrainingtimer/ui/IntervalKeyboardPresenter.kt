@@ -1,12 +1,14 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.common.IntervalType
-import com.vinapp.intervaltrainingtimer.entities.RestInterval
-import com.vinapp.intervaltrainingtimer.entities.WorkInterval
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
 
-class IntervalKeyboardPresenter(private val eventHandler: SectionsEventHandler, private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener, private val interval: Interval?): IntervalKeyboardContract.Presenter() {
+class IntervalKeyboardPresenter(
+        private val eventHandler: SectionsEventHandler,
+        private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener,
+        private val interval: Interval?
+        ): IntervalKeyboardContract.Presenter() {
 
     private val valueLength = 4
     private val timeValue: Array<Int?>
@@ -50,15 +52,7 @@ class IntervalKeyboardPresenter(private val eventHandler: SectionsEventHandler, 
     }
 
     override fun onOkButtonClick() {
-        val interval: Interval
-        when (intervalType) {
-            IntervalType.REST -> {
-                interval = RestInterval(convertToSeconds(timeValue).toString(), convertToSeconds(timeValue))
-            }
-            IntervalType.WORK -> {
-                interval = WorkInterval(convertToSeconds(timeValue).toString(), convertToSeconds(timeValue))
-            }
-        }
+        val interval = Interval(convertToSeconds(timeValue).toString(), convertToSeconds(timeValue), intervalType)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()
     }
@@ -101,11 +95,7 @@ class IntervalKeyboardPresenter(private val eventHandler: SectionsEventHandler, 
     }
 
     private fun setIntervalType() {
-        when (interval) {
-            is WorkInterval -> intervalType = IntervalType.WORK
-            is RestInterval -> intervalType = IntervalType.REST
-            else -> intervalType = IntervalType.WORK
-        }
+        intervalType = interval?.type ?: IntervalType.WORK
     }
 
     private fun convertToSeconds(values: Array<Int?>): Int {
