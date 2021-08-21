@@ -16,43 +16,40 @@ import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
-import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionPresenter
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
-import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionPresenter
 import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
-class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContract.View {
+class MainView : Fragment(), MainContract.View {
 
     private var _binding: FragmentMainBinding? = null
     private val binding
         get() = _binding!!
 
+    private lateinit var presenter: MainContract.Presenter
     private lateinit var mainToolbar: Toolbar
     private lateinit var sectionsTabLayout: TabLayout
     private lateinit var sectionsViewPager: ViewPager2
     private lateinit var startButton: FloatingActionButton
     private lateinit var leftButton: Button
     private lateinit var rightButton: Button
-
-    private val intervalSectionPresenter = IntervalsSectionPresenter(mainPresenter)
-    private val timersSectionPresenter = TimersSectionPresenter(mainPresenter)
-
-    private val sections = listOf<SectionView>(
-            IntervalsSectionView(intervalSectionPresenter),
-            TimersSectionView(timersSectionPresenter)
-    )
+    private lateinit var sections: List<SectionView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
+        presenter = MainPresenter(0)
         mainToolbar = view.mainToolbar
         sectionsTabLayout = view.sectionsTabLayout
         sectionsViewPager = view.sectionsViewPager
         startButton = view.floatingActionButton
         leftButton = view.leftButton
         rightButton = view.rightButton
+        sections = listOf<SectionView>(
+                IntervalsSectionView(presenter),
+                TimersSectionView(presenter)
+        )
 
         val sectionsAdapter = SectionsAdapter(sections, this)
         sectionsViewPager.adapter = sectionsAdapter
@@ -60,9 +57,9 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
                 if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    mainPresenter.sectionSelected(sectionsViewPager.currentItem)
+                    presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
                 } else {
-                    mainPresenter.sectionScrolled()
+                    presenter.sectionScrolled()
                 }
             }
         })
@@ -71,18 +68,29 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
             tab, position -> tab.text = sections[position].title
         }.attach()
 
+        rightButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                presenter.onRightButtonClick()
+            }
+        })
+
+        leftButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                presenter.onLeftButtonClick()
+            }
+        })
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        mainPresenter.attachView(this)
-        mainPresenter.sectionSelected(sectionsViewPager.currentItem)
+        presenter.attachView(this)
+        presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
     }
 
     override fun onStop() {
         super.onStop()
-        mainPresenter.detachView()
+        presenter.detachView()
     }
 
     override fun onDestroyView() {
@@ -92,7 +100,7 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
 
     override fun onDestroy() {
         super.onDestroy()
-        mainPresenter.destroy()
+        presenter.destroy()
     }
 
     override fun showSection(position: Int) {
@@ -100,7 +108,7 @@ class MainView(private val mainPresenter: MainPresenter) : Fragment(), MainContr
     }
 
     override fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(mainPresenter, onIntervalKeyboardListener, interval))
+        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(presenter, onIntervalKeyboardListener, interval))
         fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("").attach(intervalKeyboardView).commit()
     }
 

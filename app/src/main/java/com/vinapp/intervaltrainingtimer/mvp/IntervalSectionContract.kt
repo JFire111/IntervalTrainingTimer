@@ -1,5 +1,6 @@
 package com.vinapp.intervaltrainingtimer.mvp
 
+import com.vinapp.intervaltrainingtimer.data.repositories.IntervalRepository
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
@@ -12,6 +13,8 @@ interface IntervalSectionContract {
     }
 
     abstract class Presenter: SectionPresenter<View>() {
+
+        var intervalRepository: IntervalRepository? = null
 
         abstract fun onIntervalClick(position: Int)
 

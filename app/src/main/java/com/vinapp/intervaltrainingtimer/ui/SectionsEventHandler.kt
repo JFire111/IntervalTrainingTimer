@@ -4,6 +4,8 @@ import com.vinapp.intervaltrainingtimer.entities.base.Interval
 
 interface SectionsEventHandler {
 
+    var currentSection: Int
+
     fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: OnIntervalKeyboardListener)
 
     fun onAddIntervalClick(onIntervalKeyboardListener: OnIntervalKeyboardListener)
@@ -11,8 +13,6 @@ interface SectionsEventHandler {
     fun onCloseIntervalKeyboard()
 
     fun onAddTimerClick()
-
-    fun onSaveTimerClick()
 
     interface OnIntervalKeyboardListener {
 

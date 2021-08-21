@@ -9,8 +9,7 @@ class MainActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val mainPresenter = MainPresenter()
-    private val fragment = MainView(mainPresenter)
+    private val fragment = MainView()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

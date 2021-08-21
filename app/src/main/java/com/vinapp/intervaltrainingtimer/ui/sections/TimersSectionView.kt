@@ -10,18 +10,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerListBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
+import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
+import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 import kotlinx.android.synthetic.main.fragment_timer_list.view.*
 
-class TimersSectionView(private val timerListPresenter: TimerSectionContract.Presenter): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
+class TimersSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
 
     override val title: String
         get() = "TimerListSection"
     override val sectionFragment: Fragment
         get() = this
+    override val sideButtonsClickListener: SideButtonsClickListener
+        get() = presenter
 
     private var _binding: FragmentTimerListBinding? = null
     private val binding
         get() = _binding!!
+    private var presenter = TimersSectionPresenter(sectionsEventHandler)
     private lateinit var timersRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,25 +47,25 @@ class TimersSectionView(private val timerListPresenter: TimerSectionContract.Pre
 
     override fun onStart() {
         super.onStart()
-        timerListPresenter.attachView(this)
+        presenter.attachView(this)
     }
 
     override fun onStop() {
         super.onStop()
-        timerListPresenter.detachView()
+        presenter.detachView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        timerListPresenter.destroy()
+        presenter.destroy()
     }
 
     override fun onTimerClick(position: Int) {
-        timerListPresenter.onTimerItemClick(position)
+        presenter.onTimerItemClick(position)
     }
 
     override fun onAddTimerClick() {
-        timerListPresenter.onAddTimerClick()
+        presenter.onAddTimerClick()
     }
 }
