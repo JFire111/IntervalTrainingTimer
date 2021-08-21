@@ -14,6 +14,8 @@ interface SectionsEventHandler {
 
     fun onAddTimerClick()
 
+    fun onSaveTimerClick()
+
     interface OnIntervalKeyboardListener {
 
         fun onSave(interval: Interval)

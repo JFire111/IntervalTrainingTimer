@@ -62,4 +62,8 @@ class MainPresenter(override var currentSection: Int) : MainContract.Presenter()
         view!!.showSection(0)
     }
 
+    override fun onSaveTimerClick() {
+        view!!.showSection(1)
+    }
+
 }

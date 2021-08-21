@@ -28,7 +28,7 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler,
     private var _binding: FragmentIntervalListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = IntervalsSectionPresenter(IntervalRepository(), sectionsEventHandler, timerRepository)
+    private var presenter = IntervalsSectionPresenter(sectionsEventHandler, IntervalRepository(), timerRepository)
     private lateinit var intervalsRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

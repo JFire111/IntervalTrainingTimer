@@ -9,8 +9,8 @@ import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
 class IntervalsSectionPresenter(
+        override val sectionsEventHandler: SectionsEventHandler,
         override val intervalRepository: IntervalMVPModel,
-        private val sectionsEventHandler: SectionsEventHandler,
         timerRepository: TimerMVPModel): IntervalSectionContract.Presenter(), SideButtonsClickListener {
 
     private val timerEditingInteractor = TimerEditingInteractor(timerRepository)
@@ -62,5 +62,8 @@ class IntervalsSectionPresenter(
 
     override fun onRightButtonClick() {
         timerEditingInteractor.createTimer(intervalRepository.getIntervals())
+        sectionsEventHandler.onSaveTimerClick()
+        this.intervalRepository.clearIntervals()
+        view!!.showIntervalList(intervalRepository.getIntervals())
     }
 }

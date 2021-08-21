@@ -28,7 +28,7 @@ class TimersSectionView(sectionsEventHandler: SectionsEventHandler, timerReposit
     private var _binding: FragmentTimerListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = TimersSectionPresenter(timerRepository, sectionsEventHandler)
+    private var presenter = TimersSectionPresenter(sectionsEventHandler, timerRepository)
     private lateinit var timersRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -9,10 +9,10 @@ import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
 class TimersSectionPresenter(
-        override val timerRepository: TimerMVPModel,
-        private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter(), SideButtonsClickListener {
+        override val sectionsEventHandler: SectionsEventHandler,
+        override val timerRepository: TimerMVPModel): TimerSectionContract.Presenter(), SideButtonsClickListener {
 
-    val getTimersInteractor = GetTimersInteractor(timerRepository)
+    private val getTimersInteractor = GetTimersInteractor(timerRepository)
 
     override fun onTimerItemClick(position: Int) {
     }
