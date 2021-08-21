@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
@@ -35,21 +36,26 @@ class MainView : Fragment(), MainContract.View {
     private lateinit var rightButton: Button
     private lateinit var sections: List<SectionView>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val app = activity?.applicationContext as App
+        presenter = MainPresenter(0)
+        sections = listOf<SectionView>(
+                IntervalsSectionView(presenter, app.timerRepository),
+                TimersSectionView(presenter, app.timerRepository)
+        )
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
-        presenter = MainPresenter(0)
         mainToolbar = view.mainToolbar
         sectionsTabLayout = view.sectionsTabLayout
         sectionsViewPager = view.sectionsViewPager
         startButton = view.floatingActionButton
         leftButton = view.leftButton
         rightButton = view.rightButton
-        sections = listOf<SectionView>(
-                IntervalsSectionView(presenter),
-                TimersSectionView(presenter)
-        )
 
         val sectionsAdapter = SectionsAdapter(sections, this)
         sectionsViewPager.adapter = sectionsAdapter

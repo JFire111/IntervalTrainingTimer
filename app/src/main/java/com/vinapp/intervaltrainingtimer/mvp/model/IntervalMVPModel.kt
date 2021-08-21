@@ -11,4 +11,6 @@ interface IntervalMVPModel {
     fun updateInterval(position: Int, interval: Interval)
 
     fun deleteInterval(position: Int)
+
+    fun clearIntervals()
 }

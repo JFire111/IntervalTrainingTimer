@@ -2,13 +2,17 @@ package com.vinapp.intervaltrainingtimer.ui.sections
 
 import android.util.Log
 import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
+import com.vinapp.intervaltrainingtimer.logic.gettimers.GetTimersInteractor
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
+import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
-class TimersSectionPresenter(private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter() {
+class TimersSectionPresenter(
+        override val timerRepository: TimerMVPModel,
+        private val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter(), SideButtonsClickListener {
 
-    override var repository: TimerMVPModel? = TimerRepository()
+    val getTimersInteractor = GetTimersInteractor(timerRepository)
 
     override fun onTimerItemClick(position: Int) {
     }
@@ -19,7 +23,7 @@ class TimersSectionPresenter(private val sectionsEventHandler: SectionsEventHand
 
     override fun attachView(view: TimerSectionContract.View) {
         super.attachView(view)
-        view.showTimerList(repository!!.getTimers())
+        view.showTimerList(getTimersInteractor.getTimersList())
     }
 
     override fun detachView() {
@@ -27,7 +31,6 @@ class TimersSectionPresenter(private val sectionsEventHandler: SectionsEventHand
     }
 
     override fun destroy() {
-        repository = null
     }
 
     override fun onLeftButtonClick() {

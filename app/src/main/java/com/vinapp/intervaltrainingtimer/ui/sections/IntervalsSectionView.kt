@@ -7,14 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vinapp.intervaltrainingtimer.App
+import com.vinapp.intervaltrainingtimer.data.repositories.IntervalRepository
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
+import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
-class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
+class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler,
+                           timerRepository: TimerMVPModel): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
     override val title: String
         get() = "TimerSettingsSection"
@@ -26,14 +28,12 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
     private var _binding: FragmentIntervalListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = IntervalsSectionPresenter(sectionsEventHandler)
+    private var presenter = IntervalsSectionPresenter(IntervalRepository(), sectionsEventHandler, timerRepository)
     private lateinit var intervalsRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        val app = activity?.applicationContext as App
-        presenter.intervalRepository = app.intervalRepository
         intervalsRecyclerView = binding.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
         return view

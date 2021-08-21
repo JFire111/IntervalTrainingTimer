@@ -22,4 +22,8 @@ class IntervalRepository: IntervalMVPModel {
     override fun deleteInterval(position: Int) {
         intervalList.removeAt(position)
     }
+
+    override fun clearIntervals() {
+        intervalList.clear()
+    }
 }

@@ -1,19 +1,25 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import android.util.Log
-import com.vinapp.intervaltrainingtimer.data.repositories.IntervalRepository
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInteractor
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
+import com.vinapp.intervaltrainingtimer.mvp.model.IntervalMVPModel
+import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
+import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
 class IntervalsSectionPresenter(
-        private val sectionsEventHandler: SectionsEventHandler): IntervalSectionContract.Presenter() {
+        override val intervalRepository: IntervalMVPModel,
+        private val sectionsEventHandler: SectionsEventHandler,
+        timerRepository: TimerMVPModel): IntervalSectionContract.Presenter(), SideButtonsClickListener {
+
+    private val timerEditingInteractor = TimerEditingInteractor(timerRepository)
 
     override fun onIntervalClick(position: Int) {
-        val currentInterval = intervalRepository!!.getIntervals()[position]
+        val currentInterval = intervalRepository.getIntervals()[position]
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
-                intervalRepository!!.getIntervals()[position] = interval
+                intervalRepository.getIntervals()[position] = interval
             }
 
             override fun onCancel() {
@@ -25,7 +31,7 @@ class IntervalsSectionPresenter(
     override fun onAddIntervalClick() {
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
-                intervalRepository!!.addInterval(interval)
+                intervalRepository.addInterval(interval)
             }
 
             override fun onCancel() {
@@ -39,7 +45,7 @@ class IntervalsSectionPresenter(
 
     override fun attachView(view: IntervalSectionContract.View) {
         super.attachView(view)
-        view.showIntervalList(intervalRepository!!.getIntervals())
+        view.showIntervalList(intervalRepository.getIntervals())
     }
 
     override fun detachView() {
@@ -50,10 +56,11 @@ class IntervalsSectionPresenter(
     }
 
     override fun onLeftButtonClick() {
-        Log.e("IntervalsSectionP", "onLeftButtonClick")
+        this.intervalRepository.clearIntervals()
+        view!!.showIntervalList(intervalRepository.getIntervals())
     }
 
     override fun onRightButtonClick() {
-        Log.e("IntervalsSectionP", "onRightButtonClick")
+        timerEditingInteractor.createTimer(intervalRepository.getIntervals())
     }
 }

@@ -9,12 +9,12 @@ interface TimerSectionContract {
 
     interface View: SectionView {
 
-        fun showTimerList(timerList: ArrayList<Timer>)
+        fun showTimerList(timerList: List<Timer>)
     }
 
     abstract class Presenter: SectionPresenter<View>() {
 
-        abstract var repository: TimerMVPModel?
+        abstract val timerRepository: TimerMVPModel
 
         abstract fun onTimerItemClick(position: Int)
 

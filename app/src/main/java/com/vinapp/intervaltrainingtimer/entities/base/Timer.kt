@@ -4,5 +4,5 @@ interface Timer {
 
     //val id: Int
     var name: String
-    //var intervals: List<Interval>
+    var intervals: List<Interval>
 }
