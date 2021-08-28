@@ -41,7 +41,8 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
             TIMER_ITEM -> {
                 var holder = viewHolder as TimerItemViewHolder
                 with(holder.binding) {
-                    this.textView.text = timerList[position].name
+                    this.timerNameTextView.text = "${timerList[position].id} - ${timerList[position].name} - ${timerList[position].intervals.size}"
+                    this.timerDurationTextView.text = timerList[position].getDurationAsString()
                 }
             }
             FOOTER_ITEM -> {

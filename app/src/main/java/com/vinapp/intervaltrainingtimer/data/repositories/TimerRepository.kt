@@ -1,27 +1,15 @@
 package com.vinapp.intervaltrainingtimer.data.repositories
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.TrainingTimer
 import com.vinapp.intervaltrainingtimer.entities.base.Timer
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerRepository: TimerMVPModel {
 
     var timerList: ArrayList<Timer> = arrayListOf(
-            object : Timer {override var name = "qwe"
-                override var intervals: List<Interval>
-                    get() = listOf()
-                    set(value) {}
-            },
-            object : Timer {override var name = "asd"
-                override var intervals: List<Interval>
-                    get() = listOf()
-                    set(value) {}
-            },
-            object : Timer {override var name = "zxc"
-                override var intervals: List<Interval>
-                    get() = listOf()
-                    set(value) {}
-            })
+            TrainingTimer(0, "qwe", listOf()),
+            TrainingTimer(1, "asd", listOf()),
+            TrainingTimer(2, "zxc", listOf()))
 
     override fun addTimer(timer: Timer) {
         timerList.add(timer)
