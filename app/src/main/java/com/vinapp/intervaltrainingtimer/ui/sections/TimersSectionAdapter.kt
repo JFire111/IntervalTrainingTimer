@@ -3,7 +3,9 @@ package com.vinapp.intervaltrainingtimer.ui.sections
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.AddTimerItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.TimerItemBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Timer
@@ -12,6 +14,7 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
 
     private val TIMER_ITEM: Int = 0
     private val FOOTER_ITEM: Int  = 1
+    private var selected: Int? = null
 
     interface OnTimerClickListener {
         fun onTimerClick(position: Int)
@@ -41,8 +44,13 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
             TIMER_ITEM -> {
                 var holder = viewHolder as TimerItemViewHolder
                 with(holder.binding) {
-                    this.timerNameTextView.text = "${timerList[position].id} - ${timerList[position].name} - ${timerList[position].intervals.size}"
+                    this.timerNameTextView.text = timerList[position].name
                     this.timerDurationTextView.text = timerList[position].getDurationAsString()
+                    if (selected == position) {
+                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))
+                    } else {
+                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryDarkGray))
+                    }
                 }
             }
             FOOTER_ITEM -> {
@@ -62,14 +70,25 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
         }
     }
 
-    class TimerItemViewHolder(val binding: TimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
+    inner class TimerItemViewHolder(val binding: TimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
         override fun onClick(view: View?) {
+            val previousSelected = selected
+            if (selected == adapterPosition) {
+                selected = null
+            } else {
+                selected = adapterPosition
+            }
             onTimerClickListener.onTimerClick(adapterPosition)
+            if (previousSelected != null) {
+                notifyItemChanged(previousSelected)
+            }
+            notifyItemChanged(adapterPosition)
         }
     }
 
-    class FooterViewHolder(val binding: AddTimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
+    inner class FooterViewHolder(val binding: AddTimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
         override fun onClick(view: View?) {
+            selected = null
             onTimerClickListener.onAddTimerClick()
         }
     }
