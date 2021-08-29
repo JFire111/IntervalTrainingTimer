@@ -9,12 +9,10 @@ interface IntervalSectionContract {
 
     interface View: SectionView {
 
-        fun showIntervalList(intervalList: ArrayList<Interval>)
+        fun showIntervalList(intervalList: List<Interval>)
     }
 
     abstract class Presenter: SectionPresenter<View>() {
-
-        abstract val intervalRepository: IntervalMVPModel
 
         abstract fun onIntervalClick(position: Int)
 

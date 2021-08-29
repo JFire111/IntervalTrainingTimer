@@ -35,14 +35,22 @@ class MainView : Fragment(), MainContract.View {
     private lateinit var leftButton: Button
     private lateinit var rightButton: Button
     private lateinit var sections: List<SectionView>
+    private lateinit var intervalsSectionView: IntervalsSectionView
+    private lateinit var timersSectionView: TimersSectionView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = activity?.applicationContext as App
-        presenter = MainPresenter(0)
+        val timerEditingInteractor = app.timerEditingInteractor
+        val timerListInteractor = app.getTimersInteractor
+        presenter = MainPresenter(0, timerEditingInteractor, timerListInteractor)
+        intervalsSectionView = IntervalsSectionView(presenter)
+        timersSectionView = TimersSectionView(presenter)
+        timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
+        timerListInteractor.registerOutput(timersSectionView.timerListOutput)
         sections = listOf<SectionView>(
-                IntervalsSectionView(presenter, app.timerRepository),
-                TimersSectionView(presenter, app.timerRepository)
+                intervalsSectionView,
+                timersSectionView
         )
     }
 

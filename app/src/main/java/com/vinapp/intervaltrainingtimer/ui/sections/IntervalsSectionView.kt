@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.data.repositories.IntervalRepository
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
-class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler,
-                           timerRepository: TimerMVPModel): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
+class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
     override val title: String
         get() = "TimerSettingsSection"
@@ -28,8 +28,10 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler,
     private var _binding: FragmentIntervalListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = IntervalsSectionPresenter(sectionsEventHandler, IntervalRepository(), timerRepository)
+    private var presenter = IntervalsSectionPresenter(sectionsEventHandler)
     private lateinit var intervalsRecyclerView: RecyclerView
+    val timerEditingOutput: TimerEditingOutput
+        get() = presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
@@ -39,7 +41,7 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler,
         return view
     }
 
-    override fun showIntervalList(intervalList: ArrayList<Interval>) {
+    override fun showIntervalList(intervalList: List<Interval>) {
         if (intervalsRecyclerView.adapter == null) {
             intervalsRecyclerView.adapter = IntervalsSectionAdapter(intervalList, this)
         } else {

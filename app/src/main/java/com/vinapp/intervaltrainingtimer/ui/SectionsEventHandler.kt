@@ -6,13 +6,15 @@ interface SectionsEventHandler {
 
     var currentSection: Int
 
-    fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: OnIntervalKeyboardListener)
+    fun onIntervalClick(intervalPosition: Int)
 
-    fun onAddIntervalClick(onIntervalKeyboardListener: OnIntervalKeyboardListener)
+    fun onAddIntervalClick()
 
     fun onCloseIntervalKeyboard()
 
     fun onAddTimerClick()
+
+    fun onTimerClick(position: Int)
 
     fun onSaveTimerClick()
 

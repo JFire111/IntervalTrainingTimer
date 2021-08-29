@@ -1,18 +1,15 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import android.util.Log
-import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
-import com.vinapp.intervaltrainingtimer.logic.gettimers.GetTimersInteractor
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
-import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
-class TimersSectionPresenter(
-        override val sectionsEventHandler: SectionsEventHandler,
-        override val timerRepository: TimerMVPModel): TimerSectionContract.Presenter(), SideButtonsClickListener {
+class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter(), SideButtonsClickListener, TimerListOutput {
 
-    private val getTimersInteractor = GetTimersInteractor(timerRepository)
+    var timers: List<Timer> = listOf()
 
     override fun onTimerItemClick(position: Int) {
     }
@@ -23,7 +20,7 @@ class TimersSectionPresenter(
 
     override fun attachView(view: TimerSectionContract.View) {
         super.attachView(view)
-        view.showTimerList(getTimersInteractor.getTimersList())
+        view.showTimerList(timers)
     }
 
     override fun detachView() {
@@ -39,5 +36,10 @@ class TimersSectionPresenter(
 
     override fun onRightButtonClick() {
         Log.e("TimersSectionP", "onRightButtonClick")
+    }
+
+    override fun provideTimers(timers: List<Timer>) {
+        this.timers = timers
+        view?.showTimerList(timers)
     }
 }

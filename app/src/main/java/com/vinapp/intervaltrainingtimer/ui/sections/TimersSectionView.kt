@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerListBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
-import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 import kotlinx.android.synthetic.main.fragment_timer_list.view.*
 
-class TimersSectionView(sectionsEventHandler: SectionsEventHandler, timerRepository: TimerMVPModel): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
+class TimersSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
 
     override val title: String
         get() = "TimerListSection"
@@ -28,8 +27,10 @@ class TimersSectionView(sectionsEventHandler: SectionsEventHandler, timerReposit
     private var _binding: FragmentTimerListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = TimersSectionPresenter(sectionsEventHandler, timerRepository)
+    private var presenter = TimersSectionPresenter(sectionsEventHandler)
     private lateinit var timersRecyclerView: RecyclerView
+    val timerListOutput: TimerListOutput
+        get() = presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentTimerListBinding.inflate(layoutInflater, container, false)

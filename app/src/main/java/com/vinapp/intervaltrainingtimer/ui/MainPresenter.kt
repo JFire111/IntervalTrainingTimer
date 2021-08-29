@@ -1,9 +1,13 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
+import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
-class MainPresenter(override var currentSection: Int) : MainContract.Presenter() {
+class MainPresenter(override var currentSection: Int,
+                    private val timerEditingInput: TimerEditingInput,
+                    private val timerListInput: TimerListInput) : MainContract.Presenter() {
 
     var sideButtonsClickListener: SideButtonsClickListener? = null
 
@@ -19,6 +23,7 @@ class MainPresenter(override var currentSection: Int) : MainContract.Presenter()
                 view!!.showRightButton("Save")
             }
             1 -> {
+                timerListInput.openTimerList()
                 view!!.showLeftButton("Edit")
                 view!!.hideRightButton()
             }
@@ -46,11 +51,28 @@ class MainPresenter(override var currentSection: Int) : MainContract.Presenter()
     override fun destroy() {
     }
 
-    override fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+    override fun onIntervalClick(intervalPosition: Int) {
+        val interval = timerEditingInput!!.getInterval(intervalPosition)
+        val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
+            override fun onSave(interval: Interval) {
+                timerEditingInput!!.updateInterval(intervalPosition, interval)
+            }
+
+            override fun onCancel() {
+            }
+        }
         view!!.showIntervalKeyboard(interval, onIntervalKeyboardListener)
     }
 
-    override fun onAddIntervalClick(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+    override fun onAddIntervalClick() {
+        val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
+            override fun onSave(interval: Interval) {
+                timerEditingInput!!.addInterval(interval)
+            }
+
+            override fun onCancel() {
+            }
+        }
         view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
     }
 
@@ -62,7 +84,12 @@ class MainPresenter(override var currentSection: Int) : MainContract.Presenter()
         view!!.showSection(0)
     }
 
+    override fun onTimerClick(position: Int) {
+    }
+
     override fun onSaveTimerClick() {
+        timerEditingInput.createTimer()
+        timerListInput.openTimerList()
         view!!.showSection(1)
     }
 
