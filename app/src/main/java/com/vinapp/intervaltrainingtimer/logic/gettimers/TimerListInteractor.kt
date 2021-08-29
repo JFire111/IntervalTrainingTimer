@@ -13,7 +13,8 @@ class TimerListInteractor(private val timerRepository: TimerMVPModel, private va
         timerRepository.deleteTimer(timer)
     }
 
-    fun registerOutput(timerListOutput: TimerListOutput) {
-        this.timerListOutput = timerListOutput
+    fun registerOutput(output: TimerListOutput) {
+        timerListOutput = output
+        timerListOutput?.provideTimers(timerRepository.getTimers())
     }
 }

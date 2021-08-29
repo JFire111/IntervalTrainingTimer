@@ -30,7 +30,8 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
         timerEditingOutput?.provideIntervals(intervalRepository.getIntervals())
     }
 
-    fun registerOutput(timerEditingOutput: TimerEditingOutput) {
-        this.timerEditingOutput = timerEditingOutput
+    fun registerOutput(output: TimerEditingOutput) {
+        timerEditingOutput = output
+        timerEditingOutput?.provideIntervals(intervalRepository.getIntervals())
     }
 }
