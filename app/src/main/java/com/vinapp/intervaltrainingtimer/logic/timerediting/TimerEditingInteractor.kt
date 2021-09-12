@@ -13,7 +13,7 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
     private val intervalRepository: IntervalMVPModel = IntervalRepository()
 
     override fun createTimer() {
-        timerRepository.addTimer(TrainingTimer(123, "NAME", intervalRepository.getIntervals().toList()))
+        timerRepository.addTimer(TrainingTimer(timerRepository.getTimers().size + 1, "NAME", intervalRepository.getIntervals().toList()))
         intervalRepository.clearIntervals()
         timerEditingOutput?.provideIntervals(intervalRepository.getIntervals())
     }
