@@ -5,8 +5,18 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerListInteractor(private val timerRepository: TimerMVPModel, private var timerListOutput: TimerListOutput?): TimerListInput {
 
+    private var selectedTimer: Timer? = null
+
     override fun openTimerList() {
         timerListOutput?.provideTimers(timerRepository.getTimers())
+    }
+
+    override fun selectTimer(timerPosition: Int?) {
+        if (timerPosition == null) {
+            selectedTimer = null
+        } else {
+            selectedTimer = timerRepository.getTimers()[timerPosition]
+        }
     }
 
     override fun deleteTimer(timer: Timer) {

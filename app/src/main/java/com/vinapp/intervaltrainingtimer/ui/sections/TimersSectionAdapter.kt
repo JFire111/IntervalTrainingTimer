@@ -17,7 +17,7 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
     private var selected: Int? = null
 
     interface OnTimerClickListener {
-        fun onTimerClick(position: Int)
+        fun onTimerClick(position: Int?)
         fun onAddTimerClick()
     }
 

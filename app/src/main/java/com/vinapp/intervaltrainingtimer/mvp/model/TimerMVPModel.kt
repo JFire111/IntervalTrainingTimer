@@ -8,6 +8,8 @@ interface TimerMVPModel {
 
     fun getTimers(): ArrayList<Timer>
 
+    fun getTimerById(id: Int): Timer?
+
     fun updateTimer(timer: Timer)
 
     fun deleteTimer(timer: Timer)

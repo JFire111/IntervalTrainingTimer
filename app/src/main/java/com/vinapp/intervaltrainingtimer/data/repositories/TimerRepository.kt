@@ -19,6 +19,10 @@ class TimerRepository: TimerMVPModel {
         return timerList
     }
 
+    override fun getTimerById(id: Int): Timer? {
+        return timerList.find { it.id == id }
+    }
+
     override fun updateTimer(timer: Timer) {
     }
 

@@ -15,6 +15,7 @@ import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
+import kotlinx.android.synthetic.main.fragment_interval_list.view.*
 
 class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
@@ -36,7 +37,7 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        intervalsRecyclerView = binding.intervalsRecyclerView
+        intervalsRecyclerView = view.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
         return view
     }

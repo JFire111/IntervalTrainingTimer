@@ -1,6 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
@@ -84,7 +85,13 @@ class MainPresenter(override var currentSection: Int,
         view!!.showSection(0)
     }
 
-    override fun onTimerClick(position: Int) {
+    override fun onTimerClick(position: Int?) {
+        timerListInput.selectTimer(position)
+    }
+
+    override fun onEditTimerClick(timerId: Int) {
+        timerEditingInput.setTimerForEditing(timerId)
+        view!!.showSection(0)
     }
 
     override fun onSaveTimerClick() {

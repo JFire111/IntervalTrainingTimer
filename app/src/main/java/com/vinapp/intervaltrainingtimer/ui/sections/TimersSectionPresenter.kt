@@ -9,9 +9,12 @@ import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
 class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter(), SideButtonsClickListener, TimerListOutput {
 
+    var selectedTimerPosition: Int? = null
     var timers: List<Timer> = listOf()
 
-    override fun onTimerItemClick(position: Int) {
+    override fun onTimerItemClick(position: Int?) {
+        selectedTimerPosition = position
+        sectionsEventHandler.onTimerClick(position)
     }
 
     override fun onAddTimerClick() {
@@ -31,7 +34,9 @@ class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHan
     }
 
     override fun onLeftButtonClick() {
-        Log.e("TimersSectionP", "onLeftButtonClick")
+        if (selectedTimerPosition != null) {
+            sectionsEventHandler.onEditTimerClick(timers[selectedTimerPosition!!].id)
+        }
     }
 
     override fun onRightButtonClick() {

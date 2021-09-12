@@ -6,5 +6,7 @@ interface TimerListInput {
 
     fun openTimerList()
 
+    fun selectTimer(timerPosition: Int?)
+
     fun deleteTimer(timer: Timer)
 }

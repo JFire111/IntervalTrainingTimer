@@ -14,7 +14,9 @@ interface SectionsEventHandler {
 
     fun onAddTimerClick()
 
-    fun onTimerClick(position: Int)
+    fun onTimerClick(position: Int?)
+
+    fun onEditTimerClick(timerId: Int)
 
     fun onSaveTimerClick()
 
