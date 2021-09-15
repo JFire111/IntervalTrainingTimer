@@ -1,6 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 
 interface SectionsEventHandler {
 
@@ -16,7 +17,7 @@ interface SectionsEventHandler {
 
     fun onTimerClick(position: Int?)
 
-    fun onEditTimerClick(timerId: Int)
+    fun onEditTimerClick(timer: Timer)
 
     fun onSaveTimerClick()
 

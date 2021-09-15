@@ -1,10 +1,11 @@
 package com.vinapp.intervaltrainingtimer.logic.timerediting
 
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.base.Timer
 
 interface TimerEditingInput {
 
-    fun createTimer()
+    fun saveTimer()
 
     fun addInterval(interval: Interval)
 
@@ -12,5 +13,5 @@ interface TimerEditingInput {
 
     fun updateInterval(position: Int, interval: Interval)
 
-    fun setTimerForEditing(timerId: Int)
+    fun setTimerForEditing(timer: Timer?)
 }

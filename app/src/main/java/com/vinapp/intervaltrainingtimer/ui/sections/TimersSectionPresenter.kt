@@ -35,7 +35,7 @@ class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHan
 
     override fun onLeftButtonClick() {
         if (selectedTimerPosition != null) {
-            sectionsEventHandler.onEditTimerClick(timers[selectedTimerPosition!!].id)
+            sectionsEventHandler.onEditTimerClick(timers[selectedTimerPosition!!])
         }
     }
 

@@ -89,13 +89,13 @@ class MainPresenter(override var currentSection: Int,
         timerListInput.selectTimer(position)
     }
 
-    override fun onEditTimerClick(timerId: Int) {
-        timerEditingInput.setTimerForEditing(timerId)
+    override fun onEditTimerClick(timer: Timer) {
+        timerEditingInput.setTimerForEditing(timer)
         view!!.showSection(0)
     }
 
     override fun onSaveTimerClick() {
-        timerEditingInput.createTimer()
+        timerEditingInput.saveTimer()
         timerListInput.openTimerList()
         view!!.showSection(1)
     }
