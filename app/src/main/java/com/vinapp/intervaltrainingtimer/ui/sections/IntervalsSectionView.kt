@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.data.repositories.IntervalRepository
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.base.Interval
@@ -30,6 +32,9 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
     private val binding
         get() = _binding!!
     private var presenter = IntervalsSectionPresenter(sectionsEventHandler)
+    private lateinit var numberOfRoundsTextView: TextView
+    private lateinit var addRoundButton: FloatingActionButton
+    private lateinit var removeRoundButton: FloatingActionButton
     private lateinit var intervalsRecyclerView: RecyclerView
     val timerEditingOutput: TimerEditingOutput
         get() = presenter
@@ -37,9 +42,29 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
+        numberOfRoundsTextView = view.numberOfRoundsTextView
+        addRoundButton = view.addRoundButton
+        removeRoundButton = view.removeRoundButton
         intervalsRecyclerView = view.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
+
+        addRoundButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                presenter.addRound()
+            }
+        })
+
+        removeRoundButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                presenter.removeRound()
+            }
+        })
+
         return view
+    }
+
+    override fun showNumberOfRounds(numberOfRounds: Int) {
+        numberOfRoundsTextView.text = numberOfRounds.toString()
     }
 
     override fun showIntervalList(intervalList: List<Interval>) {

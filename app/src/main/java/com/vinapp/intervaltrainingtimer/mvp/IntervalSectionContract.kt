@@ -9,10 +9,16 @@ interface IntervalSectionContract {
 
     interface View: SectionView {
 
+        fun showNumberOfRounds(numberOfRounds: Int)
+
         fun showIntervalList(intervalList: List<Interval>)
     }
 
     abstract class Presenter: SectionPresenter<View>() {
+
+        abstract fun addRound()
+
+        abstract fun removeRound()
 
         abstract fun onIntervalClick(position: Int)
 

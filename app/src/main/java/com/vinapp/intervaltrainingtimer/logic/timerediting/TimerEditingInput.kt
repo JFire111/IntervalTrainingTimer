@@ -7,6 +7,10 @@ interface TimerEditingInput {
 
     fun saveTimer()
 
+    fun addRound()
+
+    fun removeRound()
+
     fun addInterval(interval: Interval)
 
     fun getInterval(intervalPosition: Int): Interval

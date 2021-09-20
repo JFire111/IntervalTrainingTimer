@@ -7,9 +7,9 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 class TimerRepository: TimerMVPModel {
 
     var timerList: ArrayList<Timer> = arrayListOf(
-            TrainingTimer(0, "qwe", listOf()),
-            TrainingTimer(1, "asd", listOf()),
-            TrainingTimer(2, "zxc", listOf()))
+            TrainingTimer(0, "qwe", 1, listOf()),
+            TrainingTimer(1, "asd", 1, listOf()),
+            TrainingTimer(2, "zxc", 1, listOf()))
 
     override fun addTimer(timer: Timer) {
         timerList.add(timer)

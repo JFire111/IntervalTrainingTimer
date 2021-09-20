@@ -7,6 +7,10 @@ interface SectionsEventHandler {
 
     var currentSection: Int
 
+    fun onAddRoundClick()
+
+    fun onRemoveRoundClick()
+
     fun onIntervalClick(intervalPosition: Int)
 
     fun onAddIntervalClick()

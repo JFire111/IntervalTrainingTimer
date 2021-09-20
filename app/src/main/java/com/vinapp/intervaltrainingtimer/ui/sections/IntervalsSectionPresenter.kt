@@ -11,7 +11,16 @@ import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
 class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEventHandler): IntervalSectionContract.Presenter(), SideButtonsClickListener, TimerEditingOutput {
 
+    private var numberOfRounds: Int = 1
     private var intervals: ArrayList<Interval> = arrayListOf()
+
+    override fun addRound() {
+        sectionsEventHandler.onAddRoundClick()
+    }
+
+    override fun removeRound() {
+        sectionsEventHandler.onRemoveRoundClick()
+    }
 
     override fun onIntervalClick(position: Int) {
         sectionsEventHandler.onIntervalClick(position)
@@ -27,6 +36,7 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
     override fun attachView(view: IntervalSectionContract.View) {
         super.attachView(view)
         view.showIntervalList(this.intervals)
+        view.showNumberOfRounds(this.numberOfRounds)
     }
 
     override fun detachView() {
@@ -43,6 +53,11 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
 
     override fun onRightButtonClick() {
         sectionsEventHandler.onSaveTimerClick()
+    }
+
+    override fun provideNumberOfRounds(numberOfRounds: Int) {
+        this.numberOfRounds = numberOfRounds
+        view?.showNumberOfRounds(this.numberOfRounds)
     }
 
     override fun provideIntervals(intervals: List<Interval>) {

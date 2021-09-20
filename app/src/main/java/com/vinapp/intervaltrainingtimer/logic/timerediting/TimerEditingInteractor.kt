@@ -8,6 +8,7 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
 
     private var timer: Timer? = null
+    private var numberOfRounds: Int = 1
     private val intervalList: ArrayList<Interval> = arrayListOf()
 
     override fun saveTimer() {
@@ -15,10 +16,22 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timer!!.intervals = intervalList.toList()
             timerRepository.updateTimer(timer!!)
         } else {
-            timerRepository.addTimer(TrainingTimer(timerRepository.getTimers().size + 1, "NAME", intervalList.toList()))
+            timerRepository.addTimer(TrainingTimer(timerRepository.getTimers().size + 1, "NAME", numberOfRounds, intervalList.toList()))
         }
         intervalList.clear()
         timerEditingOutput?.provideIntervals(intervalList)
+    }
+
+    override fun addRound() {
+        numberOfRounds++
+        timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
+    }
+
+    override fun removeRound() {
+        if (numberOfRounds > 0) {
+            numberOfRounds--
+            timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
+        }
     }
 
     override fun addInterval(interval: Interval) {
@@ -49,5 +62,6 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
     fun registerOutput(output: TimerEditingOutput) {
         timerEditingOutput = output
         timerEditingOutput?.provideIntervals(intervalList)
+        timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
     }
 }

@@ -52,6 +52,14 @@ class MainPresenter(override var currentSection: Int,
     override fun destroy() {
     }
 
+    override fun onAddRoundClick() {
+        timerEditingInput.addRound()
+    }
+
+    override fun onRemoveRoundClick() {
+        timerEditingInput.removeRound()
+    }
+
     override fun onIntervalClick(intervalPosition: Int) {
         val interval = timerEditingInput!!.getInterval(intervalPosition)
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
