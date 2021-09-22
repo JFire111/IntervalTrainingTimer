@@ -63,7 +63,12 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
         }
     }
 
-    override fun clearTimer() {
+    override fun cancelEditing() {
+        this.timer = null
+        clear()
+    }
+
+    override fun clear() {
         numberOfRounds = 1
         intervalList.clear()
         provideNewValues()

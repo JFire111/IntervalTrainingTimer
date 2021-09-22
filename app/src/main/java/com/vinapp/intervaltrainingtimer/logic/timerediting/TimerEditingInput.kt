@@ -19,5 +19,7 @@ interface TimerEditingInput {
 
     fun setTimerForEditing(timer: Timer?)
 
-    fun clearTimer()
+    fun cancelEditing()
+
+    fun clear()
 }

@@ -25,7 +25,6 @@ class TimerRepository: TimerMVPModel {
 
     override fun updateTimer(timer: Timer) {
         var index = timerList.indexOfFirst { it.id == timer.id }
-        println("=============== $index")
         timerList[index] = timer
     }
 

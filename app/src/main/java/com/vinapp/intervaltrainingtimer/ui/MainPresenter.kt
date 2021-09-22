@@ -11,6 +11,7 @@ class MainPresenter(override var currentSection: Int,
                     private val timerListInput: TimerListInput) : MainContract.Presenter() {
 
     var sideButtonsClickListener: SideButtonsClickListener? = null
+    var isNewTimer: Boolean = true
 
     override fun onStartButtonClick() {
     }
@@ -20,7 +21,11 @@ class MainPresenter(override var currentSection: Int,
         this.sideButtonsClickListener = sideButtonsClickListener
         when (section) {
             0 -> {
-                view!!.showLeftButton("Clear")
+                if (isNewTimer) {
+                    view!!.showLeftButton("Clear")
+                } else {
+                    view!!.showLeftButton("Cancel")
+                }
                 view!!.showRightButton("Save")
             }
             1 -> {
@@ -90,6 +95,7 @@ class MainPresenter(override var currentSection: Int,
     }
 
     override fun onAddTimerClick() {
+        isNewTimer = true
         view!!.showSection(0)
     }
 
@@ -99,16 +105,23 @@ class MainPresenter(override var currentSection: Int,
 
     override fun onEditTimerClick(timer: Timer) {
         timerEditingInput.setTimerForEditing(timer)
+        isNewTimer = false
         view!!.showSection(0)
     }
 
     override fun onClearTimerClick() {
-        timerEditingInput.clearTimer()
+        if (isNewTimer) {
+            timerEditingInput.clear()
+        } else {
+            timerEditingInput.cancelEditing()
+            view!!.showSection(1)
+        }
     }
 
     override fun onSaveTimerClick() {
         timerEditingInput.saveTimer()
         timerListInput.openTimerList()
+        isNewTimer = true
         view!!.showSection(1)
     }
 
