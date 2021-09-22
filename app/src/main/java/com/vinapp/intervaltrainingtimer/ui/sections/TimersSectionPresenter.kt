@@ -10,7 +10,7 @@ import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHandler): TimerSectionContract.Presenter(), SideButtonsClickListener, TimerListOutput {
 
     var selectedTimerPosition: Int? = null
-    var timers: List<Timer> = listOf()
+    var timers: ArrayList<Timer> = arrayListOf()
 
     override fun onTimerItemClick(position: Int?) {
         selectedTimerPosition = position
@@ -44,7 +44,8 @@ class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHan
     }
 
     override fun provideTimers(timers: List<Timer>) {
-        this.timers = timers
-        view?.showTimerList(timers)
+        this.timers.clear()
+        this.timers.addAll(timers)
+        view?.showTimerList(this.timers)
     }
 }

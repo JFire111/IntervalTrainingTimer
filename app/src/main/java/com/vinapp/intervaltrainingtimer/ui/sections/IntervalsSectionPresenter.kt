@@ -47,8 +47,7 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
     }
 
     override fun onLeftButtonClick() {
-        /*this.intervalRepository.clearIntervals()
-        view!!.showIntervalList(intervalRepository.getIntervals())*/
+        sectionsEventHandler.onClearTimerClick()
     }
 
     override fun onRightButtonClick() {

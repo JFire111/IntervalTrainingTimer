@@ -102,6 +102,10 @@ class MainPresenter(override var currentSection: Int,
         view!!.showSection(0)
     }
 
+    override fun onClearTimerClick() {
+        timerEditingInput.clearTimer()
+    }
+
     override fun onSaveTimerClick() {
         timerEditingInput.saveTimer()
         timerListInput.openTimerList()

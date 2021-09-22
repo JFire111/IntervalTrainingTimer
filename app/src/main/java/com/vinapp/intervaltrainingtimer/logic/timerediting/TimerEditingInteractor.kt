@@ -13,13 +13,16 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
 
     override fun saveTimer() {
         if (timer != null) {
+            timer!!.numberOfRounds = numberOfRounds
             timer!!.intervals = intervalList.toList()
             timerRepository.updateTimer(timer!!)
         } else {
             timerRepository.addTimer(TrainingTimer(timerRepository.getTimers().size + 1, "NAME", numberOfRounds, intervalList.toList()))
         }
+        timer = null
+        numberOfRounds = 1
         intervalList.clear()
-        timerEditingOutput?.provideIntervals(intervalList)
+        provideNewValues()
     }
 
     override fun addRound() {
@@ -54,13 +57,24 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             intervalList.clear()
         }
         if (this.timer != null) {
+            numberOfRounds = timer!!.numberOfRounds
             intervalList.addAll(this.timer!!.intervals)
-            timerEditingOutput?.provideIntervals(intervalList)
+            provideNewValues()
         }
+    }
+
+    override fun clearTimer() {
+        numberOfRounds = 1
+        intervalList.clear()
+        provideNewValues()
     }
 
     fun registerOutput(output: TimerEditingOutput) {
         timerEditingOutput = output
+        provideNewValues()
+    }
+
+    private fun provideNewValues() {
         timerEditingOutput?.provideIntervals(intervalList)
         timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
     }

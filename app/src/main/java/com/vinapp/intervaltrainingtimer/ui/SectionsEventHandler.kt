@@ -23,6 +23,8 @@ interface SectionsEventHandler {
 
     fun onEditTimerClick(timer: Timer)
 
+    fun onClearTimerClick()
+
     fun onSaveTimerClick()
 
     interface OnIntervalKeyboardListener {
