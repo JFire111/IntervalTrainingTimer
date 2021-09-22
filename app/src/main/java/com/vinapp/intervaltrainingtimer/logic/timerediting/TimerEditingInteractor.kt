@@ -28,7 +28,7 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
     }
 
     override fun removeRound() {
-        if (numberOfRounds > 0) {
+        if (numberOfRounds > 1) {
             numberOfRounds--
             timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
         }

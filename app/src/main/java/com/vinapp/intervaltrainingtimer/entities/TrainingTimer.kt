@@ -10,6 +10,7 @@ data class TrainingTimer(override val id: Int, override var name: String, overri
         intervals.forEach{
             duration += it.duration
         }
+        duration *= numberOfRounds
         return duration
     }
 
