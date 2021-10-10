@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.logic.gettimers
 
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Timer
 
 interface TimerListInput {
 

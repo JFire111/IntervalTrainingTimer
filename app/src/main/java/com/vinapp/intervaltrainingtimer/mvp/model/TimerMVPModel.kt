@@ -1,12 +1,12 @@
 package com.vinapp.intervaltrainingtimer.mvp.model
 
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Timer
 
 interface TimerMVPModel {
 
     fun addTimer(timer: Timer)
 
-    fun getTimers(): ArrayList<Timer>
+    fun getTimers(): List<Timer>
 
     fun getTimerById(id: Int): Timer?
 

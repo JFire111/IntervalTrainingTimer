@@ -1,8 +1,7 @@
 package com.vinapp.intervaltrainingtimer.logic.timerediting
 
-import com.vinapp.intervaltrainingtimer.entities.TrainingTimer
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
@@ -17,7 +16,7 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timer!!.intervals = intervalList.toList()
             timerRepository.updateTimer(timer!!)
         } else {
-            timerRepository.addTimer(TrainingTimer(timerRepository.getTimers().size + 1, "NAME", numberOfRounds, intervalList.toList()))
+            timerRepository.addTimer(Timer(timerRepository.getTimers().size + 1, "NAME", numberOfRounds, intervalList.toList()))
         }
         timer = null
         numberOfRounds = 1

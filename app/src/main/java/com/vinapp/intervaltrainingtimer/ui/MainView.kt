@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
@@ -43,7 +43,7 @@ class MainView : Fragment(), MainContract.View {
         val app = activity?.applicationContext as App
         val timerEditingInteractor = app.timerEditingInteractor
         val timerListInteractor = app.getTimersInteractor
-        presenter = MainPresenter(0, timerEditingInteractor, timerListInteractor)
+        presenter = MainPresenter(0, timerEditingInteractor!!, timerListInteractor!!)
         intervalsSectionView = IntervalsSectionView(presenter)
         timersSectionView = TimersSectionView(presenter)
         timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)

@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.data.repositories
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.model.IntervalMVPModel
 
 class IntervalRepository: IntervalMVPModel {

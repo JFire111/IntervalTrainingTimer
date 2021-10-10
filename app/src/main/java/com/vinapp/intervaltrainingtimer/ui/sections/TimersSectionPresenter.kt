@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import android.util.Log
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler

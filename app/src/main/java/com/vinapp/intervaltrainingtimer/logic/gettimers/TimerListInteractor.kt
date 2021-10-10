@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.logic.gettimers
 
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerListInteractor(private val timerRepository: TimerMVPModel, private var timerListOutput: TimerListOutput?): TimerListInput {

@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.logic.timerediting
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.Interval
 
 interface TimerEditingOutput {
 

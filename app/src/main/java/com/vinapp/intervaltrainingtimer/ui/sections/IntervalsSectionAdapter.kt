@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.AddIntervalItemBinding
 import com.vinapp.intervaltrainingtimer.databinding.IntervalItemBinding
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
+import com.vinapp.intervaltrainingtimer.entities.Interval
 
 class IntervalsSectionAdapter(private val intervalList: List<Interval>, private val onIntervalClickListener: OnIntervalClickListener): RecyclerView.Adapter<IntervalsSectionAdapter.ViewHolder>() {
 

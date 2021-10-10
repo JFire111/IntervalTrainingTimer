@@ -1,7 +1,9 @@
-package com.vinapp.intervaltrainingtimer.entities.base
+package com.vinapp.intervaltrainingtimer.entities
 
 import com.vinapp.intervaltrainingtimer.common.IntervalType
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Interval(val name: String, val duration: Int, val type: IntervalType) {
 
     fun getDurationAsString(): String {

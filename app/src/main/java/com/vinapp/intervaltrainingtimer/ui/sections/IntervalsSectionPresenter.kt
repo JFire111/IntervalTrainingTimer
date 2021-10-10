@@ -1,11 +1,8 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInteractor
+import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
-import com.vinapp.intervaltrainingtimer.mvp.model.IntervalMVPModel
-import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 

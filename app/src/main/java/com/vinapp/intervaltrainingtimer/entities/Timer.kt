@@ -1,11 +1,16 @@
 package com.vinapp.intervaltrainingtimer.entities
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class TrainingTimer(override val id: Int, override var name: String, override var numberOfRounds: Int, override var intervals: List<Interval>): Timer {
+@Entity
+data class Timer(
+        @PrimaryKey val id: Int,
+        var name: String,
+        var numberOfRounds: Int,
+        var intervals: List<Interval>) {
 
-    override fun getDuration(): Int {
+    fun getDuration(): Int {
         var duration = 0
         intervals.forEach{
             duration += it.duration
@@ -14,7 +19,7 @@ data class TrainingTimer(override val id: Int, override var name: String, overri
         return duration
     }
 
-    override fun getDurationAsString(): String {
+    fun getDurationAsString(): String {
         val minutes = getDuration() / 60
         val seconds = getDuration() - minutes * 60
         return "${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}"

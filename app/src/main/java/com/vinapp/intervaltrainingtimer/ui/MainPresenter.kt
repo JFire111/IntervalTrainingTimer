@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui
 
-import com.vinapp.intervaltrainingtimer.entities.base.Interval
-import com.vinapp.intervaltrainingtimer.entities.base.Timer
+import com.vinapp.intervaltrainingtimer.entities.Interval
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
