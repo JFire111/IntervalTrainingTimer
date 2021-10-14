@@ -17,6 +17,8 @@ interface TimerEditingInput {
 
     fun updateInterval(position: Int, interval: Interval)
 
+    fun deleteInterval(intervalPosition: Int)
+
     fun setTimerForEditing(timer: Timer?)
 
     fun cancelEditing()

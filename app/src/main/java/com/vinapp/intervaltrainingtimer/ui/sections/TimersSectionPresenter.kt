@@ -12,13 +12,17 @@ class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHan
     var selectedTimerPosition: Int? = null
     var timers: ArrayList<Timer> = arrayListOf()
 
-    override fun onTimerItemClick(position: Int?) {
+    override fun onTimerItemClick(position: Int) {
         selectedTimerPosition = position
         sectionsEventHandler.onTimerClick(position)
     }
 
     override fun onAddTimerClick() {
         sectionsEventHandler.onAddTimerClick()
+    }
+
+    override fun onDeleteTimerClick(position: Int) {
+        sectionsEventHandler.onDeleteTimerClick(timers[position].id)
     }
 
     override fun attachView(view: TimerSectionContract.View) {

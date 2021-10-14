@@ -13,8 +13,10 @@ interface TimerSectionContract {
 
     abstract class Presenter: SectionPresenter<View>() {
 
-        abstract fun onTimerItemClick(position: Int?)
+        abstract fun onTimerItemClick(position: Int)
 
         abstract fun onAddTimerClick()
+
+        abstract fun onDeleteTimerClick(position: Int)
     }
 }

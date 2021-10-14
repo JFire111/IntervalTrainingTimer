@@ -100,4 +100,8 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
     override fun onAddIntervalClick() {
         presenter.onAddIntervalClick()
     }
+
+    override fun onDeleteIntervalClick(position: Int) {
+        presenter.onDeleteIntervalClick(position)
+    }
 }

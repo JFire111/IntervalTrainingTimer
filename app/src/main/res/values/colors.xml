@@ -20,5 +20,6 @@
     <color name="fontColorDark">#999999</color>
 
     <color name="inactiveGray">#AAAAAA</color>
+    <color name="red">#FF0000</color>
 
 </resources>

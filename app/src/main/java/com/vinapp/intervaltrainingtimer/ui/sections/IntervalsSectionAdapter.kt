@@ -16,6 +16,7 @@ class IntervalsSectionAdapter(private val intervalList: List<Interval>, private 
     interface OnIntervalClickListener {
         fun onIntervalClick(position: Int)
         fun onAddIntervalClick()
+        fun onDeleteIntervalClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,6 +59,13 @@ class IntervalsSectionAdapter(private val intervalList: List<Interval>, private 
     }
 
     class IntervalItemViewHolder(val binding: IntervalItemBinding, onIntervalClickListener: OnIntervalClickListener): ViewHolder(binding.root, onIntervalClickListener) {
+        init {
+            binding.deleteIntervalButton.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View?) {
+                    onIntervalClickListener.onDeleteIntervalClick(adapterPosition)
+                }
+            })
+        }
         override fun onClick(view: View?) {
             onIntervalClickListener.onIntervalClick(adapterPosition)
         }

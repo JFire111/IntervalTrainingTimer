@@ -12,5 +12,5 @@ interface TimerMVPModel {
 
     fun updateTimer(timer: Timer)
 
-    fun deleteTimer(timer: Timer)
+    fun deleteTimer(id: Int)
 }

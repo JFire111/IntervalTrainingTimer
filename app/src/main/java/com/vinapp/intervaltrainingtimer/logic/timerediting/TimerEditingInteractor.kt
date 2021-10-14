@@ -3,6 +3,7 @@ package com.vinapp.intervaltrainingtimer.logic.timerediting
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
+import kotlin.random.Random
 
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
 
@@ -16,7 +17,7 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timer!!.intervals = intervalList.toList()
             timerRepository.updateTimer(timer!!)
         } else {
-            timerRepository.addTimer(Timer(timerRepository.getTimers().size + 1, "NAME", numberOfRounds, intervalList.toList()))
+            timerRepository.addTimer(Timer(timerRepository.getTimers().size + Random(4).nextInt(), "NAME", numberOfRounds, intervalList.toList()))
         }
         timer = null
         numberOfRounds = 1
@@ -47,6 +48,11 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
 
     override fun updateInterval(position: Int, interval: Interval) {
         intervalList[position] = interval
+        timerEditingOutput?.provideIntervals(intervalList)
+    }
+
+    override fun deleteInterval(intervalPosition: Int) {
+        intervalList.removeAt(intervalPosition)
         timerEditingOutput?.provideIntervals(intervalList)
     }
 

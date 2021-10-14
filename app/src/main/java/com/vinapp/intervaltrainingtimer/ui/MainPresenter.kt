@@ -90,6 +90,10 @@ class MainPresenter(override var currentSection: Int,
         view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
     }
 
+    override fun onDeleteIntervalClick(intervalPosition: Int) {
+        timerEditingInput.deleteInterval(intervalPosition)
+    }
+
     override fun onCloseIntervalKeyboard() {
         view!!.hideIntervalKeyboard()
     }
@@ -99,7 +103,7 @@ class MainPresenter(override var currentSection: Int,
         view!!.showSection(0)
     }
 
-    override fun onTimerClick(position: Int?) {
+    override fun onTimerClick(position: Int) {
         timerListInput.selectTimer(position)
     }
 
@@ -107,6 +111,10 @@ class MainPresenter(override var currentSection: Int,
         timerEditingInput.setTimerForEditing(timer)
         isNewTimer = false
         view!!.showSection(0)
+    }
+
+    override fun onDeleteTimerClick(timerId: Int) {
+        timerListInput.deleteTimer(timerId)
     }
 
     override fun onClearTimerClick() {

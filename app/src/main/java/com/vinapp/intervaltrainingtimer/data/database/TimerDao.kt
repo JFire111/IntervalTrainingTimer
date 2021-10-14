@@ -12,8 +12,8 @@ interface TimerDao {
     @Update
     fun update(timer: Timer)
 
-    @Delete
-    fun delete(timer: Timer)
+    @Query("DELETE FROM timer WHERE id = :timerId")
+    fun delete(timerId: Int)
 
     @Query("SELECT * FROM timer")
     fun getAll(): List<Timer>

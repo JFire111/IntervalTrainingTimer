@@ -15,13 +15,17 @@ interface SectionsEventHandler {
 
     fun onAddIntervalClick()
 
+    fun onDeleteIntervalClick(intervalPosition: Int)
+
     fun onCloseIntervalKeyboard()
 
     fun onAddTimerClick()
 
-    fun onTimerClick(position: Int?)
+    fun onTimerClick(timerPosition: Int)
 
     fun onEditTimerClick(timer: Timer)
+
+    fun onDeleteTimerClick(timerId: Int)
 
     fun onClearTimerClick()
 

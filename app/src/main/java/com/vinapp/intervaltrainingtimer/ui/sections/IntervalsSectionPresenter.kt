@@ -27,7 +27,8 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
         sectionsEventHandler.onAddIntervalClick()
     }
 
-    override fun onDeleteIntervalClick() {
+    override fun onDeleteIntervalClick(position: Int) {
+        sectionsEventHandler.onDeleteIntervalClick(position)
     }
 
     override fun attachView(view: IntervalSectionContract.View) {

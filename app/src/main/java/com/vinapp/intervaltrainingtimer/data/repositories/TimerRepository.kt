@@ -22,5 +22,7 @@ class TimerRepository(private val timerDao: TimerDao): TimerMVPModel {
         timerDao.update(timer)
     }
 
-    override fun deleteTimer(timer: Timer) {}
+    override fun deleteTimer(id: Int) {
+        timerDao.delete(id)
+    }
 }

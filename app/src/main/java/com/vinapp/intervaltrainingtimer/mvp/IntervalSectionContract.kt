@@ -23,6 +23,6 @@ interface IntervalSectionContract {
 
         abstract fun onAddIntervalClick()
 
-        abstract fun onDeleteIntervalClick()
+        abstract fun onDeleteIntervalClick(position: Int)
     }
 }

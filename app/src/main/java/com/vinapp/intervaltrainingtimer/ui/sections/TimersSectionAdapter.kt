@@ -1,5 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,9 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
     private var selected: Int? = null
 
     interface OnTimerClickListener {
-        fun onTimerClick(position: Int?)
+        fun onTimerClick(position: Int)
         fun onAddTimerClick()
+        fun onDeleteClickListener(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,8 +49,10 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
                     this.timerNameTextView.text = timerList[position].name
                     this.timerDurationTextView.text = timerList[position].getDurationAsString()
                     if (selected == position) {
+                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))
                         this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))
                     } else {
+                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.primaryDarkGray))
                         this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryDarkGray))
                     }
                 }
@@ -66,6 +70,13 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
     }
 
     inner class TimerItemViewHolder(val binding: TimerItemBinding, onTimerClickListener: OnTimerClickListener): ViewHolder(binding.root, onTimerClickListener) {
+        init {
+            binding.deleteTimerButton.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View?) {
+                    onTimerClickListener.onDeleteClickListener(adapterPosition)
+                }
+            })
+        }
         override fun onClick(view: View?) {
             val previousSelected = selected
             if (selected == adapterPosition) {

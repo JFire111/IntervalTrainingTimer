@@ -64,11 +64,15 @@ class TimersSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(),
         presenter.destroy()
     }
 
-    override fun onTimerClick(position: Int?) {
+    override fun onTimerClick(position: Int) {
         presenter.onTimerItemClick(position)
     }
 
     override fun onAddTimerClick() {
         presenter.onAddTimerClick()
+    }
+
+    override fun onDeleteClickListener(position: Int) {
+        presenter.onDeleteTimerClick(position)
     }
 }
