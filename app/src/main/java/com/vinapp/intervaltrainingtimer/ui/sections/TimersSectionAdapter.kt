@@ -53,12 +53,7 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
                     }
                 }
             }
-            FOOTER_ITEM -> {
-                var holder = viewHolder as FooterViewHolder
-                with(holder.binding) {
-                    this.textView.text = "Add timer"
-                }
-            }
+            FOOTER_ITEM -> {}
         }
     }
 

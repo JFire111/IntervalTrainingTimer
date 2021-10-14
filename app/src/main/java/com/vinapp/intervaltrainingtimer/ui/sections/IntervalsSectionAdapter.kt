@@ -45,12 +45,7 @@ class IntervalsSectionAdapter(private val intervalList: List<Interval>, private 
                     this.intervalTimeTextView.text = intervalList[position].getDurationAsString()
                 }
             }
-            FOOTER_ITEM -> {
-                var holder = viewHolder as FooterViewHolder
-                with(holder.binding) {
-                    this.textView.text = "Add interval"
-                }
-            }
+            FOOTER_ITEM -> {}
         }
     }
 

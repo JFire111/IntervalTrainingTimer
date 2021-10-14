@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/data_layouts_height"
     android:foreground="?selectableItemBackground"
-    android:background="@color/primaryDarkGray">
+    android:background="@color/primaryMediumGray">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/addIntervalImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add interval"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/add" />
 </androidx.constraintlayout.widget.ConstraintLayout>
