@@ -12,7 +12,7 @@ interface MainContract {
 
         fun showSection(position: Int)
 
-        fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener)
+        fun showIntervalKeyboard(interval: Interval?, defaultIntervalName: String?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener)
 
         fun hideIntervalKeyboard()
 

@@ -40,7 +40,7 @@ public class KeyboardActivity extends Activity {
         setContentView(R.layout.fragment_keyboard);
 
         displayTextView = findViewById(R.id.displayTextView);
-        titleTextView = findViewById(R.id.keyboardTitle);
+        titleTextView = findViewById(R.id.intervalNameTextView);
         hintMinutesTextView = findViewById(R.id.hintMinutesTextView);
         hintSecondsTextView = findViewById(R.id.hintSecondsTextView);
         //hintNumbersTextView = findViewById(R.id.hintNumbersTextView);

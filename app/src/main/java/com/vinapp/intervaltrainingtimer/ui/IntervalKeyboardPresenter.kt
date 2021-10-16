@@ -7,18 +7,22 @@ import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
 class IntervalKeyboardPresenter(
         private val eventHandler: SectionsEventHandler,
         private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener,
-        private val interval: Interval?
+        private val interval: Interval?,
+        private val defaultIntervalName: String?
         ): IntervalKeyboardContract.Presenter() {
 
     private val valueLength = 4
     private val timeValue: Array<Int?>
+    private var intervalName: String = ""
     private var selectedNumberIndex = 0
     private var intervalType = IntervalType.WORK
 
     init {
         if (interval != null) {
+            intervalName = interval.name
             timeValue = convertToArray(interval.duration)
         } else {
+            intervalName = defaultIntervalName ?: ""
             timeValue = arrayOfNulls(valueLength)
         }
     }
@@ -51,8 +55,8 @@ class IntervalKeyboardPresenter(
         view!!.showSelectedType(intervalType)
     }
 
-    override fun onOkButtonClick() {
-        val interval = Interval(convertToSeconds(timeValue).toString(), convertToSeconds(timeValue), intervalType)
+    override fun onOkButtonClick(intervalName: String) {
+        val interval = Interval(intervalName, convertToSeconds(timeValue), intervalType)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()
     }
@@ -66,6 +70,7 @@ class IntervalKeyboardPresenter(
         super.attachView(view)
         setSelectedNumberIndex()
         setIntervalType()
+        view!!.showIntervalName(intervalName)
         view!!.showTimeValue(getTimeValueString(), timeValue)
         view!!.showSelectedType(intervalType)
     }

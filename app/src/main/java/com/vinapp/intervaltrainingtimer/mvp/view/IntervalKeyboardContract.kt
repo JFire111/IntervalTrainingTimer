@@ -7,6 +7,8 @@ interface IntervalKeyboardContract {
 
     interface View: MVPView {
 
+        fun showIntervalName(name: String)
+
         fun showTimeValue(timeValue: String, valuesArray: Array<Int?>)
 
         fun showSelectedType(intervalType: IntervalType)
@@ -22,7 +24,7 @@ interface IntervalKeyboardContract {
 
         abstract fun onWorkButtonClick()
 
-        abstract fun onOkButtonClick()
+        abstract fun onOkButtonClick(intervalName: String)
 
         abstract fun onCancelButtonClick()
     }

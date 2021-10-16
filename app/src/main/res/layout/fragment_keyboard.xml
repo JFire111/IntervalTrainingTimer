@@ -8,7 +8,7 @@
     android:background="@color/primaryDarkGray">
 
     <EditText
-        android:id="@+id/keyboardTitle"
+        android:id="@+id/intervalNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
@@ -17,10 +17,11 @@
         android:minWidth="150dp"
         android:maxWidth="250dp"
         android:maxLength="32"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/displayTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Keyboard Title" />
+        tools:text="Interval name" />
 
     <TextView
         android:id="@+id/displayTextView"

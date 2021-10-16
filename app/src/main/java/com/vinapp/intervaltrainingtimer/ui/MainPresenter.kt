@@ -75,7 +75,7 @@ class MainPresenter(override var currentSection: Int,
             override fun onCancel() {
             }
         }
-        view!!.showIntervalKeyboard(interval, onIntervalKeyboardListener)
+        view!!.showIntervalKeyboard(interval, null, onIntervalKeyboardListener)
     }
 
     override fun onAddIntervalClick() {
@@ -87,7 +87,7 @@ class MainPresenter(override var currentSection: Int,
             override fun onCancel() {
             }
         }
-        view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
+        view!!.showIntervalKeyboard(null, timerEditingInput.getDefaultIntervalName(), onIntervalKeyboardListener)
     }
 
     override fun onDeleteIntervalClick(intervalPosition: Int) {

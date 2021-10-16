@@ -2,8 +2,10 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +28,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
     private var _binding: FragmentKeyboardBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var keyboardTitle: TextView
+    private lateinit var intervalNameTextView: TextView
     private lateinit var displayTextView: TextView
     private lateinit var keyboardGridLayout: GridLayout
     private lateinit var restButton: Button
@@ -40,7 +42,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentKeyboardBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        keyboardTitle = binding.keyboardTitle
+        intervalNameTextView = binding.intervalNameTextView
         displayTextView = binding.displayTextView
         keyboardGridLayout = binding.keyboardGridLayout
         restButton = binding.keyboardButtonRest
@@ -51,12 +53,12 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
 
         view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                keyboardTitle.clearFocus()
+                intervalNameTextView.clearFocus()
             }
         })
 
-        keyboardTitle.setOnFocusChangeListener(object : View.OnFocusChangeListener {
-            override fun onFocusChange(view: View?, p1: Boolean) {
+        intervalNameTextView.setOnFocusChangeListener(object : View.OnFocusChangeListener {
+            override fun onFocusChange(view: View?, hasFocus: Boolean) {
                 (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
                     hideSoftInputFromWindow(view?.windowToken, 0)
                 }
@@ -66,7 +68,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
         for (index in 0 until keyboardLength) {
             keyboardGridLayout[index].setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    keyboardTitle.clearFocus()
+                    intervalNameTextView.clearFocus()
                     if (index == 9) {
                         intervalKeyboardPresenter.onKeyboardButtonClick(0)
                     } else {
@@ -78,21 +80,21 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
 
         restButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                keyboardTitle.clearFocus()
+                intervalNameTextView.clearFocus()
                 intervalKeyboardPresenter.onRestButtonClick()
             }
         })
 
         workButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                keyboardTitle.clearFocus()
+                intervalNameTextView.clearFocus()
                 intervalKeyboardPresenter.onWorkButtonClick()
             }
         })
 
         okButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                intervalKeyboardPresenter.onOkButtonClick()
+                intervalKeyboardPresenter.onOkButtonClick(intervalNameTextView.text.toString())
             }
         })
 
@@ -109,6 +111,10 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
         })
 
         return view
+    }
+
+    override fun showIntervalName(name: String) {
+        intervalNameTextView.text = name
     }
 
     override fun showTimeValue(timeValue: String, valuesArray: Array<Int?>) {
