@@ -20,7 +20,6 @@ class TimerListInteractor(private val timerRepository: TimerMVPModel, private va
     }
 
     override fun deleteTimer(timerId: Int) {
-        println("=========================== timer id: $timerId")
         timerRepository.deleteTimer(timerId)
         timerListOutput?.provideTimers(timerRepository.getTimers())
     }

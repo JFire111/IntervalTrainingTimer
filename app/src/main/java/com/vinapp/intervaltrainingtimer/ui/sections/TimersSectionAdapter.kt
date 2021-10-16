@@ -46,7 +46,7 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
             TIMER_ITEM -> {
                 var holder = viewHolder as TimerItemViewHolder
                 with(holder.binding) {
-                    this.timerNameTextView.text = timerList[position].name
+                    this.timerNameTextView.text = timerList[position].id.toString()
                     this.timerDurationTextView.text = timerList[position].getDurationAsString()
                     if (selected == position) {
                         this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))

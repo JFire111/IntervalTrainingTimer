@@ -17,7 +17,7 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timer!!.intervals = intervalList.toList()
             timerRepository.updateTimer(timer!!)
         } else {
-            timerRepository.addTimer(Timer(timerRepository.getTimers().size + Random(4).nextInt(), "NAME", numberOfRounds, intervalList.toList()))
+            timerRepository.addTimer(Timer(getUniqueId(1), "NAME", numberOfRounds, intervalList.toList()))
         }
         timer = null
         numberOfRounds = 1
@@ -87,5 +87,13 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
     private fun provideNewValues() {
         timerEditingOutput?.provideIntervals(intervalList)
         timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
+    }
+
+    private fun getUniqueId(defaultId: Int): Int {
+        var id = defaultId
+        while (timerRepository.getTimerById(id) != null) {
+            id++
+        }
+        return id
     }
 }
