@@ -15,7 +15,7 @@ interface TimerDao {
     @Query("DELETE FROM timer WHERE id = :timerId")
     fun delete(timerId: Int)
 
-    @Query("SELECT * FROM timer")
+    @Query("SELECT * FROM timer ORDER BY createdTime")
     fun getAll(): List<Timer>
 
     @Query("SELECT * FROM timer WHERE id = :id")
