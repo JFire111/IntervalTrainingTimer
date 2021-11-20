@@ -14,6 +14,7 @@ class MainPresenter(override var currentSection: Int,
     var isNewTimer: Boolean = true
 
     override fun onStartButtonClick() {
+        view!!.showTimer()
     }
 
     override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {

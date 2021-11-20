@@ -1,7 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 

@@ -2,10 +2,8 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View

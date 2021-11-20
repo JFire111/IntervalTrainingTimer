@@ -19,6 +19,7 @@ import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
+import com.vinapp.intervaltrainingtimer.ui.timer.TimerView
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainView : Fragment(), MainContract.View {
@@ -37,6 +38,7 @@ class MainView : Fragment(), MainContract.View {
     private lateinit var sections: List<SectionView>
     private lateinit var intervalsSectionView: IntervalsSectionView
     private lateinit var timersSectionView: TimersSectionView
+    private lateinit var timerView: TimerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class MainView : Fragment(), MainContract.View {
         presenter = MainPresenter(0, timerEditingInteractor!!, timerListInteractor!!)
         intervalsSectionView = IntervalsSectionView(presenter)
         timersSectionView = TimersSectionView(presenter)
+        timerView = TimerView()
         timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
         timerListInteractor.registerOutput(timersSectionView.timerListOutput)
         sections = listOf<SectionView>(
@@ -57,7 +60,6 @@ class MainView : Fragment(), MainContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-
         mainToolbar = view.mainToolbar
         sectionsTabLayout = view.sectionsTabLayout
         sectionsViewPager = view.sectionsViewPager
@@ -65,34 +67,15 @@ class MainView : Fragment(), MainContract.View {
         leftButton = view.leftButton
         rightButton = view.rightButton
 
-        val sectionsAdapter = SectionsAdapter(sections, this)
-        sectionsViewPager.adapter = sectionsAdapter
-        sectionsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
-                } else {
-                    presenter.sectionScrolled()
-                }
-            }
-        })
+        configureViewPager()
 
         TabLayoutMediator(sectionsTabLayout, sectionsViewPager) {
             tab, position -> tab.text = sections[position].title
         }.attach()
 
-        rightButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                presenter.onRightButtonClick()
-            }
-        })
-
-        leftButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                presenter.onLeftButtonClick()
-            }
-        })
+        startButton.setOnClickListener { presenter.onStartButtonClick() }
+        rightButton.setOnClickListener { presenter.onRightButtonClick() }
+        leftButton.setOnClickListener { presenter.onLeftButtonClick() }
         return view
     }
 
@@ -119,6 +102,11 @@ class MainView : Fragment(), MainContract.View {
 
     override fun showSection(position: Int) {
         sectionsViewPager.currentItem = position
+    }
+
+    override fun showTimer() {
+        val transition = fragmentManager!!.beginTransaction()
+        transition.replace(R.id.mainFragmentContainer, timerView).commit()
     }
 
     override fun showIntervalKeyboard(interval: Interval?, defaultIntervalName: String?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
@@ -158,5 +146,20 @@ class MainView : Fragment(), MainContract.View {
 
     override fun onPause() {
         super.onPause()
+    }
+
+    private fun configureViewPager() {
+        val sectionsAdapter = SectionsAdapter(sections, this)
+        sectionsViewPager.adapter = sectionsAdapter
+        sectionsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
+                } else {
+                    presenter.sectionScrolled()
+                }
+            }
+        })
     }
 }

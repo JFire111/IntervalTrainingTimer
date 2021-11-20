@@ -3,7 +3,6 @@ package com.vinapp.intervaltrainingtimer.logic.timerediting
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
-import kotlin.random.Random
 
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
 
