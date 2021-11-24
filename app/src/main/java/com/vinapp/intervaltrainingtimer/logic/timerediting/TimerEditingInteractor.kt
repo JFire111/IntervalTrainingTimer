@@ -17,8 +17,10 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timer!!.updatedTime = System.currentTimeMillis()
             timerRepository.updateTimer(timer!!)
         } else {
-            timerRepository.addTimer(Timer(getUniqueId(1), "NAME", numberOfRounds, intervalList.toList(), System.currentTimeMillis(), null))
+            timer = Timer(getUniqueId(1), "NAME", numberOfRounds, intervalList.toList(), System.currentTimeMillis(), null)
+            timerRepository.addTimer(timer!!)
         }
+        timerEditingOutput?.provideTimer(timer!!)
         timer = null
         numberOfRounds = 1
         intervalList.clear()

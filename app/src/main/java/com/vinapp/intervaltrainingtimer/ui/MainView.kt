@@ -15,6 +15,7 @@ import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
+import com.vinapp.intervaltrainingtimer.logic.timer.TimerInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
@@ -38,17 +39,15 @@ class MainView : Fragment(), MainContract.View {
     private lateinit var sections: List<SectionView>
     private lateinit var intervalsSectionView: IntervalsSectionView
     private lateinit var timersSectionView: TimersSectionView
-    private lateinit var timerView: TimerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = activity?.applicationContext as App
         val timerEditingInteractor = app.timerEditingInteractor
-        val timerListInteractor = app.getTimersInteractor
+        val timerListInteractor = app.timerListInteractor
         presenter = MainPresenter(0, timerEditingInteractor!!, timerListInteractor!!)
         intervalsSectionView = IntervalsSectionView(presenter)
         timersSectionView = TimersSectionView(presenter)
-        timerView = TimerView()
         timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
         timerListInteractor.registerOutput(timersSectionView.timerListOutput)
         sections = listOf<SectionView>(
@@ -104,9 +103,9 @@ class MainView : Fragment(), MainContract.View {
         sectionsViewPager.currentItem = position
     }
 
-    override fun showTimer() {
+    override fun showTimerScreen(timerInput: TimerInput) {
         val transition = fragmentManager!!.beginTransaction()
-        transition.replace(R.id.mainFragmentContainer, timerView).commit()
+        transition.replace(R.id.mainFragmentContainer, TimerView(timerInput)).commit()
     }
 
     override fun showIntervalKeyboard(interval: Interval?, defaultIntervalName: String?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {

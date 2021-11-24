@@ -11,12 +11,8 @@ class TimerListInteractor(private val timerRepository: TimerMVPModel, private va
         timerListOutput?.provideTimers(timerRepository.getTimers())
     }
 
-    override fun selectTimer(timerPosition: Int?) {
-        if (timerPosition == null) {
-            selectedTimer = null
-        } else {
-            selectedTimer = timerRepository.getTimers()[timerPosition]
-        }
+    override fun selectTimer(timer: Timer?) {
+        selectedTimer = timer
     }
 
     override fun deleteTimer(timerId: Int) {

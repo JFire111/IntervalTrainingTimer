@@ -16,5 +16,7 @@ interface TimerContract {
     }
 
     abstract class Presenter: MVPPresenter<View>() {
+
+        abstract fun onTimerActionButtonClick()
     }
 }

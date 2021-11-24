@@ -3,7 +3,9 @@ package com.vinapp.intervaltrainingtimer.ui
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
+import com.vinapp.intervaltrainingtimer.logic.timer.TimerInteractor
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
+import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInteractor
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
 class MainPresenter(override var currentSection: Int,
@@ -12,9 +14,13 @@ class MainPresenter(override var currentSection: Int,
 
     var sideButtonsClickListener: SideButtonsClickListener? = null
     var isNewTimer: Boolean = true
+    var selectedTimer: Timer? = null
 
     override fun onStartButtonClick() {
-        view!!.showTimer()
+        if (currentSection == 0) {
+            timerEditingInput.saveTimer()
+        }
+        view!!.showTimerScreen(TimerInteractor(selectedTimer!!, null))
     }
 
     override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {
@@ -104,11 +110,13 @@ class MainPresenter(override var currentSection: Int,
         view!!.showSection(0)
     }
 
-    override fun onTimerClick(position: Int) {
-        timerListInput.selectTimer(position)
+    override fun onTimerClick(timer: Timer) {
+        selectedTimer = timer
+        timerListInput.selectTimer(timer)
     }
 
     override fun onEditTimerClick(timer: Timer) {
+        selectedTimer = timer
         timerEditingInput.setTimerForEditing(timer)
         isNewTimer = false
         view!!.showSection(0)
@@ -132,6 +140,10 @@ class MainPresenter(override var currentSection: Int,
         timerListInput.openTimerList()
         isNewTimer = true
         view!!.showSection(1)
+    }
+
+    override fun setTimer(timer: Timer) {
+        this.selectedTimer = timer
     }
 
 }

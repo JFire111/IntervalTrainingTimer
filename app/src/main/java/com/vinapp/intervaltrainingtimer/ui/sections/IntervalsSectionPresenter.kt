@@ -1,6 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
@@ -61,5 +62,9 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
         this.intervals.clear()
         this.intervals.addAll(intervals)
         view?.showIntervalList(this.intervals)
+    }
+
+    override fun provideTimer(timer: Timer) {
+        sectionsEventHandler.setTimer(timer)
     }
 }

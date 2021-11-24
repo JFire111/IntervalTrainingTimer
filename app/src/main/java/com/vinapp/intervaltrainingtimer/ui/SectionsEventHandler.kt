@@ -21,7 +21,7 @@ interface SectionsEventHandler {
 
     fun onAddTimerClick()
 
-    fun onTimerClick(timerPosition: Int)
+    fun onTimerClick(timer: Timer)
 
     fun onEditTimerClick(timer: Timer)
 
@@ -30,6 +30,8 @@ interface SectionsEventHandler {
     fun onClearTimerClick()
 
     fun onSaveTimerClick()
+
+    fun setTimer(timer: Timer)
 
     interface OnIntervalKeyboardListener {
 

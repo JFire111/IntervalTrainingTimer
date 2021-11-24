@@ -14,7 +14,7 @@ class TimersSectionPresenter(override val sectionsEventHandler: SectionsEventHan
 
     override fun onTimerItemClick(position: Int) {
         selectedTimerPosition = position
-        sectionsEventHandler.onTimerClick(position)
+        sectionsEventHandler.onTimerClick(timers[position])
     }
 
     override fun onAddTimerClick() {
