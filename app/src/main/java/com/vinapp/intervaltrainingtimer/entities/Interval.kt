@@ -6,6 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Interval(val name: String, val duration: Int, val type: IntervalType) {
 
+    fun getDurationInMillis(): Long {
+        return (duration * 1000).toLong()
+    }
+
     fun getDurationAsString(): String {
         val minutes = duration / 60
         val seconds = duration - minutes * 60

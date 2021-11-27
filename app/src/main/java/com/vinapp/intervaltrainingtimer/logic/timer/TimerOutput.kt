@@ -4,7 +4,9 @@ import com.vinapp.intervaltrainingtimer.entities.Interval
 
 interface TimerOutput {
 
-    fun provideTime(remainingTime: Int)
+    fun provideState(state: TimerState)
+
+    fun provideTime(remainingTime: Long)
 
     fun provideCurrentInterval(interval: Interval)
 }

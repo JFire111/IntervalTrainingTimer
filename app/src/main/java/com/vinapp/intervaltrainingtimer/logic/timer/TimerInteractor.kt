@@ -1,25 +1,39 @@
 package com.vinapp.intervaltrainingtimer.logic.timer
 
-import android.os.CountDownTimer
-import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.utils.IntervalTimer
 
 class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOutput?): TimerInput {
 
     private var timerDuration: Int = timer.getDuration()
-    private val oneSecond: Long = 1000
-    private var countDownTimer: CountDownTimer? = null
     private var remainingTime: Int? = null
     private var currentIntervalIndex: Int? = null
+    private val intervalTimer: IntervalTimer = object : IntervalTimer(timer) {
+        override fun onTick(remainingTime: Long) {
+            timerOutput?.provideTime(remainingTime)
+        }
+
+        override fun onIntervalEnded(finishedIntervalIndex: Int) {
+            if (timer.intervals.size > finishedIntervalIndex + 1) {
+                timerOutput?.provideCurrentInterval(timer.intervals[finishedIntervalIndex + 1])
+            }
+        }
+
+        override fun onRoundEnded(remainingRounds: Int) {
+        }
+
+        override fun onFinish() {
+        }
+    }
 
     override fun start() {
-        remainingTime = timerDuration
-        currentIntervalIndex = 0
-        startCountDown(timer.intervals[currentIntervalIndex!!])
+        timerOutput?.provideCurrentInterval(timer.intervals.first())
+        timerOutput?.provideState(TimerState.IN_PROGRESS)
+        intervalTimer.start()
     }
 
     override fun pause() {
-        countDownTimer!!.cancel()
+        intervalTimer.pause()
     }
 
     override fun resume() {
@@ -32,37 +46,12 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
     override fun restart() {
     }
 
-    private fun startCountDown(interval: Interval) {
-        timerOutput!!.provideCurrentInterval(interval)
-        countDownTimer = object : CountDownTimer(interval.duration * oneSecond, oneSecond) {
-            override fun onTick(millisUntilFinished: Long) {
-                remainingTime = remainingTime!! - 1
-                timerOutput!!.provideTime(remainingTime!!)
-            }
-
-            override fun onFinish() {
-                if (currentIntervalIndex!! < timer.intervals.size - 1) {
-                    currentIntervalIndex = currentIntervalIndex!! + 1
-                    startCountDown(timer.intervals[currentIntervalIndex!!])
-                }
-            }
-        }
+    override fun registerOutput(output: TimerOutput) {
+        this.timerOutput = output
+        timerOutput?.provideTime(remainingTime?.toLong() ?: timerDuration.toLong())
     }
 
-    private fun resumeCountDown(interval: Interval, intervalRemainingTime: Long) {
-        timerOutput!!.provideCurrentInterval(interval)
-        countDownTimer = object : CountDownTimer(intervalRemainingTime, oneSecond) {
-            override fun onTick(millisUntilFinished: Long) {
-                remainingTime = remainingTime!! - 1
-                timerOutput!!.provideTime(remainingTime!!)
-            }
-
-            override fun onFinish() {
-                if (currentIntervalIndex!! < timer.intervals.size - 1) {
-                    currentIntervalIndex = currentIntervalIndex!! + 1
-                    startCountDown(timer.intervals[currentIntervalIndex!!])
-                }
-            }
-        }
+    override fun unregisterOutput() {
+        this.timerOutput = null
     }
 }

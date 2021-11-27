@@ -11,4 +11,8 @@ interface TimerInput {
     fun stop()
 
     fun restart()
+
+    fun registerOutput(output: TimerOutput)
+
+    fun unregisterOutput()
 }

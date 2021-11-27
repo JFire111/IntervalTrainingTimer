@@ -1,16 +1,14 @@
 package com.vinapp.intervaltrainingtimer.utils
 
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import kotlinx.coroutines.*
-import java.lang.Runnable
 
-abstract class IntervalTimer() {
+abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
 
-    private val timerStepInMillis: Long = 1000
-    var inProcess = true
     private var timerJob: Job? = null
+    private var isPaused: Boolean = false
 
     fun start() {
-        var time: Long = 0
         timerJob = MainScope().launch {
             run()
         }
@@ -24,26 +22,35 @@ abstract class IntervalTimer() {
     }
 
     fun stop() {
-        var result = { x: Int ->
-            x.toString()
-        }
-        result
     }
 
-    abstract fun onTick()
+    abstract fun onTick(remainingTime: Long)
 
-    abstract fun onIntervalFinish()
+    abstract fun onIntervalEnded(finishedIntervalIndex: Int)
+
+    abstract fun onRoundEnded(remainingRounds: Int)
 
     abstract fun onFinish()
 
-    private suspend fun run() = coroutineScope{
-        var time: Long = 0
+    private suspend fun run() = coroutineScope {
+        var remainingTime: Long = timer.getDurationInMillis()
+        var remainingRounds: Int = timer.numberOfRounds
         launch {
-            while (time != 6000L) {
-                delay(timerStepInMillis)
-                time += timerStepInMillis
-                onTick()
+            while (remainingRounds > 0) {
+                timer.intervals.forEachIndexed { index, interval ->
+                    var remainingIntervalTime = interval.getDurationInMillis()
+                    while (remainingIntervalTime > 0L) {
+                        delay(stepInMillis)
+                        remainingIntervalTime -= stepInMillis
+                        remainingTime -= stepInMillis
+                        onTick(remainingTime)
+                    }
+                    onIntervalEnded(index)
+                }
+                remainingRounds--
+                onRoundEnded(remainingRounds)
             }
+            onFinish()
         }
     }
 }

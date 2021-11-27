@@ -21,6 +21,15 @@ data class Timer(
         return duration
     }
 
+    fun getDurationInMillis(): Long {
+        var duration = 0
+        intervals.forEach{
+            duration += it.duration
+        }
+        duration *= numberOfRounds
+        return (duration * 1000).toLong()
+    }
+
     fun getDurationAsString(): String {
         val minutes = getDuration() / 60
         val seconds = getDuration() - minutes * 60
