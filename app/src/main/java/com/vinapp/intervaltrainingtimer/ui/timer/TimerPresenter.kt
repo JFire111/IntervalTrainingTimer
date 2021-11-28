@@ -15,6 +15,7 @@ class TimerPresenter(private val timerInput: TimerInput): TimerContract.Presente
             TimerState.STOPPED -> timerInput.start()
             TimerState.PAUSED -> timerInput.resume()
             TimerState.IN_PROGRESS -> timerInput.pause()
+            TimerState.FINISHED -> timerInput.restart()
         }
     }
 
@@ -33,10 +34,14 @@ class TimerPresenter(private val timerInput: TimerInput): TimerContract.Presente
 
     override fun provideState(state: TimerState) {
         timerState = state
+        if (state == TimerState.FINISHED) {
+            view!!.showTime("")
+            view!!.setDefaultColor()
+        }
     }
 
     override fun provideTime(time: Long) {
-        view!!.showTime(time)
+        view!!.showTime((time / 1000 + 1).toString())
     }
 
     override fun provideCurrentInterval(interval: Interval) {

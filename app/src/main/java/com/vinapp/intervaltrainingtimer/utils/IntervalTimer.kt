@@ -3,6 +3,7 @@ package com.vinapp.intervaltrainingtimer.utils
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import kotlinx.coroutines.*
+import kotlin.math.absoluteValue
 
 abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1) {
 
@@ -42,7 +43,7 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1) {
         remainingIntervalTime = 0L
     }
 
-    abstract fun onTick(remainingTime: Long)
+    abstract fun onTick(time: Long)
 
     abstract fun onIntervalEnded(endedIntervalIndex: Int)
 
@@ -57,9 +58,11 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1) {
                 intervals.forEach { interval ->
                     remainingIntervalTime = getRemainingTime(interval)
                     while (remainingIntervalTime > 0L) {
+                        var beforeDelay = System.currentTimeMillis()
                         delay(stepInMillis)
-                        remainingIntervalTime -= stepInMillis
-                        remainingTime -= stepInMillis
+                        var difference = System.currentTimeMillis() - beforeDelay
+                        remainingIntervalTime -= difference
+                        remainingTime -= difference
                         onTick(remainingTime)
                     }
                     onIntervalEnded(currentIntervalIndex)

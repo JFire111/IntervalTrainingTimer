@@ -56,8 +56,8 @@ class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
     override fun showMessage(message: String) {
     }
 
-    override fun showTime(time: Long) {
-        timeTextView.text = time.toString()
+    override fun showTime(time: String) {
+        timeTextView.text = time
     }
 
     override fun setColorByIntervalType(type: IntervalType) {
@@ -66,6 +66,12 @@ class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
                 IntervalType.WORK -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.colorOfAction))
                 IntervalType.REST -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.colorOfRestGreen))
             }
+        }
+    }
+
+    override fun setDefaultColor() {
+        context?.let {
+            view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.colorOfMenu))
         }
     }
 }

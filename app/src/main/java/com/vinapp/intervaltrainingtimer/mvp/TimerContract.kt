@@ -10,9 +10,11 @@ interface TimerContract {
 
         fun showMessage(message: String)
 
-        fun showTime(time: Long)
+        fun showTime(time: String)
 
         fun setColorByIntervalType(type: IntervalType)
+
+        fun setDefaultColor()
     }
 
     abstract class Presenter: MVPPresenter<View>() {
