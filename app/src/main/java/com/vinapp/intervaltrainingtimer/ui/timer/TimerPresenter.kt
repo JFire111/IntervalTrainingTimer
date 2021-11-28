@@ -22,6 +22,7 @@ class TimerPresenter(private val timerInput: TimerInput): TimerContract.Presente
     }
 
     override fun destroy() {
+        timerInput.stop()
     }
 
     override fun attachView(view: TimerContract.View) {

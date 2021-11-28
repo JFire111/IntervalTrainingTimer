@@ -18,4 +18,12 @@ class MainActivity: AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().add(R.id.mainFragmentContainer, fragment).commit()
     }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
