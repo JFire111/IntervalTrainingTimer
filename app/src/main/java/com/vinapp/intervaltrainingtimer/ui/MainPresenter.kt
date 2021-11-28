@@ -5,7 +5,6 @@ import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerInteractor
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInteractor
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 
 class MainPresenter(override var currentSection: Int,

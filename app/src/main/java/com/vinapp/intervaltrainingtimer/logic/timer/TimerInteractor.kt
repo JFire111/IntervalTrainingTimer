@@ -13,9 +13,9 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
             timerOutput?.provideTime(remainingTime)
         }
 
-        override fun onIntervalEnded(finishedIntervalIndex: Int) {
-            if (timer.intervals.size > finishedIntervalIndex + 1) {
-                timerOutput?.provideCurrentInterval(timer.intervals[finishedIntervalIndex + 1])
+        override fun onIntervalEnded(endedIntervalIndex: Int) {
+            if (timer.intervals.size > endedIntervalIndex + 1) {
+                timerOutput?.provideCurrentInterval(timer.intervals[endedIntervalIndex + 1])
             }
         }
 
@@ -33,11 +33,13 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
     }
 
     override fun pause() {
+        timerOutput?.provideState(TimerState.PAUSED)
         intervalTimer.pause()
     }
 
     override fun resume() {
-        var intervalRemainingTime = timer.intervals[currentIntervalIndex!!]
+        timerOutput?.provideState(TimerState.IN_PROGRESS)
+        intervalTimer.resume()
     }
 
     override fun stop() {
