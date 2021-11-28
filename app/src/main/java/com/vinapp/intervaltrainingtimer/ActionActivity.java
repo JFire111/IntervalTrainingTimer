@@ -242,7 +242,7 @@ public class ActionActivity extends AppCompatActivity {
                 if (trainingCountDownTimer != null) {
                     trainingCountDownTimer.cancel();
                     pauseTimer = true;
-                    timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.play));
+                    timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.play_white));
                 }
             } else {
                 // TODO: remake ColorSwitch.
@@ -250,7 +250,7 @@ public class ActionActivity extends AppCompatActivity {
                 remainingTime--;
                 startTimer(remainingTime);
                 pauseTimer = false;
-                timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pause));
+                timerButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pause_white));
             }
         } else {
             finish();

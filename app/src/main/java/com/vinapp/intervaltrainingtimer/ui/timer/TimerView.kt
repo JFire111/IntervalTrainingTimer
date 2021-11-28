@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalType
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerInput
+import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import kotlinx.android.synthetic.main.fragment_timer.view.*
 
@@ -54,10 +56,18 @@ class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
     }
 
     override fun showMessage(message: String) {
+        infoTextView.text = message
     }
 
     override fun showTime(time: String) {
+        if (timeTextView.isInvisible) {
+            timeTextView.visibility = View.VISIBLE
+        }
         timeTextView.text = time
+    }
+
+    override fun hideTime() {
+        timeTextView.visibility = View.INVISIBLE
     }
 
     override fun setColorByIntervalType(type: IntervalType) {
@@ -72,6 +82,17 @@ class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
     override fun setDefaultColor() {
         context?.let {
             view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.colorOfMenu))
+        }
+    }
+
+    override fun setActionButtonIconByState(state: TimerActionButtonState) {
+        when (state) {
+            TimerActionButtonState.PAUSE_WHITE -> timerActionButton.setImageResource(R.drawable.pause_white)
+            TimerActionButtonState.PAUSE_RED -> timerActionButton.setImageResource(R.drawable.pause_red)
+            TimerActionButtonState.PAUSE_GREEN -> timerActionButton.setImageResource(R.drawable.pause_green)
+            TimerActionButtonState.PLAY_WHITE -> timerActionButton.setImageResource(R.drawable.play_white)
+            TimerActionButtonState.PLAY_RED -> timerActionButton.setImageResource(R.drawable.play_red)
+            TimerActionButtonState.PLAY_GREEN -> timerActionButton.setImageResource(R.drawable.play_green)
         }
     }
 }

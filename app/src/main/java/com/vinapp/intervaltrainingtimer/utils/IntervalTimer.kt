@@ -3,9 +3,8 @@ package com.vinapp.intervaltrainingtimer.utils
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import kotlinx.coroutines.*
-import kotlin.math.absoluteValue
 
-abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1) {
+abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
 
     private var timerJob: Job? = null
     private var isPaused: Boolean = false

@@ -5,8 +5,6 @@ import com.vinapp.intervaltrainingtimer.utils.IntervalTimer
 
 class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOutput?): TimerInput {
 
-    private var timerDuration: Int = timer.getDuration()
-    private var remainingTime: Int? = null
     private val intervalTimer: IntervalTimer = object : IntervalTimer(timer) {
         override fun onTick(time: Long) {
             timerOutput?.provideTime(time)
@@ -27,8 +25,9 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
     }
 
     override fun start() {
-        timerOutput?.provideCurrentInterval(timer.intervals.first())
         timerOutput?.provideState(TimerState.IN_PROGRESS)
+        timerOutput?.provideTime(timer.getDurationInMillis())
+        timerOutput?.provideCurrentInterval(timer.intervals.first())
         intervalTimer.start()
     }
 
@@ -54,7 +53,7 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
 
     override fun registerOutput(output: TimerOutput) {
         this.timerOutput = output
-        timerOutput?.provideTime(remainingTime?.toLong() ?: timerDuration.toLong())
+        timerOutput?.provideTime(timer.getDurationInMillis())
     }
 
     override fun unregisterOutput() {

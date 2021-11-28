@@ -11,8 +11,12 @@
         <entry key="app/src/main/res/drawable/pause_action_color.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/drawable/pause_rest_e_color.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/drawable/pause_rest_r_color.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/drawable/pause_white.xml" value="0.6177083333333333" />
         <entry key="app/src/main/res/drawable/play.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/drawable/play_green.xml" value="0.6177083333333333" />
         <entry key="app/src/main/res/drawable/play_main.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/drawable/play_red.xml" value="0.6177083333333333" />
+        <entry key="app/src/main/res/drawable/play_white.xml" value="0.6177083333333333" />
         <entry key="app/src/main/res/drawable/plus.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_action.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3536458333333333" />

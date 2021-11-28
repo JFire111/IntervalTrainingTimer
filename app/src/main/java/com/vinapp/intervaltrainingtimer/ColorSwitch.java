@@ -121,16 +121,16 @@ public class ColorSwitch{
     }
 
     public int getButtonIconColor() {
-        int buttonIconColor = R.drawable.pause;
+        int buttonIconColor = R.drawable.pause_white;
         switch (color) {
             case R.color.colorOfAction:
-                buttonIconColor = R.drawable.pause_action_color;
+                buttonIconColor = R.drawable.pause_red;
                 break;
             case R.color.colorOfRestGreen:
-                buttonIconColor = R.drawable.pause_rest_r_color;
+                buttonIconColor = R.drawable.pause_green;
                 break;
             case R.color.colorOfRestYellow:
-                buttonIconColor = R.drawable.pause_rest_e_color;
+                buttonIconColor = R.drawable.pause_yellow;
                 break;
             case R.color.colorOfMenu:
                 buttonIconColor = R.drawable.done;
