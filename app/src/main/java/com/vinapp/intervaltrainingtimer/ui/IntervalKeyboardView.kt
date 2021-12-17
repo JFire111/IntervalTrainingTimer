@@ -48,67 +48,18 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
         okButton = binding.keyboardButtonOk
         cancelButton = binding.keyboardButtonCancel
         deleteButton = binding.keyboardButtonDelete
+        setClickListeners()
 
-        view.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalNameTextView.clearFocus()
-            }
-        })
-
-        intervalNameTextView.setOnFocusChangeListener(object : View.OnFocusChangeListener {
-            override fun onFocusChange(view: View?, hasFocus: Boolean) {
-                (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-                    hideSoftInputFromWindow(view?.windowToken, 0)
-                    intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
-                }
-            }
-        })
-
-        for (index in 0 until keyboardLength) {
-            keyboardGridLayout[index].setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View?) {
-                    intervalNameTextView.clearFocus()
-                    if (index == 9) {
-                        intervalKeyboardPresenter.onKeyboardButtonClick(0)
-                    } else {
-                        intervalKeyboardPresenter.onKeyboardButtonClick(index + 1)
-                    }
-                }
-            })
+        view.setOnClickListener {
+            intervalNameTextView.clearFocus()
         }
 
-        restButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalNameTextView.clearFocus()
-                intervalKeyboardPresenter.onRestButtonClick()
+        intervalNameTextView.setOnFocusChangeListener { view, hasFocus ->
+            (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+                hideSoftInputFromWindow(view?.windowToken, 0)
+                intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
             }
-        })
-
-        workButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalNameTextView.clearFocus()
-                intervalKeyboardPresenter.onWorkButtonClick()
-            }
-        })
-
-        okButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalKeyboardPresenter.onOkButtonClick()
-            }
-        })
-
-        cancelButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalKeyboardPresenter.onCancelButtonClick()
-            }
-        })
-
-        deleteButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                intervalKeyboardPresenter.onDeleteButtonClick()
-            }
-        })
-
+        }
         return view
     }
 
@@ -151,6 +102,41 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
     override fun onDestroy() {
         super.onDestroy()
         intervalKeyboardPresenter.destroy()
+    }
+
+    private fun setClickListeners() {
+        restButton.setOnClickListener {
+            intervalNameTextView.clearFocus()
+            intervalKeyboardPresenter.onRestButtonClick()
+        }
+
+        workButton.setOnClickListener {
+            intervalNameTextView.clearFocus()
+            intervalKeyboardPresenter.onWorkButtonClick()
+        }
+
+        okButton.setOnClickListener {
+            intervalKeyboardPresenter.onOkButtonClick()
+        }
+
+        cancelButton.setOnClickListener {
+            intervalKeyboardPresenter.onCancelButtonClick()
+        }
+
+        deleteButton.setOnClickListener {
+            intervalKeyboardPresenter.onDeleteButtonClick()
+        }
+
+        for (index in 0 until keyboardLength) {
+            keyboardGridLayout[index].setOnClickListener {
+                intervalNameTextView.clearFocus()
+                if (index == 9) {
+                    intervalKeyboardPresenter.onKeyboardButtonClick(0)
+                } else {
+                    intervalKeyboardPresenter.onKeyboardButtonClick(index + 1)
+                }
+            }
+        }
     }
 
     private fun textColoring(string: String, coloredSymbolsArray: Array<Int?>): SpannableString {

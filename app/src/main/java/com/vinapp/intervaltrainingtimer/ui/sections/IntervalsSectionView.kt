@@ -45,19 +45,7 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
         removeRoundButton = view.removeRoundButton
         intervalsRecyclerView = view.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(view.context)
-
-        addRoundButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                presenter.addRound()
-            }
-        })
-
-        removeRoundButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                presenter.removeRound()
-            }
-        })
-
+        setClickListeners()
         return view
     }
 
@@ -103,5 +91,14 @@ class IntervalsSectionView(sectionsEventHandler: SectionsEventHandler): Fragment
 
     override fun onDeleteIntervalClick(position: Int) {
         presenter.onDeleteIntervalClick(position)
+    }
+
+    private fun setClickListeners() {
+        addRoundButton.setOnClickListener {
+            presenter.addRound()
+        }
+        removeRoundButton.setOnClickListener {
+            presenter.removeRound()
+        }
     }
 }

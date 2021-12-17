@@ -72,9 +72,7 @@ class MainView : Fragment(), MainContract.View {
             tab, position -> tab.text = sections[position].title
         }.attach()
 
-        startButton.setOnClickListener { presenter.onStartButtonClick() }
-        rightButton.setOnClickListener { presenter.onRightButtonClick() }
-        leftButton.setOnClickListener { presenter.onLeftButtonClick() }
+        setClickListeners()
         return view
     }
 
@@ -143,8 +141,16 @@ class MainView : Fragment(), MainContract.View {
         rightButton.visibility = View.GONE
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun setClickListeners() {
+        startButton.setOnClickListener {
+            presenter.onStartButtonClick()
+        }
+        rightButton.setOnClickListener {
+            presenter.onRightButtonClick()
+        }
+        leftButton.setOnClickListener {
+            presenter.onLeftButtonClick()
+        }
     }
 
     private fun configureViewPager() {
