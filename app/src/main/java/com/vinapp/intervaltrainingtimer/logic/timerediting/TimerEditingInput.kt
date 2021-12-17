@@ -24,4 +24,8 @@ interface TimerEditingInput {
     fun cancelEditing()
 
     fun clear()
+
+    fun registerOutput(output: TimerEditingOutput)
+
+    fun unregisterOutput()
 }

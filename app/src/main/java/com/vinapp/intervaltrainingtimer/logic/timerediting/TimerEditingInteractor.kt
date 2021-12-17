@@ -81,9 +81,13 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
         provideNewValues()
     }
 
-    fun registerOutput(output: TimerEditingOutput) {
+    override fun registerOutput(output: TimerEditingOutput) {
         timerEditingOutput = output
         provideNewValues()
+    }
+
+    override fun unregisterOutput() {
+        timerEditingOutput = null
     }
 
     private fun provideNewValues() {

@@ -9,4 +9,8 @@ interface TimerListInput {
     fun selectTimer(timer: Timer?)
 
     fun deleteTimer(timerId: Int)
+
+    fun registerOutput(output: TimerListOutput)
+
+    fun unregisterOutput()
 }

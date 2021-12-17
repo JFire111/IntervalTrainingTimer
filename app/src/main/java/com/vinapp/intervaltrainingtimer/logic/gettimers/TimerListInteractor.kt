@@ -20,8 +20,12 @@ class TimerListInteractor(private val timerRepository: TimerMVPModel, private va
         timerListOutput?.provideTimers(timerRepository.getTimers())
     }
 
-    fun registerOutput(output: TimerListOutput) {
+    override fun registerOutput(output: TimerListOutput) {
         timerListOutput = output
         timerListOutput?.provideTimers(timerRepository.getTimers())
+    }
+
+    override fun unregisterOutput() {
+        timerListOutput = null
     }
 }
