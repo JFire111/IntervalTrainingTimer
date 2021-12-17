@@ -44,7 +44,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/numberOfRoundsText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -74,7 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/numberOfExercisesText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,7 +104,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/timeOfWorkText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -134,7 +134,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/timeOfRestBetweenExercisesText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -164,7 +164,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/timeOfRestBetweenRoundsText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -182,7 +182,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/additionalOptions"
-                    android:textColor="@color/fontColorDark" />
+                    android:textColor="@color/grayFontColor" />
 
                 <TextView
                     android:id="@+id/delayTextView"
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
-                    android:textColor="@color/fontColor"
+                    android:textColor="@color/whiteFontColor"
                     tools:text="Start in 3s" />
 
                 <SeekBar

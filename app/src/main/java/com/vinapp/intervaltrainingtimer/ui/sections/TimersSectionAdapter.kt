@@ -49,11 +49,11 @@ class TimersSectionAdapter(private val timerList: List<Timer>, private val onTim
                     this.timerNameTextView.text = timerList[position].id.toString()
                     this.timerDurationTextView.text = timerList[position].getDurationAsString()
                     if (selected == position) {
-                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))
-                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryLightGray))
+                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.lightGray))
+                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.lightGray))
                     } else {
-                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.primaryDarkGray))
-                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.primaryDarkGray))
+                        this.deleteTimerButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this.root.context, R.color.darkGray))
+                        this.root.setBackgroundColor(ContextCompat.getColor(this.root.context, R.color.darkGray))
                     }
                 }
             }

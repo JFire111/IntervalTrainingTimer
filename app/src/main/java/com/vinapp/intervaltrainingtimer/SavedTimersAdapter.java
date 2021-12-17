@@ -84,9 +84,9 @@ public class SavedTimersAdapter extends ArrayAdapter <Training> {
                 break;
         }
         if (isSelected) {
-            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryLightGray));
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGray));
         } else {
-            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryDarkGray));
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkGray));
         }
         return view;
     }

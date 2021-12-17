@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fontColor">
+    android:background="@color/whiteFontColor">
 
     <TextView
         android:id="@+id/infoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryDarkGray"
+        android:textColor="@color/darkGray"
         android:textSize="80sp"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/timeTextView"
@@ -22,7 +22,7 @@
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryDarkGray"
+        android:textColor="@color/darkGray"
         android:textSize="100sp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +40,7 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="onTimerButtonClick"
-        app:backgroundTint="@color/primaryDarkGray"
+        app:backgroundTint="@color/darkGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

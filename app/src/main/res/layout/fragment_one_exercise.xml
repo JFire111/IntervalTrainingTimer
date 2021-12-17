@@ -44,7 +44,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/numberOfRoundsText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +75,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/timeOfWorkText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -106,7 +106,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/timeOfRestText"
-                    android:textColor="@color/fontColorDark"
+                    android:textColor="@color/grayFontColor"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -126,7 +126,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/additionalOptions"
-                    android:textColor="@color/fontColorDark" />
+                    android:textColor="@color/grayFontColor" />
 
                 <Switch
                     android:id="@+id/startFromRestSwitch"
@@ -136,7 +136,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/startFromRestSwitchText"
-                    android:textColor="@color/fontColor" />
+                    android:textColor="@color/whiteFontColor" />
 
                 <TextView
                     android:id="@+id/delayTextView"
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
-                    android:textColor="@color/fontColor"
+                    android:textColor="@color/whiteFontColor"
                     tools:text="Start in 3s" />
 
                 <SeekBar

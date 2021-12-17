@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkGray">
+    android:background="@color/darkGray">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/removeRoundButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:backgroundTint="@color/primaryDarkGray"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="0dp"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/numberOfRoundsTextView"
@@ -25,7 +25,7 @@
         android:id="@+id/numberOfRoundsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/mainAccent"
+        android:textColor="@color/orange"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/intervalsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:backgroundTint="@color/primaryDarkGray"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="0dp"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/numberOfRoundsTextView"
@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="110dp"
-        android:background="@color/primaryMediumGray"
+        android:background="@color/mediumGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

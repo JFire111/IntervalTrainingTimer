@@ -5,7 +5,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryMediumGray">
+    android:background="@color/mediumGray">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
@@ -24,7 +24,7 @@
             android:id="@+id/sectionsTabLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/primaryLightGray"
+            android:background="@color/lightGray"
             app:tabGravity="fill"
             app:tabMode="fixed"
             tools:layout_editor_absoluteX="16dp"

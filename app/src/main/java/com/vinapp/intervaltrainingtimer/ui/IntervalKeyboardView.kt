@@ -74,12 +74,12 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
     override fun showSelectedType(intervalType: IntervalType) {
         when(intervalType) {
             IntervalType.REST -> {
-                restButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorOfRestGreen))
+                restButton.setTextColor(ContextCompat.getColor(context!!, R.color.green))
                 workButton.setTextColor(ContextCompat.getColor(context!!, R.color.inactiveGray))
             }
             IntervalType.WORK -> {
                 restButton.setTextColor(ContextCompat.getColor(context!!, R.color.inactiveGray))
-                workButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorOfAction))
+                workButton.setTextColor(ContextCompat.getColor(context!!, R.color.orange))
             }
         }
     }
@@ -144,9 +144,9 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
         for ((index, value) in coloredSymbolsArray.withIndex()) {
             if (value != null) {
                 if (index < string.length / 2) {
-                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.mainAccent)), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.orange)), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 } else {
-                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.mainAccent)), index + 1, index + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.orange)), index + 1, index + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
             }
         }

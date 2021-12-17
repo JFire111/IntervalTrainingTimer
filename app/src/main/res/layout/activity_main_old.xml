@@ -5,7 +5,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkGray"
+    android:background="@color/darkGray"
     android:divider="?attr/dividerHorizontal"
     tools:context=".MainActivity">
 
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom|start"
             app:tabGravity="fill"
-            app:tabTextColor="@color/mainAccent"
+            app:tabTextColor="@color/orange"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="4dp">
 
