@@ -44,7 +44,7 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
 
     abstract fun onTick(time: Long)
 
-    abstract fun onIntervalEnded(endedIntervalIndex: Int)
+    abstract fun onIntervalStart(endedIntervalIndex: Int)
 
     abstract fun onRoundEnded(remainingRounds: Int)
 
@@ -56,6 +56,7 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
                 var intervals = getIntervals()
                 intervals.forEach { interval ->
                     remainingIntervalTime = getRemainingTime(interval)
+                    onIntervalStart(currentIntervalIndex)
                     while (remainingIntervalTime > 0L) {
                         var beforeDelay = System.currentTimeMillis()
                         delay(stepInMillis)
@@ -64,7 +65,6 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
                         remainingTime -= difference
                         onTick(remainingTime)
                     }
-                    onIntervalEnded(currentIntervalIndex)
                     currentIntervalIndex++
                 }
                 remainingRounds--

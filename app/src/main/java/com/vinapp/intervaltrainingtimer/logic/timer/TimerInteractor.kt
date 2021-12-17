@@ -10,10 +10,8 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
             timerOutput?.provideTime(time)
         }
 
-        override fun onIntervalEnded(endedIntervalIndex: Int) {
-            if (timer.intervals.size > endedIntervalIndex + 1) {
-                timerOutput?.provideCurrentInterval(timer.intervals[endedIntervalIndex + 1])
-            }
+        override fun onIntervalStart(endedIntervalIndex: Int) {
+            timerOutput?.provideCurrentInterval(timer.intervals[endedIntervalIndex])
         }
 
         override fun onRoundEnded(remainingRounds: Int) {
@@ -27,7 +25,6 @@ class TimerInteractor(private val timer: Timer, private var timerOutput: TimerOu
     override fun start() {
         timerOutput?.provideState(TimerState.IN_PROGRESS)
         timerOutput?.provideTime(timer.getDurationInMillis())
-        timerOutput?.provideCurrentInterval(timer.intervals.first())
         intervalTimer.start()
     }
 
