@@ -15,8 +15,6 @@ interface TimerEditingInput {
 
     fun getInterval(intervalPosition: Int): Interval
 
-    fun getDefaultIntervalName(): String
-
     fun updateInterval(position: Int, interval: Interval)
 
     fun deleteInterval(intervalPosition: Int)

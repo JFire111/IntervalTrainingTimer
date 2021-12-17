@@ -108,8 +108,8 @@ class MainView : Fragment(), MainContract.View {
         transition.replace(R.id.mainFragmentContainer, TimerView(timerInput)).addToBackStack("TIMER_SCREEN").commit()
     }
 
-    override fun showIntervalKeyboard(interval: Interval?, defaultIntervalName: String?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(presenter, onIntervalKeyboardListener, interval, defaultIntervalName))
+    override fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(presenter, onIntervalKeyboardListener, interval))
         fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("INTERVAL_KEYBOARD_SCREEN").attach(intervalKeyboardView).commit()
     }
 

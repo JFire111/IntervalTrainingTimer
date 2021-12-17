@@ -48,10 +48,6 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
         return intervalList[intervalPosition]
     }
 
-    override fun getDefaultIntervalName(): String {
-        return "default name"
-    }
-
     override fun updateInterval(position: Int, interval: Interval) {
         intervalList[position] = interval
         timerEditingOutput?.provideIntervals(intervalList)

@@ -8,7 +8,6 @@ class IntervalKeyboardPresenter(
         private val eventHandler: SectionsEventHandler,
         private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener,
         private val interval: Interval?,
-        private val defaultIntervalName: String?
         ): IntervalKeyboardContract.Presenter() {
 
     private val valueLength = 4
@@ -22,7 +21,7 @@ class IntervalKeyboardPresenter(
             intervalName = interval.name
             timeValue = convertToArray(interval.duration)
         } else {
-            intervalName = defaultIntervalName ?: ""
+            intervalName = intervalType.toString()
             timeValue = arrayOfNulls(valueLength)
         }
     }
@@ -47,15 +46,27 @@ class IntervalKeyboardPresenter(
 
     override fun onRestButtonClick() {
         intervalType = IntervalType.REST
+        if (intervalName.equals(IntervalType.WORK.toString())) {
+            intervalName = IntervalType.REST.toString()
+            view!!.showIntervalName(intervalName)
+        }
         view!!.showSelectedType(intervalType)
     }
 
     override fun onWorkButtonClick() {
         intervalType = IntervalType.WORK
+        if (intervalName.equals(IntervalType.REST.toString())) {
+            intervalName = IntervalType.WORK.toString()
+            view!!.showIntervalName(intervalName)
+        }
         view!!.showSelectedType(intervalType)
     }
 
-    override fun onOkButtonClick(intervalName: String) {
+    override fun onNameChanged(name: String) {
+        intervalName = name
+    }
+
+    override fun onOkButtonClick() {
         val interval = Interval(intervalName, convertToSeconds(timeValue), intervalType)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()

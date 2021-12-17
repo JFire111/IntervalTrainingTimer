@@ -59,6 +59,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
             override fun onFocusChange(view: View?, hasFocus: Boolean) {
                 (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
                     hideSoftInputFromWindow(view?.windowToken, 0)
+                    intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
                 }
             }
         })
@@ -92,7 +93,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
 
         okButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                intervalKeyboardPresenter.onOkButtonClick(intervalNameTextView.text.toString())
+                intervalKeyboardPresenter.onOkButtonClick()
             }
         })
 

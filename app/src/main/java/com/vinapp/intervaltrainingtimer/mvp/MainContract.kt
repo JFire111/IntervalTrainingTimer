@@ -15,7 +15,7 @@ interface MainContract {
 
         fun showTimerScreen(timerInput: TimerInput)
 
-        fun showIntervalKeyboard(interval: Interval?, defaultIntervalName: String?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener)
+        fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener)
 
         fun hideIntervalKeyboard()
 

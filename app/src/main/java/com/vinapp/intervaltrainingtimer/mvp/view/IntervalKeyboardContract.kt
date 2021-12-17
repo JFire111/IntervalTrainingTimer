@@ -24,7 +24,9 @@ interface IntervalKeyboardContract {
 
         abstract fun onWorkButtonClick()
 
-        abstract fun onOkButtonClick(intervalName: String)
+        abstract fun onNameChanged(name: String)
+
+        abstract fun onOkButtonClick()
 
         abstract fun onCancelButtonClick()
     }
