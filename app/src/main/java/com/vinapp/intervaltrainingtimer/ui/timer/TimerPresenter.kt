@@ -2,37 +2,44 @@ package com.vinapp.intervaltrainingtimer.ui.timer
 
 import com.vinapp.intervaltrainingtimer.common.IntervalType
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.logic.timer.TimerInput
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerOutput
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
+import com.vinapp.intervaltrainingtimer.services.TimerService
+import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
-class TimerPresenter(private val timerInput: TimerInput): TimerContract.Presenter(), TimerOutput {
+class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
     private var timerState: TimerState = TimerState.STOPPED
     private var currentInterval: Interval? = null
 
+    init {
+        serviceController.bindService(TimerService::class.java)
+    }
+
     override fun onTimerActionButtonClick() {
         when (timerState) {
-            TimerState.STOPPED -> timerInput.start()
-            TimerState.PAUSED -> timerInput.resume()
-            TimerState.IN_PROGRESS -> timerInput.pause()
-            //TimerState.FINISHED -> timerInput.restart()
+            TimerState.STOPPED -> serviceController.start(timer)
+            TimerState.PAUSED -> serviceController.resume()
+            TimerState.IN_PROGRESS -> serviceController.pause()
+            TimerState.FINISHED -> serviceController.restart()
         }
     }
 
     override fun destroy() {
-        timerInput.stop()
+        serviceController.unbindService()
+        serviceController.stop()
     }
 
     override fun attachView(view: TimerContract.View) {
         super.attachView(view)
-        timerInput.registerOutput(this)
+        serviceController.registerOutput(this)
     }
 
     override fun detachView() {
         super.detachView()
-        timerInput.unregisterOutput()
+        serviceController.unregisterOutput()
     }
 
     override fun provideState(state: TimerState) {
@@ -53,10 +60,10 @@ class TimerPresenter(private val timerInput: TimerInput): TimerContract.Presente
         view!!.showTime("${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}")
     }
 
-    override fun provideCurrentInterval(interval: Interval) {
-        currentInterval = interval
-        view!!.showMessage(interval.name)
-        view!!.setColorByIntervalType(interval.type)
+    override fun provideCurrentInterval(intervalIndex: Int) {
+        currentInterval = timer.intervals[intervalIndex]
+        view!!.showMessage(timer.intervals[intervalIndex].name)
+        view!!.setColorByIntervalType(timer.intervals[intervalIndex].type)
         view!!.setActionButtonIconByState(getActionButtonState())
     }
 

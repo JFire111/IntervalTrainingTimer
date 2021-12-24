@@ -3,13 +3,14 @@ package com.vinapp.intervaltrainingtimer.ui
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
-import com.vinapp.intervaltrainingtimer.logic.timer.TimerInteractor
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
+import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
 class MainPresenter(override var currentSection: Int,
                     private val timerEditingInput: TimerEditingInput,
-                    private val timerListInput: TimerListInput) : MainContract.Presenter() {
+                    private val timerListInput: TimerListInput,
+                    private val serviceController: TimerServiceController) : MainContract.Presenter() {
 
     var sideButtonsClickListener: SideButtonsClickListener? = null
     var isNewTimer: Boolean = true
@@ -19,7 +20,7 @@ class MainPresenter(override var currentSection: Int,
         if (currentSection == 0) {
             timerEditingInput.saveTimer()
         }
-        view!!.showTimerScreen(TimerInteractor(selectedTimer!!, null))
+        view!!.showTimerScreen(selectedTimer!!, serviceController)
     }
 
     override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {

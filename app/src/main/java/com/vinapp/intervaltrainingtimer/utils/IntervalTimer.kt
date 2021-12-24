@@ -4,8 +4,10 @@ import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import kotlinx.coroutines.*
 
-abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
+abstract class IntervalTimer {
 
+    private var timer: Timer? = null
+    private var stepInMillis: Long = 100
     private var timerJob: Job? = null
     private var isPaused: Boolean = false
     private var remainingTime: Long = 0L
@@ -13,10 +15,12 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
     private var currentIntervalIndex: Int = 0
     private var remainingIntervalTime: Long = 0L
 
-    fun start() {
+    fun start(timer: Timer, stepInMillis: Long = 100) {
+        this.timer = timer
+        this.stepInMillis = stepInMillis
         isPaused = false
-        remainingTime = timer.getDurationInMillis()
-        remainingRounds = timer.numberOfRounds
+        remainingTime = this.timer!!.getDurationInMillis()
+        remainingRounds = this.timer!!.numberOfRounds
         timerJob = MainScope().launch {
             run()
         }
@@ -36,8 +40,8 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
     fun stop() {
         timerJob!!.cancel()
         isPaused = false
-        remainingTime = timer.getDurationInMillis()
-        remainingRounds = timer.numberOfRounds
+        remainingTime = timer!!.getDurationInMillis()
+        remainingRounds = timer!!.numberOfRounds
         currentIntervalIndex = 0
         remainingIntervalTime = 0L
     }
@@ -76,10 +80,10 @@ abstract class IntervalTimer(val timer: Timer, val stepInMillis: Long = 1000) {
 
     private fun getIntervals(): List<Interval> {
         return if (isPaused) {
-            timer.intervals.asSequence().drop(currentIntervalIndex).toList()
+            timer!!.intervals.asSequence().drop(currentIntervalIndex).toList()
         } else {
             currentIntervalIndex = 0
-            timer.intervals
+            timer!!.intervals
         }
     }
 

@@ -12,11 +12,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalType
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
-import com.vinapp.intervaltrainingtimer.logic.timer.TimerInput
+import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
+import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 import kotlinx.android.synthetic.main.fragment_timer.view.*
 
-class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
+class TimerView(private val timer: Timer, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
 
     private var presenter: TimerPresenter? = null
     private var _binding: FragmentTimerBinding? = null
@@ -27,14 +28,16 @@ class TimerView(val timerInput: TimerInput): Fragment(), TimerContract.View {
     private lateinit var timerActionButton: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        presenter = TimerPresenter(timerInput)
+        presenter = TimerPresenter(timer, serviceController)
         _binding = FragmentTimerBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         infoTextView = view.infoTextView
         timeTextView = view.timeTextView
         timerActionButton = view.timerActionButton
 
-        timerActionButton.setOnClickListener { presenter!!.onTimerActionButtonClick() }
+        timerActionButton.setOnClickListener {
+            presenter!!.onTimerActionButtonClick()
+        }
         return view
     }
 
