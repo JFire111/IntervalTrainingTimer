@@ -48,15 +48,20 @@ abstract class IntervalTimer {
 
     abstract fun onTick(time: Long)
 
-    abstract fun onIntervalStart(endedIntervalIndex: Int)
+    abstract fun onIntervalStart(intervalIndex: Int)
 
-    abstract fun onRoundEnded(remainingRounds: Int)
+    abstract fun onIntervalEnd(endedIntervalIndex: Int)
+
+    abstract fun onRoundStart(remainingRounds: Int)
+
+    abstract fun onRoundEnd(remainingRounds: Int)
 
     abstract fun onFinish()
 
     private suspend fun run() = coroutineScope {
         launch {
             while (remainingRounds > 0) {
+                onRoundStart(remainingRounds)
                 var intervals = getIntervals()
                 intervals.forEach { interval ->
                     remainingIntervalTime = getRemainingTime(interval)
@@ -69,10 +74,11 @@ abstract class IntervalTimer {
                         remainingTime -= difference
                         onTick(remainingTime)
                     }
+                    onIntervalEnd(currentIntervalIndex)
                     currentIntervalIndex++
                 }
                 remainingRounds--
-                onRoundEnded(remainingRounds)
+                onRoundEnd(remainingRounds)
             }
             onFinish()
         }

@@ -1,10 +1,17 @@
 package com.vinapp.intervaltrainingtimer.services
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.IBinder
+import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
+import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerOutput
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
@@ -15,10 +22,14 @@ class TimerServiceController(private val applicationContext: Context) {
     private var timerService: TimerService? = null
     private var bound = false
     private var output: TimerOutput? = null
+    private val notificationId = 0
+    private val notificationChannelId = "TimerNotification"
+    private val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private var serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             timerService = (binder as TimerService.TimerBinder).getService()
             bound = true
+            showNotification()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -30,15 +41,23 @@ class TimerServiceController(private val applicationContext: Context) {
             output?.provideTime(time)
         }
 
-        override fun onIntervalStart(endedIntervalIndex: Int) {
-            output?.provideCurrentInterval(endedIntervalIndex)
+        override fun onIntervalStart(intervalIndex: Int) {
+            output?.provideCurrentInterval(intervalIndex)
         }
 
-        override fun onRoundEnded(remainingRounds: Int) {
+        override fun onIntervalEnd(endedIntervalIndex: Int) {
+            timerService!!.playEndIntervalSound()
+        }
+
+        override fun onRoundStart(remainingRounds: Int) {
+        }
+
+        override fun onRoundEnd(remainingRounds: Int) {
         }
 
         override fun onFinish() {
             output?.provideState(TimerState.FINISHED)
+            timerService!!.playFinishSound()
         }
     }
 
@@ -50,6 +69,7 @@ class TimerServiceController(private val applicationContext: Context) {
     fun unbindService() {
         if (bound) {
             applicationContext.unbindService(serviceConnection!!)
+            closeNotification()
         }
         bound = false
     }
@@ -86,5 +106,27 @@ class TimerServiceController(private val applicationContext: Context) {
     fun restart() {
         output?.provideState(TimerState.IN_PROGRESS)
         timerService?.restart()
+    }
+
+    private fun showNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(notificationChannelId, "TimerNotificationChannel", NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(channel)
+        }
+        notificationManager.notify(notificationId, createNotification())
+    }
+
+    private fun closeNotification() {
+        notificationManager.cancel(notificationId)
+    }
+
+    private fun createNotification(): Notification {
+        val notificationLayout = RemoteViews(applicationContext.packageName, R.layout.notification)
+        return NotificationCompat.Builder(applicationContext, notificationChannelId)
+            .setSilent(true)
+            .setOngoing(true)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContent(notificationLayout)
+            .build()
     }
 }

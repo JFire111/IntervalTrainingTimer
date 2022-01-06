@@ -29,6 +29,7 @@
         <entry key="app/src/main/res/layout/fragment_timer.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/fragment_timer_list.xml" value="0.31979166666666664" />
         <entry key="app/src/main/res/layout/interval_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/notification.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/saved_timers_list_footer.xml" value="0.4053442028985507" />
         <entry key="app/src/main/res/layout/timer_item.xml" value="0.25" />
       </map>

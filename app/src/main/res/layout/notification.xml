@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:background="@color/mediumGray">
+
+    <TextView
+        android:id="@+id/intervalNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="6dp"
+        android:text="Interval name"
+        android:textColor="@color/grayFontColor"
+        android:textSize="16sp"
+        android:maxLength="36"
+        tools:text="Interval name" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/intervalNameTextView"
+        android:layout_alignTop="@+id/imageButton"
+        android:layout_alignBottom="@+id/imageButton"
+        android:text="00:00"
+        android:textColor="@color/orange"
+        android:textSize="36sp"
+        tools:text="00:00" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        android:background="@color/mediumGray"
+        android:src="@drawable/play_red" />
+</RelativeLayout>
