@@ -29,7 +29,7 @@ class TimerServiceController(private val applicationContext: Context) {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             timerService = (binder as TimerService.TimerBinder).getService()
             bound = true
-            showNotification()
+            //showNotification()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -69,7 +69,7 @@ class TimerServiceController(private val applicationContext: Context) {
     fun unbindService() {
         if (bound) {
             applicationContext.unbindService(serviceConnection!!)
-            closeNotification()
+            //closeNotification()
         }
         bound = false
     }

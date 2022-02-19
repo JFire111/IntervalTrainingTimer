@@ -11,6 +11,7 @@ import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
 class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
+    private var remainingTime: Long = timer.getDurationInMillis()
     private var timerState: TimerState = TimerState.STOPPED
     private var currentInterval: Interval? = null
 
@@ -34,6 +35,7 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
 
     override fun attachView(view: TimerContract.View) {
         super.attachView(view)
+        view.showTime(convertTimeToString(remainingTime))
         serviceController.registerOutput(this)
     }
 
@@ -54,10 +56,8 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
     }
 
     override fun provideTime(time: Long) {
-        var timeInSeconds = Math.ceil(time / 1000.0).toInt()
-        val minutes = timeInSeconds / 60
-        val seconds = timeInSeconds - minutes * 60
-        view!!.showTime("${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}")
+        remainingTime = time
+        view!!.showTime(convertTimeToString(remainingTime))
     }
 
     override fun provideCurrentInterval(intervalIndex: Int) {
@@ -86,5 +86,12 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
             }
         }
         return state
+    }
+
+    private fun convertTimeToString(time: Long): String {
+        val timeInSeconds = Math.ceil(time / 1000.0).toInt()
+        val minutes = timeInSeconds / 60
+        val seconds = timeInSeconds - minutes * 60
+        return "${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}"
     }
 }
