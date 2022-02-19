@@ -7,5 +7,7 @@
         android:id="@+id/timersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mediumGray" />
+        android:background="@color/mediumGray"
+        android:paddingBottom="@dimen/data_layouts_height"
+        android:clipToPadding="false" />
 </FrameLayout>
