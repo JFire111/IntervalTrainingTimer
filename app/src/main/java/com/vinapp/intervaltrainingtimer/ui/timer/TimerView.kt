@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
@@ -24,6 +25,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
     private val binding
         get() = _binding!!
     private lateinit var infoTextView: TextView
+    private lateinit var delaySeekBar: SeekBar
     private lateinit var timeTextView: TextView
     private lateinit var timerActionButton: FloatingActionButton
 
@@ -33,11 +35,8 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
         val view = binding.root
         infoTextView = view.infoTextView
         timeTextView = view.timeTextView
-        timerActionButton = view.timerActionButton
-
-        timerActionButton.setOnClickListener {
-            presenter!!.onTimerActionButtonClick()
-        }
+        setTimerActionButton()
+        setDelaySeekBar()
         return view
     }
 
@@ -59,6 +58,23 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
 
     override fun showMessage(message: String) {
         infoTextView.text = message
+    }
+
+    override fun showDelay(delay: Int) {
+        infoTextView.text = "${getString(R.string.timeToStartInfo)}: $delay"
+        delaySeekBar.progress = delay
+    }
+
+    override fun hideMessage() {
+        infoTextView.visibility = View.GONE
+    }
+
+    override fun showDelaySeekBar() {
+        delaySeekBar.visibility = View.VISIBLE
+    }
+
+    override fun hideDelaySeekBar() {
+        delaySeekBar.visibility = View.GONE
     }
 
     override fun showTime(time: String) {
@@ -96,5 +112,27 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
             TimerActionButtonState.PLAY_RED -> timerActionButton.setImageResource(R.drawable.play_red)
             TimerActionButtonState.PLAY_GREEN -> timerActionButton.setImageResource(R.drawable.play_green)
         }
+    }
+
+    private fun setTimerActionButton() {
+        timerActionButton = binding.root.timerActionButton
+        timerActionButton.setOnClickListener {
+            presenter!!.onTimerActionButtonClick()
+        }
+    }
+
+    private fun setDelaySeekBar() {
+        delaySeekBar = binding.root.delaySeekBar
+        delaySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                presenter!!.changeDelay(seekBar!!.progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 }

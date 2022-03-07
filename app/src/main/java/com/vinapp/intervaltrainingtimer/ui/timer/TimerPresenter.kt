@@ -11,6 +11,7 @@ import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
 class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
+    private var delay: Long = 3000L
     private var remainingTime: Long = timer.getDurationInMillis()
     private var timerState: TimerState = TimerState.STOPPED
     private var currentInterval: Interval? = null
@@ -19,9 +20,17 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
         serviceController.bindService(TimerService::class.java)
     }
 
+    override fun changeDelay(value: Int) {
+        delay = value * 1000L
+        view!!.showDelay(value)
+    }
+
     override fun onTimerActionButtonClick() {
         when (timerState) {
-            TimerState.STOPPED -> serviceController.start(timer)
+            TimerState.STOPPED -> {
+                serviceController.setDelay(delay)
+                serviceController.start(timer)
+            }
             TimerState.PAUSED -> serviceController.resume()
             TimerState.IN_PROGRESS -> serviceController.pause()
             TimerState.FINISHED -> serviceController.restart()
@@ -35,6 +44,7 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
 
     override fun attachView(view: TimerContract.View) {
         super.attachView(view)
+        view.showDelay((delay / 1000).toInt())
         view.showTime(convertTimeToString(remainingTime))
         serviceController.registerOutput(this)
     }
@@ -53,6 +63,15 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
             view!!.setDefaultColor()
         }
         view!!.setActionButtonIconByState(getActionButtonState())
+    }
+
+    override fun provideDelay(delay: Long) {
+        this.delay = delay
+        if (delay > 0) {
+            view!!.showDelay((this.delay / 1000).toInt())
+        } else {
+            view!!.hideDelaySeekBar()
+        }
     }
 
     override fun provideTime(time: Long) {

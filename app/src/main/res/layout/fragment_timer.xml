@@ -10,13 +10,33 @@
         android:id="@+id/infoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/darkGray"
-        android:textSize="80sp"
         android:textAlignment="center"
+        android:textColor="@color/darkGray"
+        android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/timeTextView"
         app:layout_constraintEnd_toEndOf="@+id/timeTextView"
         app:layout_constraintStart_toStartOf="@+id/timeTextView"
-        tools:text="@string/timeToStartInfo"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        tools:text="@string/timeToStartInfo" />
+
+    <SeekBar
+        android:id="@+id/delaySeekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:max="10"
+        android:progress="3"
+        android:progressBackgroundTint="@color/mediumGray"
+        android:progressTint="@color/orange"
+        app:layout_constraintBottom_toTopOf="@+id/timeTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoTextView"
+        app:layout_constraintVertical_bias="0.15"
+        app:tickMarkTint="@color/darkGray" />
 
     <TextView
         android:id="@+id/timeTextView"

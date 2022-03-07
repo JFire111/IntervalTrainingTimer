@@ -12,6 +12,14 @@ interface TimerContract {
 
         fun showMessage(message: String)
 
+        fun showDelay(delay: Int)
+
+        fun hideMessage()
+
+        fun showDelaySeekBar()
+
+        fun hideDelaySeekBar()
+
         fun showTime(time: String)
 
         fun hideTime()
@@ -24,6 +32,8 @@ interface TimerContract {
     }
 
     abstract class Presenter: MVPPresenter<View>() {
+
+        abstract fun changeDelay(value: Int)
 
         abstract fun onTimerActionButtonClick()
     }

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:focusable="true"
         app:backgroundTint="@color/darkGray"
         app:borderWidth="0dp"
         app:elevation="0dp"
@@ -19,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintTop_toTopOf="@+id/numberOfRoundsTextView"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/minus"/>
 
     <TextView
         android:id="@+id/numberOfRoundsTextView"
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:focusable="true"
         app:backgroundTint="@color/darkGray"
         app:borderWidth="0dp"
         app:elevation="0dp"
@@ -46,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toEndOf="@+id/numberOfRoundsTextView"
         app:layout_constraintTop_toTopOf="@+id/numberOfRoundsTextView"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/plus"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/intervalsRecyclerView"

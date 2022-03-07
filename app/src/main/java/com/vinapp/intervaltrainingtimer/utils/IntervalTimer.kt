@@ -7,6 +7,7 @@ import kotlinx.coroutines.*
 abstract class IntervalTimer {
 
     private var timer: Timer? = null
+    private var startDelay: Long = 0L
     private var stepInMillis: Long = 100
     private var timerJob: Job? = null
     private var isPaused: Boolean = false
@@ -15,6 +16,10 @@ abstract class IntervalTimer {
     private var currentIntervalIndex: Int = 0
     private var remainingIntervalTime: Long = 0L
 
+    fun setStartDelay(delay: Long) {
+        this.startDelay = delay
+    }
+
     fun start(timer: Timer, stepInMillis: Long = 100) {
         this.timer = timer
         this.stepInMillis = stepInMillis
@@ -22,7 +27,7 @@ abstract class IntervalTimer {
         remainingTime = this.timer!!.getDurationInMillis()
         remainingRounds = this.timer!!.numberOfRounds
         timerJob = MainScope().launch {
-            run()
+            runTimer()
         }
     }
 
@@ -33,7 +38,7 @@ abstract class IntervalTimer {
 
     fun resume() {
         timerJob = MainScope().launch {
-            run()
+            runTimer()
         }
     }
 
@@ -45,6 +50,8 @@ abstract class IntervalTimer {
         currentIntervalIndex = 0
         remainingIntervalTime = 0L
     }
+
+    abstract fun onDelayTick(delay: Long)
 
     abstract fun onTick(time: Long)
 
@@ -58,30 +65,41 @@ abstract class IntervalTimer {
 
     abstract fun onFinish()
 
-    private suspend fun run() = coroutineScope {
-        launch {
-            while (remainingRounds > 0) {
-                onRoundStart(remainingRounds)
-                var intervals = getIntervals()
-                intervals.forEach { interval ->
-                    remainingIntervalTime = getRemainingTime(interval)
-                    onIntervalStart(currentIntervalIndex)
-                    while (remainingIntervalTime > 0L) {
-                        var beforeDelay = System.currentTimeMillis()
-                        delay(stepInMillis)
-                        var difference = System.currentTimeMillis() - beforeDelay
-                        remainingIntervalTime -= difference
-                        remainingTime -= difference
-                        onTick(remainingTime)
-                    }
-                    onIntervalEnd(currentIntervalIndex)
-                    currentIntervalIndex++
-                }
-                remainingRounds--
-                onRoundEnd(remainingRounds)
-            }
-            onFinish()
+    private suspend fun runDelay() {
+        var remainingDelayTime = startDelay
+        while (remainingDelayTime > 0L) {
+            remainingDelayTime -= computeTimeDifference()
+            onDelayTick(remainingDelayTime)
         }
+    }
+
+    private suspend fun runTimer() {
+        runDelay()
+        while (remainingRounds > 0) {
+            onRoundStart(remainingRounds)
+            var intervals = getIntervals()
+            intervals.forEach { interval ->
+                remainingIntervalTime = getRemainingTime(interval)
+                onIntervalStart(currentIntervalIndex)
+                while (remainingIntervalTime > 0L) {
+                    var difference = computeTimeDifference()
+                    remainingIntervalTime -= difference
+                    remainingTime -= difference
+                    onTick(remainingTime)
+                }
+                onIntervalEnd(currentIntervalIndex)
+                currentIntervalIndex++
+            }
+            remainingRounds--
+            onRoundEnd(remainingRounds)
+        }
+        onFinish()
+    }
+
+    private suspend fun computeTimeDifference(): Long {
+        val beforeDelay = System.currentTimeMillis()
+        delay(stepInMillis)
+        return System.currentTimeMillis() - beforeDelay
     }
 
     private fun getIntervals(): List<Interval> {

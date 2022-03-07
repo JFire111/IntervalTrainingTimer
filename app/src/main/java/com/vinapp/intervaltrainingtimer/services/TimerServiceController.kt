@@ -19,6 +19,7 @@ import com.vinapp.intervaltrainingtimer.utils.IntervalTimer
 
 class TimerServiceController(private val applicationContext: Context) {
 
+    private var intervalTimer: IntervalTimer? = null
     private var timerService: TimerService? = null
     private var bound = false
     private var output: TimerOutput? = null
@@ -29,6 +30,7 @@ class TimerServiceController(private val applicationContext: Context) {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             timerService = (binder as TimerService.TimerBinder).getService()
             bound = true
+            initTimer()
             //showNotification()
         }
 
@@ -36,39 +38,15 @@ class TimerServiceController(private val applicationContext: Context) {
             bound = false
         }
     }
-    private val intervalTimer = object : IntervalTimer() {
-        override fun onTick(time: Long) {
-            output?.provideTime(time)
-        }
-
-        override fun onIntervalStart(intervalIndex: Int) {
-            output?.provideCurrentInterval(intervalIndex)
-        }
-
-        override fun onIntervalEnd(endedIntervalIndex: Int) {
-            timerService!!.playEndIntervalSound()
-        }
-
-        override fun onRoundStart(remainingRounds: Int) {
-        }
-
-        override fun onRoundEnd(remainingRounds: Int) {
-        }
-
-        override fun onFinish() {
-            output?.provideState(TimerState.FINISHED)
-            timerService!!.playFinishSound()
-        }
-    }
 
     fun bindService(serviceClass: Class<*>?) {
         var intent = Intent(applicationContext, serviceClass)
-        applicationContext.bindService(intent, serviceConnection!!, Context.BIND_AUTO_CREATE)
+        applicationContext.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 
     fun unbindService() {
         if (bound) {
-            applicationContext.unbindService(serviceConnection!!)
+            applicationContext.unbindService(serviceConnection)
             //closeNotification()
         }
         bound = false
@@ -82,8 +60,12 @@ class TimerServiceController(private val applicationContext: Context) {
         this.output = null
     }
 
+    fun setDelay(delay: Long) {
+        intervalTimer!!.setStartDelay(delay)
+    }
+
     fun start(timer: Timer) {
-        timerService?.start(timer, intervalTimer)
+        timerService?.start(timer, intervalTimer!!)
         output?.provideState(TimerState.IN_PROGRESS)
         output?.provideTime(timer.getDurationInMillis())
     }
@@ -106,6 +88,37 @@ class TimerServiceController(private val applicationContext: Context) {
     fun restart() {
         output?.provideState(TimerState.IN_PROGRESS)
         timerService?.restart()
+    }
+
+    private fun initTimer() {
+        intervalTimer = object : IntervalTimer() {
+            override fun onDelayTick(delay: Long) {
+                output?.provideDelay(delay)
+            }
+
+            override fun onTick(time: Long) {
+                output?.provideTime(time)
+            }
+
+            override fun onIntervalStart(intervalIndex: Int) {
+                output?.provideCurrentInterval(intervalIndex)
+            }
+
+            override fun onIntervalEnd(endedIntervalIndex: Int) {
+                timerService!!.playEndIntervalSound()
+            }
+
+            override fun onRoundStart(remainingRounds: Int) {
+            }
+
+            override fun onRoundEnd(remainingRounds: Int) {
+            }
+
+            override fun onFinish() {
+                output?.provideState(TimerState.FINISHED)
+                timerService!!.playFinishSound()
+            }
+        }
     }
 
     private fun showNotification() {

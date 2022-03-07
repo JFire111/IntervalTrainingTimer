@@ -4,6 +4,8 @@ interface TimerOutput {
 
     fun provideState(state: TimerState)
 
+    fun provideDelay(delay: Long)
+
     fun provideTime(remainingTime: Long)
 
     fun provideCurrentInterval(intervalIndex: Int)
