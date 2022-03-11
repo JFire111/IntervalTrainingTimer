@@ -16,7 +16,6 @@ import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
-import kotlinx.android.synthetic.main.fragment_timer.view.*
 
 class TimerView(private val timer: Timer, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
 
@@ -33,10 +32,10 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
         presenter = TimerPresenter(timer, serviceController)
         _binding = FragmentTimerBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        infoTextView = view.infoTextView
-        timeTextView = view.timeTextView
-        setTimerActionButton()
-        setDelaySeekBar()
+        infoTextView = binding.infoTextView
+        timeTextView = binding.timeTextView
+        initTimerActionButton()
+        initDelaySeekBar()
         return view
     }
 
@@ -114,15 +113,15 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
         }
     }
 
-    private fun setTimerActionButton() {
-        timerActionButton = binding.root.timerActionButton
+    private fun initTimerActionButton() {
+        timerActionButton = binding.timerActionButton
         timerActionButton.setOnClickListener {
             presenter!!.onTimerActionButtonClick()
         }
     }
 
-    private fun setDelaySeekBar() {
-        delaySeekBar = binding.root.delaySeekBar
+    private fun initDelaySeekBar() {
+        delaySeekBar = binding.delaySeekBar
         delaySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 presenter!!.changeDelay(seekBar!!.progress)

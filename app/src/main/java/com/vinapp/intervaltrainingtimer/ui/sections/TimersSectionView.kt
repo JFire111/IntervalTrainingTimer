@@ -12,7 +12,6 @@ import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
-import kotlinx.android.synthetic.main.fragment_timer_list.view.*
 
 class TimersSectionView(timersSectionEventListener: TimersSectionEventListener): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
 
@@ -34,8 +33,7 @@ class TimersSectionView(timersSectionEventListener: TimersSectionEventListener):
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentTimerListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        timersRecyclerView = view.timersRecyclerView
-        timersRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        initTimerRecyclerView()
         return view
     }
 
@@ -73,5 +71,10 @@ class TimersSectionView(timersSectionEventListener: TimersSectionEventListener):
 
     override fun onDeleteClickListener(position: Int) {
         presenter.onDeleteTimerClick(position)
+    }
+
+    private fun initTimerRecyclerView() {
+        timersRecyclerView = binding.timersRecyclerView
+        timersRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
     }
 }

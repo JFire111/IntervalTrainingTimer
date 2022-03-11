@@ -40,26 +40,14 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentKeyboardBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        intervalNameTextView = binding.intervalNameEditText
+        initIntervalNameTextView()
         displayTextView = binding.displayTextView
-        keyboardGridLayout = binding.keyboardGridLayout
-        restButton = binding.keyboardButtonRest
-        workButton = binding.keyboardButtonWork
-        okButton = binding.keyboardButtonOk
-        cancelButton = binding.keyboardButtonCancel
-        deleteButton = binding.keyboardButtonDelete
-        setClickListeners()
-
-        view.setOnClickListener {
-            intervalNameTextView.clearFocus()
-        }
-
-        intervalNameTextView.setOnFocusChangeListener { view, hasFocus ->
-            (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-                hideSoftInputFromWindow(view?.windowToken, 0)
-                intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
-            }
-        }
+        initKeyboardGridLayout()
+        initRestButton()
+        initWorkButton()
+        initOkButton()
+        initCancelButton()
+        initDeleteButton()
         return view
     }
 
@@ -104,29 +92,21 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
         intervalKeyboardPresenter.destroy()
     }
 
-    private fun setClickListeners() {
-        restButton.setOnClickListener {
+    private fun initIntervalNameTextView() {
+        intervalNameTextView = binding.intervalNameEditText
+        binding.root.setOnClickListener {
             intervalNameTextView.clearFocus()
-            intervalKeyboardPresenter.onRestButtonClick()
         }
-
-        workButton.setOnClickListener {
-            intervalNameTextView.clearFocus()
-            intervalKeyboardPresenter.onWorkButtonClick()
+        intervalNameTextView.setOnFocusChangeListener { view, hasFocus ->
+            (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+                hideSoftInputFromWindow(view?.windowToken, 0)
+                intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
+            }
         }
+    }
 
-        okButton.setOnClickListener {
-            intervalKeyboardPresenter.onOkButtonClick()
-        }
-
-        cancelButton.setOnClickListener {
-            intervalKeyboardPresenter.onCancelButtonClick()
-        }
-
-        deleteButton.setOnClickListener {
-            intervalKeyboardPresenter.onDeleteButtonClick()
-        }
-
+    private fun initKeyboardGridLayout() {
+        keyboardGridLayout = binding.keyboardGridLayout
         for (index in 0 until keyboardLength) {
             keyboardGridLayout[index].setOnClickListener {
                 intervalNameTextView.clearFocus()
@@ -136,6 +116,43 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
                     intervalKeyboardPresenter.onKeyboardButtonClick(index + 1)
                 }
             }
+        }
+    }
+
+    private fun initRestButton() {
+        restButton = binding.keyboardButtonRest
+        restButton.setOnClickListener {
+            intervalNameTextView.clearFocus()
+            intervalKeyboardPresenter.onRestButtonClick()
+        }
+    }
+
+    private fun initWorkButton() {
+        workButton = binding.keyboardButtonWork
+        workButton.setOnClickListener {
+            intervalNameTextView.clearFocus()
+            intervalKeyboardPresenter.onWorkButtonClick()
+        }
+    }
+
+    private fun initOkButton() {
+        okButton = binding.keyboardButtonOk
+        okButton.setOnClickListener {
+            intervalKeyboardPresenter.onOkButtonClick()
+        }
+    }
+
+    private fun initCancelButton() {
+        cancelButton = binding.keyboardButtonCancel
+        cancelButton.setOnClickListener {
+            intervalKeyboardPresenter.onCancelButtonClick()
+        }
+    }
+
+    private fun initDeleteButton() {
+        deleteButton = binding.keyboardButtonDelete
+        deleteButton.setOnClickListener {
+            intervalKeyboardPresenter.onDeleteButtonClick()
         }
     }
 

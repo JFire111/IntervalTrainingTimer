@@ -22,7 +22,6 @@ import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
 import com.vinapp.intervaltrainingtimer.ui.timer.TimerView
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainView : Fragment(), MainContract.View {
 
@@ -32,8 +31,8 @@ class MainView : Fragment(), MainContract.View {
 
     private lateinit var presenter: MainPresenter
     private lateinit var mainToolbar: Toolbar
-    private lateinit var sectionsTabLayout: TabLayout
     private lateinit var sectionsViewPager: ViewPager2
+    private lateinit var sectionsTabLayout: TabLayout
     private lateinit var startButton: FloatingActionButton
     private lateinit var leftButton: Button
     private lateinit var rightButton: Button
@@ -60,20 +59,12 @@ class MainView : Fragment(), MainContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        mainToolbar = view.mainToolbar
-        sectionsTabLayout = view.sectionsTabLayout
-        sectionsViewPager = view.sectionsViewPager
-        startButton = view.floatingActionButton
-        leftButton = view.leftButton
-        rightButton = view.rightButton
-
-        configureViewPager()
-
-        TabLayoutMediator(sectionsTabLayout, sectionsViewPager) {
-            tab, position -> tab.text = sections[position].title
-        }.attach()
-
-        setClickListeners()
+        mainToolbar = binding.mainToolbar
+        initViewPager()
+        initTabLayout()
+        initStartButton()
+        initLeftButton()
+        initRightButton()
         return view
     }
 
@@ -157,24 +148,8 @@ class MainView : Fragment(), MainContract.View {
         }
     }
 
-    private fun setClickListeners() {
-        startButton.setOnClickListener {
-            presenter.onStartButtonClick()
-        }
-        rightButton.setOnClickListener {
-            when (sectionsViewPager.currentItem) {
-                0 -> presenter.onSaveButtonClick()
-            }
-        }
-        leftButton.setOnClickListener {
-            when (sectionsViewPager.currentItem) {
-                0 -> presenter.onClearButtonClick()
-                1 -> presenter.onEditButtonClick()
-            }
-        }
-    }
-
-    private fun configureViewPager() {
+    private fun initViewPager() {
+        sectionsViewPager = binding.sectionsViewPager
         val sectionsAdapter = SectionsAdapter(sections, this)
         sectionsViewPager.adapter = sectionsAdapter
         sectionsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -187,5 +162,38 @@ class MainView : Fragment(), MainContract.View {
                 }
             }
         })
+    }
+
+    private fun initTabLayout() {
+        sectionsTabLayout = binding.sectionsTabLayout
+        TabLayoutMediator(sectionsTabLayout, sectionsViewPager) {
+                tab, position -> tab.text = sections[position].title
+        }.attach()
+    }
+
+    private fun initStartButton() {
+        startButton = binding.floatingActionButton
+        startButton.setOnClickListener {
+            presenter.onStartButtonClick()
+        }
+    }
+
+    private fun initLeftButton() {
+        leftButton = binding.leftButton
+        leftButton.setOnClickListener {
+            when (sectionsViewPager.currentItem) {
+                0 -> presenter.onClearButtonClick()
+                1 -> presenter.onEditButtonClick()
+            }
+        }
+    }
+
+    private fun initRightButton() {
+        rightButton = binding.rightButton
+        rightButton.setOnClickListener {
+            when (sectionsViewPager.currentItem) {
+                0 -> presenter.onSaveButtonClick()
+            }
+        }
     }
 }

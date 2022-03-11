@@ -16,7 +16,6 @@ import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
-import kotlinx.android.synthetic.main.fragment_interval_list.view.*
 
 class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventListener): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
@@ -43,7 +42,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         initTimerNameTextView()
-        numberOfRoundsTextView = view.numberOfRoundsTextView
+        numberOfRoundsTextView = binding.numberOfRoundsTextView
         initAddRoundButton()
         initRemoveRoundButton()
         initIntervalsRecyclerView()
@@ -104,7 +103,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     }
 
     private fun initTimerNameTextView() {
-        timerNameTextView = binding.root.timerNameEditTextText
+        timerNameTextView = binding.timerNameEditTextText
         binding.root.setOnClickListener {
             timerNameTextView.clearFocus()
         }
@@ -117,7 +116,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     }
 
     private fun initAddRoundButton() {
-        addRoundButton = binding.root.addRoundButton
+        addRoundButton = binding.addRoundButton
         addRoundButton.setOnClickListener {
             presenter.addRound()
             timerNameTextView.clearFocus()
@@ -125,7 +124,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     }
 
     private fun initRemoveRoundButton() {
-        removeRoundButton = binding.root.removeRoundButton
+        removeRoundButton = binding.removeRoundButton
         removeRoundButton.setOnClickListener {
             presenter.removeRound()
             timerNameTextView.clearFocus()
@@ -133,7 +132,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     }
 
     private fun initIntervalsRecyclerView() {
-        intervalsRecyclerView = binding.root.intervalsRecyclerView
+        intervalsRecyclerView = binding.intervalsRecyclerView
         intervalsRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
     }
 }
