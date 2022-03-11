@@ -8,6 +8,6 @@
 
     <item
         android:state_selected="true"
-        android:drawable="@color/orange"
+        android:drawable="@color/red"
         ></item>
 </selector>

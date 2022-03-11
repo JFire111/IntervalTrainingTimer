@@ -91,7 +91,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
     override fun setColorByIntervalType(type: IntervalType) {
         context?.let {
             when (type) {
-                IntervalType.WORK -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.orange))
+                IntervalType.WORK -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.red))
                 IntervalType.REST -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.green))
             }
         }

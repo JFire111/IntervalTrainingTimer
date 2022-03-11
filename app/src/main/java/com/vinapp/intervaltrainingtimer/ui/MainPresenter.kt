@@ -6,15 +6,48 @@ import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
+import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionEventListener
+import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionEventListener
 
-class MainPresenter(override var currentSection: Int,
-                    private val timerEditingInput: TimerEditingInput,
-                    private val timerListInput: TimerListInput,
-                    private val serviceController: TimerServiceController) : MainContract.Presenter() {
+class MainPresenter(
+    override var currentSection: Int,
+    private val timerEditingInput: TimerEditingInput,
+    private val timerListInput: TimerListInput,
+    private val serviceController: TimerServiceController
+    ) : MainContract.Presenter(),
+    IntervalsSectionEventListener,
+    TimersSectionEventListener {
 
     var sideButtonsClickListener: SideButtonsClickListener? = null
     var isNewTimer: Boolean = true
     var selectedTimer: Timer? = null
+
+    override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {
+        this.currentSection = section
+        this.sideButtonsClickListener = sideButtonsClickListener
+        when (section) {
+            0 -> {
+                if (isNewTimer) {
+                    view!!.showClearButton()
+                } else {
+                    //view!!.showLeftButton("Cancel")
+                }
+                view!!.showSaveButton()
+            }
+            1 -> {
+                timerListInput.openTimerList()
+                view!!.showEditButton()
+            }
+        }
+        view!!.showStartButton()
+    }
+
+    override fun sectionScrolled() {
+        view!!.hideClearButton()
+        view!!.hideEditButton()
+        view!!.hideSaveButton()
+        view!!.hideStartButton()
+    }
 
     override fun onStartButtonClick() {
         if (currentSection == 0) {
@@ -23,39 +56,16 @@ class MainPresenter(override var currentSection: Int,
         view!!.showTimerScreen(selectedTimer!!, serviceController)
     }
 
-    override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {
-        this.currentSection = section
-        this.sideButtonsClickListener = sideButtonsClickListener
-        when (section) {
-            0 -> {
-                if (isNewTimer) {
-                    view!!.showLeftButton("Clear")
-                } else {
-                    view!!.showLeftButton("Cancel")
-                }
-                view!!.showRightButton("Save")
-            }
-            1 -> {
-                timerListInput.openTimerList()
-                view!!.showLeftButton("Edit")
-                view!!.hideRightButton()
-            }
-        }
-        view!!.showStartButton()
-    }
-
-    override fun sectionScrolled() {
-        view!!.hideLeftButton()
-        view!!.hideRightButton()
-        view!!.hideStartButton()
-    }
-
-    override fun onLeftButtonClick() {
+    override fun onClearButtonClick() {
         sideButtonsClickListener?.onLeftButtonClick()
     }
 
-    override fun onRightButtonClick() {
+    override fun onSaveButtonClick() {
         sideButtonsClickListener?.onRightButtonClick()
+    }
+
+    override fun onEditButtonClick() {
+        sideButtonsClickListener?.onLeftButtonClick()
     }
 
     override fun detachView() {
@@ -73,10 +83,10 @@ class MainPresenter(override var currentSection: Int,
     }
 
     override fun onIntervalClick(intervalPosition: Int) {
-        val interval = timerEditingInput!!.getInterval(intervalPosition)
+        val interval = timerEditingInput.getInterval(intervalPosition)
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
-                timerEditingInput!!.updateInterval(intervalPosition, interval)
+                timerEditingInput.updateInterval(intervalPosition, interval)
             }
 
             override fun onCancel() {
@@ -88,7 +98,7 @@ class MainPresenter(override var currentSection: Int,
     override fun onAddIntervalClick() {
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
-                timerEditingInput!!.addInterval(interval)
+                timerEditingInput.addInterval(interval)
             }
 
             override fun onCancel() {
@@ -135,7 +145,7 @@ class MainPresenter(override var currentSection: Int,
         }
     }
 
-    override fun onSaveTimerClick() {
+    override fun onSaveTimerClick(timerName: String) {
         timerEditingInput.saveTimer()
         timerListInput.openTimerList()
         isNewTimer = true

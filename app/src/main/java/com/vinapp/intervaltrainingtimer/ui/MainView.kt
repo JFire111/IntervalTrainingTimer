@@ -30,7 +30,7 @@ class MainView : Fragment(), MainContract.View {
     private val binding
         get() = _binding!!
 
-    private lateinit var presenter: MainContract.Presenter
+    private lateinit var presenter: MainPresenter
     private lateinit var mainToolbar: Toolbar
     private lateinit var sectionsTabLayout: TabLayout
     private lateinit var sectionsViewPager: ViewPager2
@@ -124,22 +124,37 @@ class MainView : Fragment(), MainContract.View {
         startButton.visibility = View.GONE
     }
 
-    override fun showLeftButton(text: String) {
-        leftButton.text = text
+    override fun showClearButton() {
+        leftButton.text = "Clear"
         leftButton.visibility = View.VISIBLE
     }
 
-    override fun hideLeftButton() {
-        leftButton.visibility = View.GONE
+    override fun hideClearButton() {
+        if (leftButton.visibility == View.VISIBLE) {
+            leftButton.visibility = View.GONE
+        }
     }
 
-    override fun showRightButton(text: String) {
-        rightButton.text = text
+    override fun showSaveButton() {
+        rightButton.text = "Save"
         rightButton.visibility = View.VISIBLE
     }
 
-    override fun hideRightButton() {
-        rightButton.visibility = View.GONE
+    override fun hideSaveButton() {
+        if (rightButton.visibility == View.VISIBLE) {
+            rightButton.visibility = View.GONE
+        }
+    }
+
+    override fun showEditButton() {
+        leftButton.text = "Edit"
+        leftButton.visibility = View.VISIBLE
+    }
+
+    override fun hideEditButton() {
+        if (leftButton.visibility == View.VISIBLE) {
+            leftButton.visibility = View.GONE
+        }
     }
 
     private fun setClickListeners() {
@@ -147,10 +162,15 @@ class MainView : Fragment(), MainContract.View {
             presenter.onStartButtonClick()
         }
         rightButton.setOnClickListener {
-            presenter.onRightButtonClick()
+            when (sectionsViewPager.currentItem) {
+                0 -> presenter.onSaveButtonClick()
+            }
         }
         leftButton.setOnClickListener {
-            presenter.onLeftButtonClick()
+            when (sectionsViewPager.currentItem) {
+                0 -> presenter.onClearButtonClick()
+                1 -> presenter.onEditButtonClick()
+            }
         }
     }
 

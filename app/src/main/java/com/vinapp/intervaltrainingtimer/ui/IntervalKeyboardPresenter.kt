@@ -81,9 +81,9 @@ class IntervalKeyboardPresenter(
         super.attachView(view)
         setSelectedNumberIndex()
         setIntervalType()
-        view!!.showIntervalName(intervalName)
-        view!!.showTimeValue(getTimeValueString(), timeValue)
-        view!!.showSelectedType(intervalType)
+        view.showIntervalName(intervalName)
+        view.showTimeValue(getTimeValueString(), timeValue)
+        view.showSelectedType(intervalType)
     }
 
     override fun destroy() {

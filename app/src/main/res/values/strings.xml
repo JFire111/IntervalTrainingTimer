@@ -3,6 +3,7 @@
     <!-- General -->
     <string name="app_name">Interval Training Timer</string>
     <string name="numberOfRoundsText">Number of rounds</string>
+    <string name="timerName">Timer name</string>
     <string name="startButton">Start</string>
     <string name="timeToStartInfo">Start in</string>
     <string name="delaySeekBarText">Start in</string>

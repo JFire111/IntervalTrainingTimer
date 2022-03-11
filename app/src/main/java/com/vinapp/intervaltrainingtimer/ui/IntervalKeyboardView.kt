@@ -21,7 +21,7 @@ import com.vinapp.intervaltrainingtimer.common.IntervalType
 import com.vinapp.intervaltrainingtimer.databinding.FragmentKeyboardBinding
 import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
 
-class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresenter): Fragment(), IntervalKeyboardContract.View {
+class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboardPresenter): Fragment(), IntervalKeyboardContract.View {
 
     private var _binding: FragmentKeyboardBinding? = null
     private val binding
@@ -40,7 +40,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentKeyboardBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        intervalNameTextView = binding.intervalNameTextView
+        intervalNameTextView = binding.intervalNameEditText
         displayTextView = binding.displayTextView
         keyboardGridLayout = binding.keyboardGridLayout
         restButton = binding.keyboardButtonRest
@@ -79,7 +79,7 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
             }
             IntervalType.WORK -> {
                 restButton.setTextColor(ContextCompat.getColor(context!!, R.color.inactiveGray))
-                workButton.setTextColor(ContextCompat.getColor(context!!, R.color.orange))
+                workButton.setTextColor(ContextCompat.getColor(context!!, R.color.red))
             }
         }
     }
@@ -144,9 +144,9 @@ class IntervalKeyboardView(val intervalKeyboardPresenter: IntervalKeyboardPresen
         for ((index, value) in coloredSymbolsArray.withIndex()) {
             if (value != null) {
                 if (index < string.length / 2) {
-                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.orange)), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.red)), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 } else {
-                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.orange)), index + 1, index + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.red)), index + 1, index + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
             }
         }

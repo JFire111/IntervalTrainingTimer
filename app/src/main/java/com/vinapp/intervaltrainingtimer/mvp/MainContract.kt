@@ -24,25 +24,31 @@ interface MainContract {
 
         fun hideStartButton()
 
-        fun showLeftButton(text: String)
+        fun showClearButton()
 
-        fun hideLeftButton()
+        fun hideClearButton()
 
-        fun showRightButton(text: String)
+        fun showSaveButton()
 
-        fun hideRightButton()
+        fun hideSaveButton()
+
+        fun showEditButton()
+
+        fun hideEditButton()
     }
 
     abstract class Presenter: MVPPresenter<View>(), SectionsEventHandler {
-
-        abstract fun onStartButtonClick()
 
         abstract fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener)
 
         abstract fun sectionScrolled()
 
-        abstract fun onLeftButtonClick()
+        abstract fun onStartButtonClick()
 
-        abstract fun onRightButtonClick()
+        abstract fun onClearButtonClick()
+
+        abstract fun onSaveButtonClick()
+
+        abstract fun onEditButtonClick()
     }
 }

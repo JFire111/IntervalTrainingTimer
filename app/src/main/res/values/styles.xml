@@ -3,13 +3,13 @@
     <style name="DarkAppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/darkGray</item>
         <item name="colorPrimaryDark">@color/lightGray</item>
-        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccent">@color/red</item>
     </style>
 
     <style name="DarkSettingsTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/darkGray</item>
         <item name="colorPrimaryDark">@color/darkGray</item>
-        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccent">@color/red</item>
         <item name="android:windowBackground">@color/darkGray</item>
     </style>
 </resources>

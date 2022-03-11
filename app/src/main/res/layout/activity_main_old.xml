@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom|start"
             app:tabGravity="fill"
-            app:tabTextColor="@color/orange"
+            app:tabTextColor="@color/red"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="4dp">
 

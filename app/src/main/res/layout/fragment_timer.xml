@@ -30,7 +30,7 @@
         android:max="10"
         android:progress="3"
         android:progressBackgroundTint="@color/mediumGray"
-        android:progressTint="@color/orange"
+        android:progressTint="@color/red"
         app:layout_constraintBottom_toTopOf="@+id/timeTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

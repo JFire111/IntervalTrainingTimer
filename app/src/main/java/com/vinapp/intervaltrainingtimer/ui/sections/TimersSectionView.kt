@@ -11,11 +11,10 @@ import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerListBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
-import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 import kotlinx.android.synthetic.main.fragment_timer_list.view.*
 
-class TimersSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
+class TimersSectionView(timersSectionEventListener: TimersSectionEventListener): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
 
     override val title: String
         get() = "TimerListSection"
@@ -27,7 +26,7 @@ class TimersSectionView(sectionsEventHandler: SectionsEventHandler): Fragment(),
     private var _binding: FragmentTimerListBinding? = null
     private val binding
         get() = _binding!!
-    private var presenter = TimersSectionPresenter(sectionsEventHandler)
+    private var presenter = TimersSectionPresenter(timersSectionEventListener)
     private lateinit var timersRecyclerView: RecyclerView
     val timerListOutput: TimerListOutput
         get() = presenter

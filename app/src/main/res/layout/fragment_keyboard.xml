@@ -8,8 +8,8 @@
     android:background="@color/darkGray">
 
     <EditText
-        android:id="@+id/intervalNameTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/intervalNameEditText"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:textSize="18dp"
@@ -18,6 +18,7 @@
         android:maxWidth="250dp"
         android:maxLength="32"
         android:textAlignment="center"
+        android:background="@drawable/edit_text_shape"
         app:layout_constraintBottom_toTopOf="@+id/displayTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

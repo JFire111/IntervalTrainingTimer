@@ -7,31 +7,7 @@ interface SectionsEventHandler {
 
     var currentSection: Int
 
-    fun onAddRoundClick()
-
-    fun onRemoveRoundClick()
-
-    fun onIntervalClick(intervalPosition: Int)
-
-    fun onAddIntervalClick()
-
-    fun onDeleteIntervalClick(intervalPosition: Int)
-
     fun onCloseIntervalKeyboard()
-
-    fun onAddTimerClick()
-
-    fun onTimerClick(timer: Timer)
-
-    fun onEditTimerClick(timer: Timer)
-
-    fun onDeleteTimerClick(timerId: Int)
-
-    fun onClearTimerClick()
-
-    fun onSaveTimerClick()
-
-    fun setTimer(timer: Timer)
 
     interface OnIntervalKeyboardListener {
 

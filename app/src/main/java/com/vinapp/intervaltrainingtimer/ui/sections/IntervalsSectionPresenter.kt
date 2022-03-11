@@ -4,36 +4,41 @@ import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
-import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
 
-class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEventHandler): IntervalSectionContract.Presenter(), SideButtonsClickListener, TimerEditingOutput {
+class IntervalsSectionPresenter(override val intervalsSectionEventListener: IntervalsSectionEventListener): IntervalSectionContract.Presenter(), TimerEditingOutput, SideButtonsClickListener {
 
+    private var timerName: String? = null
     private var numberOfRounds: Int = 1
     private var intervals: ArrayList<Interval> = arrayListOf()
 
+    override fun onNameChanged(name: String) {
+        timerName = name
+    }
+
     override fun addRound() {
-        sectionsEventHandler.onAddRoundClick()
+        intervalsSectionEventListener.onAddRoundClick()
     }
 
     override fun removeRound() {
-        sectionsEventHandler.onRemoveRoundClick()
+        intervalsSectionEventListener.onRemoveRoundClick()
     }
 
     override fun onIntervalClick(position: Int) {
-        sectionsEventHandler.onIntervalClick(position)
+        intervalsSectionEventListener.onIntervalClick(position)
     }
 
     override fun onAddIntervalClick() {
-        sectionsEventHandler.onAddIntervalClick()
+        intervalsSectionEventListener.onAddIntervalClick()
     }
 
     override fun onDeleteIntervalClick(position: Int) {
-        sectionsEventHandler.onDeleteIntervalClick(position)
+        intervalsSectionEventListener.onDeleteIntervalClick(position)
     }
 
     override fun attachView(view: IntervalSectionContract.View) {
         super.attachView(view)
+        view.showTimerName(this.timerName)
         view.showIntervalList(this.intervals)
         view.showNumberOfRounds(this.numberOfRounds)
     }
@@ -43,14 +48,6 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
     }
 
     override fun destroy() {
-    }
-
-    override fun onLeftButtonClick() {
-        sectionsEventHandler.onClearTimerClick()
-    }
-
-    override fun onRightButtonClick() {
-        sectionsEventHandler.onSaveTimerClick()
     }
 
     override fun provideNumberOfRounds(numberOfRounds: Int) {
@@ -65,6 +62,14 @@ class IntervalsSectionPresenter(override val sectionsEventHandler: SectionsEvent
     }
 
     override fun provideTimer(timer: Timer) {
-        sectionsEventHandler.setTimer(timer)
+        intervalsSectionEventListener.setTimer(timer)
+    }
+
+    override fun onLeftButtonClick() {
+        intervalsSectionEventListener.onClearTimerClick()
+    }
+
+    override fun onRightButtonClick() {
+        intervalsSectionEventListener.onSaveTimerClick(timerName!!)
     }
 }

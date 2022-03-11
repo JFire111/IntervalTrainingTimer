@@ -3,10 +3,13 @@ package com.vinapp.intervaltrainingtimer.mvp
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.presenter.sections.SectionPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
+import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionEventListener
 
 interface IntervalSectionContract {
 
     interface View: SectionView {
+
+        fun showTimerName(name: String?)
 
         fun showNumberOfRounds(numberOfRounds: Int)
 
@@ -14,6 +17,10 @@ interface IntervalSectionContract {
     }
 
     abstract class Presenter: SectionPresenter<View>() {
+
+        abstract val intervalsSectionEventListener: IntervalsSectionEventListener
+
+        abstract fun onNameChanged(name: String)
 
         abstract fun addRound()
 

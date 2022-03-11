@@ -48,7 +48,7 @@ public class ColorSwitch{
                         if (restBetweenRoundsCounter >= timeOfRestBetweenRounds) {
                             //check for start from rest
                             if (!invertedColors) {
-                                color = R.color.orange;
+                                color = R.color.red;
                             } else {
                                 color = R.color.green;
                             }
@@ -59,14 +59,14 @@ public class ColorSwitch{
                             if (!invertedColors) {
                                 color = R.color.green;
                             } else {
-                                color = R.color.orange;
+                                color = R.color.red;
                             }
                             restBetweenRoundsCounter++;
                         }
                     } else {
                         //check for start from rest
                         if (!invertedColors) {
-                            color = R.color.orange;
+                            color = R.color.red;
                         } else {
                             color = R.color.green;
                         }
@@ -78,7 +78,7 @@ public class ColorSwitch{
                     if (exercisesCounter == numberOfExercises - 1) {
                         color = R.color.green;
                         if (restBetweenRoundsCounter == timeOfRestBetweenRounds) {
-                            color = R.color.orange;
+                            color = R.color.red;
                             exercisesCounter = 0;
                             workCounter = 1;
                             restBetweenRoundsCounter = 0;
@@ -88,7 +88,7 @@ public class ColorSwitch{
                     } else {
                         color = R.color.yellow;
                         if (restBetweenExercisesCounter == timeOfRestBetweenExercises) {
-                            color = R.color.orange;
+                            color = R.color.red;
                             exercisesCounter++;
                             workCounter = 1;
                             restBetweenExercisesCounter = 0;
@@ -97,7 +97,7 @@ public class ColorSwitch{
                         }
                     }
                 } else {
-                    color = R.color.orange;
+                    color = R.color.red;
                     workCounter++;
                 }
                 break;
@@ -123,7 +123,7 @@ public class ColorSwitch{
     public int getButtonIconColor() {
         int buttonIconColor = R.drawable.pause_white;
         switch (color) {
-            case R.color.orange:
+            case R.color.red:
                 buttonIconColor = R.drawable.pause_red;
                 break;
             case R.color.green:

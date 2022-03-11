@@ -178,7 +178,7 @@ public class KeyboardActivity extends Activity {
         switch (DATA_TYPE) {
             case "number":
                 if (changedCharsPosition[0]) {
-                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.orange)), 0, spannableText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)), 0, spannableText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 break;
             case "time":
@@ -189,10 +189,10 @@ public class KeyboardActivity extends Activity {
                     }
                 }
                 if (i <= 2) {
-                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.orange)), 0, i, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)), 0, i, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
-                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.orange)), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.orange)), 3, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)), 3, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 break;
             default:

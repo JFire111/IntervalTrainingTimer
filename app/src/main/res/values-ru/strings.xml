@@ -102,5 +102,6 @@
     <string name="hintMinutes">мин</string>
     <string name="hintSeconds">сек</string>
     <string name="hintNumbers">кол</string>
+    <string name="timerName">Название таймера</string>
 
 </resources>
