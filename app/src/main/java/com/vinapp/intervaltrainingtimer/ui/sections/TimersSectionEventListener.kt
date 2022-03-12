@@ -13,4 +13,6 @@ interface TimersSectionEventListener {
     fun onDeleteTimerClick(timerId: Int)
 
     fun setTimer(timer: Timer)
+
+    fun onStartTimerClick(timer: Timer)
 }

@@ -1,98 +1,29 @@
 package com.vinapp.intervaltrainingtimer.logic.timerediting
 
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
 
-    private var timer: Timer? = null
-    private var numberOfRounds: Int = 1
-    private val intervalList: ArrayList<Interval> = arrayListOf()
-
-    override fun saveTimer() {
-        if (timer != null) {
-            timer!!.numberOfRounds = numberOfRounds
-            timer!!.intervals = intervalList.toList()
-            timer!!.updatedTime = System.currentTimeMillis()
-            timerRepository.updateTimer(timer!!)
+    override fun saveTimer(timer: Timer) {
+        var timerId = timer.id
+        if (timerId != null) {
+            timer.updatedTime = System.currentTimeMillis()
+            timerRepository.updateTimer(timer)
+            timerEditingOutput?.provideTimer(timer)
         } else {
-            timer = Timer(getUniqueId(1), "NAME", numberOfRounds, intervalList.toList(), System.currentTimeMillis(), null)
-            timerRepository.addTimer(timer!!)
+            timerId = getUniqueId(1)
+            timerRepository.addTimer(timer.copy(id = timerId, createdTime = System.currentTimeMillis()))
         }
-        timerEditingOutput?.provideTimer(timer!!)
-        timer = null
-        numberOfRounds = 1
-        intervalList.clear()
-        provideNewValues()
-    }
-
-    override fun addRound() {
-        numberOfRounds++
-        timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
-    }
-
-    override fun removeRound() {
-        if (numberOfRounds > 1) {
-            numberOfRounds--
-            timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
-        }
-    }
-
-    override fun addInterval(interval: Interval) {
-        intervalList.add(interval)
-        timerEditingOutput?.provideIntervals(intervalList)
-    }
-
-    override fun getInterval(intervalPosition: Int): Interval {
-        return intervalList[intervalPosition]
-    }
-
-    override fun updateInterval(position: Int, interval: Interval) {
-        intervalList[position] = interval
-        timerEditingOutput?.provideIntervals(intervalList)
-    }
-
-    override fun deleteInterval(intervalPosition: Int) {
-        intervalList.removeAt(intervalPosition)
-        timerEditingOutput?.provideIntervals(intervalList)
-    }
-
-    override fun setTimerForEditing(timer: Timer?) {
-        this.timer = timer
-        if (intervalList.isNotEmpty()) {
-            intervalList.clear()
-        }
-        if (this.timer != null) {
-            numberOfRounds = timer!!.numberOfRounds
-            intervalList.addAll(this.timer!!.intervals)
-            provideNewValues()
-        }
-    }
-
-    override fun cancelEditing() {
-        this.timer = null
-        clear()
-    }
-
-    override fun clear() {
-        numberOfRounds = 1
-        intervalList.clear()
-        provideNewValues()
+        timerEditingOutput?.provideTimer(timerRepository.getTimerById(timerId)!!)
     }
 
     override fun registerOutput(output: TimerEditingOutput) {
         timerEditingOutput = output
-        provideNewValues()
     }
 
     override fun unregisterOutput() {
         timerEditingOutput = null
-    }
-
-    private fun provideNewValues() {
-        timerEditingOutput?.provideIntervals(intervalList)
-        timerEditingOutput?.provideNumberOfRounds(numberOfRounds)
     }
 
     private fun getUniqueId(defaultId: Int): Int {

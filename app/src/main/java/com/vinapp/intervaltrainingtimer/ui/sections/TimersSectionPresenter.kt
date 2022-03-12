@@ -3,9 +3,9 @@ package com.vinapp.intervaltrainingtimer.ui.sections
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
-import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
+import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
-class TimersSectionPresenter(override val timersSectionEventListener: TimersSectionEventListener): TimerSectionContract.Presenter(), TimerListOutput, SideButtonsClickListener {
+class TimersSectionPresenter(override val timersSectionEventListener: TimersSectionEventListener): TimerSectionContract.Presenter(), TimerListOutput, OnActionButtonsClickListener {
 
     var selectedTimerPosition: Int? = null
     var timers: ArrayList<Timer> = arrayListOf()
@@ -20,7 +20,7 @@ class TimersSectionPresenter(override val timersSectionEventListener: TimersSect
     }
 
     override fun onDeleteTimerClick(position: Int) {
-        timersSectionEventListener.onDeleteTimerClick(timers[position].id)
+        timersSectionEventListener.onDeleteTimerClick(timers[position].id!!)
     }
 
     override fun attachView(view: TimerSectionContract.View) {
@@ -41,9 +41,15 @@ class TimersSectionPresenter(override val timersSectionEventListener: TimersSect
         view?.showTimerList(this.timers)
     }
 
+    override fun onStartButtonClick() {
+        selectedTimerPosition?.let {
+            timersSectionEventListener.onStartTimerClick(timers[it])
+        }
+    }
+
     override fun onLeftButtonClick() {
-        if (selectedTimerPosition != null) {
-            timersSectionEventListener.onEditTimerClick(timers[selectedTimerPosition!!])
+        selectedTimerPosition?.let {
+            timersSectionEventListener.onEditTimerClick(timers[it])
         }
     }
 

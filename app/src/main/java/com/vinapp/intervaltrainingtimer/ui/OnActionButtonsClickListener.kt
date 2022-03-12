@@ -1,6 +1,8 @@
 package com.vinapp.intervaltrainingtimer.ui
 
-interface SideButtonsClickListener {
+interface OnActionButtonsClickListener {
+
+    fun onStartButtonClick()
 
     fun onLeftButtonClick()
 

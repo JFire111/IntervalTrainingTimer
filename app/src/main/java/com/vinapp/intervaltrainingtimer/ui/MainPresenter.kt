@@ -15,16 +15,17 @@ class MainPresenter(
     private val timerListInput: TimerListInput,
     private val serviceController: TimerServiceController
     ) : MainContract.Presenter(),
+    OnActionButtonsClickListener,
     IntervalsSectionEventListener,
     TimersSectionEventListener {
 
-    var sideButtonsClickListener: SideButtonsClickListener? = null
+    var onActionButtonsClickListener: OnActionButtonsClickListener? = null
     var isNewTimer: Boolean = true
     var selectedTimer: Timer? = null
 
-    override fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener) {
+    override fun sectionSelected(section: Int, onActionButtonsClickListener: OnActionButtonsClickListener) {
         this.currentSection = section
-        this.sideButtonsClickListener = sideButtonsClickListener
+        this.onActionButtonsClickListener = onActionButtonsClickListener
         when (section) {
             0 -> {
                 if (isNewTimer) {
@@ -50,22 +51,15 @@ class MainPresenter(
     }
 
     override fun onStartButtonClick() {
-        if (currentSection == 0) {
-            timerEditingInput.saveTimer()
-        }
-        view!!.showTimerScreen(selectedTimer!!, serviceController)
+        onActionButtonsClickListener!!.onStartButtonClick()
     }
 
-    override fun onClearButtonClick() {
-        sideButtonsClickListener?.onLeftButtonClick()
+    override fun onLeftButtonClick() {
+        onActionButtonsClickListener!!.onLeftButtonClick()
     }
 
-    override fun onSaveButtonClick() {
-        sideButtonsClickListener?.onRightButtonClick()
-    }
-
-    override fun onEditButtonClick() {
-        sideButtonsClickListener?.onLeftButtonClick()
+    override fun onRightButtonClick() {
+        onActionButtonsClickListener!!.onRightButtonClick()
     }
 
     override fun detachView() {
@@ -74,41 +68,12 @@ class MainPresenter(
     override fun destroy() {
     }
 
-    override fun onAddRoundClick() {
-        timerEditingInput.addRound()
-    }
-
-    override fun onRemoveRoundClick() {
-        timerEditingInput.removeRound()
-    }
-
-    override fun onIntervalClick(intervalPosition: Int) {
-        val interval = timerEditingInput.getInterval(intervalPosition)
-        val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
-            override fun onSave(interval: Interval) {
-                timerEditingInput.updateInterval(intervalPosition, interval)
-            }
-
-            override fun onCancel() {
-            }
-        }
+    override fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
         view!!.showIntervalKeyboard(interval, onIntervalKeyboardListener)
     }
 
-    override fun onAddIntervalClick() {
-        val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
-            override fun onSave(interval: Interval) {
-                timerEditingInput.addInterval(interval)
-            }
-
-            override fun onCancel() {
-            }
-        }
+    override fun onAddIntervalClick(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
         view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
-    }
-
-    override fun onDeleteIntervalClick(intervalPosition: Int) {
-        timerEditingInput.deleteInterval(intervalPosition)
     }
 
     override fun onCloseIntervalKeyboard() {
@@ -127,7 +92,6 @@ class MainPresenter(
 
     override fun onEditTimerClick(timer: Timer) {
         selectedTimer = timer
-        timerEditingInput.setTimerForEditing(timer)
         isNewTimer = false
         view!!.showSection(0)
     }
@@ -145,8 +109,8 @@ class MainPresenter(
         }
     }
 
-    override fun onSaveTimerClick(timerName: String) {
-        timerEditingInput.saveTimer()
+    override fun onSaveTimerClick(timer: Timer) {
+        timerEditingInput.saveTimer(timer)
         timerListInput.openTimerList()
         isNewTimer = true
         view!!.showSection(1)
@@ -156,4 +120,7 @@ class MainPresenter(
         this.selectedTimer = timer
     }
 
+    override fun onStartTimerClick(timer: Timer) {
+        view!!.showTimerScreen(timer, serviceController)
+    }
 }

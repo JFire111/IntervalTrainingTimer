@@ -6,7 +6,7 @@ import com.vinapp.intervaltrainingtimer.mvp.presenter.MVPPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.MVPView
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
-import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
+import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
 interface MainContract {
 
@@ -39,16 +39,9 @@ interface MainContract {
 
     abstract class Presenter: MVPPresenter<View>(), SectionsEventHandler {
 
-        abstract fun sectionSelected(section: Int, sideButtonsClickListener: SideButtonsClickListener)
+        abstract fun sectionSelected(section: Int, onActionButtonsClickListener: OnActionButtonsClickListener)
 
         abstract fun sectionScrolled()
 
-        abstract fun onStartButtonClick()
-
-        abstract fun onClearButtonClick()
-
-        abstract fun onSaveButtonClick()
-
-        abstract fun onEditButtonClick()
     }
 }

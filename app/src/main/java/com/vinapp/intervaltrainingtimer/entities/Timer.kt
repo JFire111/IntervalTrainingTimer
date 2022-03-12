@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Timer(
-        @PrimaryKey(autoGenerate = true) val id: Int,
+        @PrimaryKey(autoGenerate = true) val id: Int?,
         var name: String,
         var numberOfRounds: Int,
         var intervals: List<Interval>,
-        val createdTime: Long,
+        val createdTime: Long?,
         var updatedTime: Long?) {
 
     fun getDuration(): Int {

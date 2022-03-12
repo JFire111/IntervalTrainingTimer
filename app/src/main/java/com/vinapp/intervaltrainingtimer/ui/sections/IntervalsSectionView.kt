@@ -15,7 +15,7 @@ import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
-import com.vinapp.intervaltrainingtimer.ui.SideButtonsClickListener
+import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
 class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventListener): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
@@ -23,7 +23,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
         get() = "TimerSettingsSection"
     override val sectionFragment: Fragment
         get() = this
-    override val sideButtonsClickListener: SideButtonsClickListener
+    override val onActionButtonsClickListener: OnActionButtonsClickListener
         get() = presenter
 
     private var _binding: FragmentIntervalListBinding? = null

@@ -71,7 +71,7 @@ class MainView : Fragment(), MainContract.View {
     override fun onStart() {
         super.onStart()
         presenter.attachView(this)
-        presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
+        presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].onActionButtonsClickListener)
     }
 
     override fun onStop() {
@@ -156,7 +156,7 @@ class MainView : Fragment(), MainContract.View {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
                 if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].sideButtonsClickListener)
+                    presenter.sectionSelected(sectionsViewPager.currentItem, sections[sectionsViewPager.currentItem].onActionButtonsClickListener)
                 } else {
                     presenter.sectionScrolled()
                 }
@@ -181,19 +181,14 @@ class MainView : Fragment(), MainContract.View {
     private fun initLeftButton() {
         leftButton = binding.leftButton
         leftButton.setOnClickListener {
-            when (sectionsViewPager.currentItem) {
-                0 -> presenter.onClearButtonClick()
-                1 -> presenter.onEditButtonClick()
-            }
+            presenter.onLeftButtonClick()
         }
     }
 
     private fun initRightButton() {
         rightButton = binding.rightButton
         rightButton.setOnClickListener {
-            when (sectionsViewPager.currentItem) {
-                0 -> presenter.onSaveButtonClick()
-            }
+            presenter.onRightButtonClick()
         }
     }
 }
