@@ -2,7 +2,7 @@ package com.vinapp.intervaltrainingtimer.ui.sections
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
+import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
@@ -71,19 +71,17 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     override fun destroy() {
     }
 
-    override fun provideNumberOfRounds(numberOfRounds: Int) {
-        this.numberOfRounds = numberOfRounds
-        view?.showNumberOfRounds(this.numberOfRounds)
-    }
-
-    override fun provideIntervals(intervals: List<Interval>) {
-        this.intervals.clear()
-        this.intervals.addAll(intervals)
-        view?.showIntervalList(this.intervals)
-    }
-
     override fun provideTimer(timer: Timer) {
-        intervalsSectionEventListener.setTimer(timer)
+        this.timer = timer
+        this.timerName = timer.name
+        this.numberOfRounds = timer.numberOfRounds
+        this.intervals.apply {
+            clear()
+            addAll(timer.intervals)
+        }
+        view!!.showTimerName(timerName)
+        view!!.showNumberOfRounds(numberOfRounds)
+        view!!.showIntervalList(intervals)
     }
 
     override fun onStartButtonClick() {
@@ -102,7 +100,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
         if (timer == null) {
             intervalsSectionEventListener.onSaveTimerClick(Timer(null, timerName!!, numberOfRounds, intervals, null, null))
         } else {
-            intervalsSectionEventListener.onSaveTimerClick(timer!!)
+            intervalsSectionEventListener.onSaveTimerClick(Timer(timer!!.id, timerName!!, numberOfRounds, intervals, timer!!.createdTime, null))
         }
     }
 }

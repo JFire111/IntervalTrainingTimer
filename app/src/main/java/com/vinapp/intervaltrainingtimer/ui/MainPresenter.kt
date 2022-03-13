@@ -2,8 +2,8 @@ package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInput
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInput
+import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListInput
+import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionEventListener
@@ -20,23 +20,17 @@ class MainPresenter(
     TimersSectionEventListener {
 
     var onActionButtonsClickListener: OnActionButtonsClickListener? = null
-    var isNewTimer: Boolean = true
-    var selectedTimer: Timer? = null
 
     override fun sectionSelected(section: Int, onActionButtonsClickListener: OnActionButtonsClickListener) {
         this.currentSection = section
         this.onActionButtonsClickListener = onActionButtonsClickListener
         when (section) {
             0 -> {
-                if (isNewTimer) {
-                    view!!.showClearButton()
-                } else {
-                    //view!!.showLeftButton("Cancel")
-                }
+                view!!.showClearButton()
                 view!!.showSaveButton()
             }
             1 -> {
-                timerListInput.openTimerList()
+                timerListInput.getTimerList()
                 view!!.showEditButton()
             }
         }
@@ -81,18 +75,11 @@ class MainPresenter(
     }
 
     override fun onAddTimerClick() {
-        isNewTimer = true
         view!!.showSection(0)
     }
 
-    override fun onTimerClick(timer: Timer) {
-        selectedTimer = timer
-        timerListInput.selectTimer(timer)
-    }
-
     override fun onEditTimerClick(timer: Timer) {
-        selectedTimer = timer
-        isNewTimer = false
+        timerEditingInput.setTimer(timer)
         view!!.showSection(0)
     }
 
@@ -101,23 +88,12 @@ class MainPresenter(
     }
 
     override fun onClearTimerClick() {
-        if (isNewTimer) {
-            timerEditingInput.clear()
-        } else {
-            timerEditingInput.cancelEditing()
-            view!!.showSection(1)
-        }
     }
 
     override fun onSaveTimerClick(timer: Timer) {
         timerEditingInput.saveTimer(timer)
-        timerListInput.openTimerList()
-        isNewTimer = true
+        timerListInput.getTimerList()
         view!!.showSection(1)
-    }
-
-    override fun setTimer(timer: Timer) {
-        this.selectedTimer = timer
     }
 
     override fun onStartTimerClick(timer: Timer) {

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingOutput
+import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 

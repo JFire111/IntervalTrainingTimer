@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.logic.gettimers
+package com.vinapp.intervaltrainingtimer.logic.timer_list
 
 import com.vinapp.intervaltrainingtimer.entities.Timer
 

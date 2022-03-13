@@ -14,7 +14,5 @@ interface IntervalsSectionEventListener {
 
     fun onSaveTimerClick(timer: Timer)
 
-    fun setTimer(timer: Timer)
-
     fun onStartTimerClick(timer: Timer)
 }

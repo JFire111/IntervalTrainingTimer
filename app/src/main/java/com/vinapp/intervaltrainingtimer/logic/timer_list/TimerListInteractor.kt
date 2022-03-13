@@ -1,18 +1,11 @@
-package com.vinapp.intervaltrainingtimer.logic.gettimers
+package com.vinapp.intervaltrainingtimer.logic.timer_list
 
-import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerListInteractor(private val timerRepository: TimerMVPModel, private var timerListOutput: TimerListOutput?): TimerListInput {
 
-    private var selectedTimer: Timer? = null
-
-    override fun openTimerList() {
+    override fun getTimerList() {
         timerListOutput?.provideTimers(timerRepository.getTimers())
-    }
-
-    override fun selectTimer(timer: Timer?) {
-        selectedTimer = timer
     }
 
     override fun deleteTimer(timerId: Int) {

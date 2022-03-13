@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerListBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
+import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 

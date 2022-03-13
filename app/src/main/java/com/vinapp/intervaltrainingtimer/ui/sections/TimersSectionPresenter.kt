@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui.sections
 
 import com.vinapp.intervaltrainingtimer.entities.Timer
-import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListOutput
+import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
@@ -12,7 +12,6 @@ class TimersSectionPresenter(override val timersSectionEventListener: TimersSect
 
     override fun onTimerItemClick(position: Int) {
         selectedTimerPosition = position
-        timersSectionEventListener.onTimerClick(timers[position])
     }
 
     override fun onAddTimerClick() {

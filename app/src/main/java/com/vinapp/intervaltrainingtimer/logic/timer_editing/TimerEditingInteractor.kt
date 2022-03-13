@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.logic.timerediting
+package com.vinapp.intervaltrainingtimer.logic.timer_editing
 
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
@@ -16,6 +16,10 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
             timerRepository.addTimer(timer.copy(id = timerId, createdTime = System.currentTimeMillis()))
         }
         timerEditingOutput?.provideTimer(timerRepository.getTimerById(timerId)!!)
+    }
+
+    override fun setTimer(timer: Timer) {
+        timerEditingOutput?.provideTimer(timer)
     }
 
     override fun registerOutput(output: TimerEditingOutput) {

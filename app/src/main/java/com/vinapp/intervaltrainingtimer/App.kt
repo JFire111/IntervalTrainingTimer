@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.vinapp.intervaltrainingtimer.data.database.Database
 import com.vinapp.intervaltrainingtimer.data.repositories.TimerRepository
-import com.vinapp.intervaltrainingtimer.logic.gettimers.TimerListInteractor
-import com.vinapp.intervaltrainingtimer.logic.timerediting.TimerEditingInteractor
+import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListInteractor
+import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingInteractor
 import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
