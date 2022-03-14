@@ -38,7 +38,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     val timerEditingOutput: TimerEditingOutput
         get() = presenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentIntervalListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         initTimerNameTextView()
@@ -56,6 +56,10 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
             timerNameTextView.text = "Timer"
             presenter.onNameChanged(timerNameTextView.text.toString())
         }
+    }
+
+    override fun getTimerName(): String {
+        return timerNameTextView.text.toString()
     }
 
     override fun showNumberOfRounds(numberOfRounds: Int) {

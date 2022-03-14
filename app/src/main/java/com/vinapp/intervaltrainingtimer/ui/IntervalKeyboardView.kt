@@ -37,7 +37,7 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
 
     private val keyboardLength = 10
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentKeyboardBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         initIntervalNameTextView()

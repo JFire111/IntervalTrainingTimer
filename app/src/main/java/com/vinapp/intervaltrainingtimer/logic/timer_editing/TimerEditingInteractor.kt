@@ -5,6 +5,8 @@ import com.vinapp.intervaltrainingtimer.mvp.model.TimerMVPModel
 
 class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private var timerEditingOutput: TimerEditingOutput?): TimerEditingInput {
 
+    private var currentTimer: Timer? = null
+
     override fun saveTimer(timer: Timer) {
         var timerId = timer.id
         if (timerId != null) {
@@ -24,6 +26,9 @@ class TimerEditingInteractor(private val timerRepository: TimerMVPModel, private
 
     override fun registerOutput(output: TimerEditingOutput) {
         timerEditingOutput = output
+        if (currentTimer != null) {
+            output.provideTimer(currentTimer!!)
+        }
     }
 
     override fun unregisterOutput() {

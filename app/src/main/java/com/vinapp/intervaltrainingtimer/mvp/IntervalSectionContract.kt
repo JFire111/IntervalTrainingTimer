@@ -11,6 +11,8 @@ interface IntervalSectionContract {
 
         fun showTimerName(name: String?)
 
+        fun getTimerName(): String
+
         fun showNumberOfRounds(numberOfRounds: Int)
 
         fun showIntervalList(intervalList: List<Interval>)

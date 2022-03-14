@@ -59,9 +59,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
 
     override fun attachView(view: IntervalSectionContract.View) {
         super.attachView(view)
-        view.showTimerName(this.timerName)
-        view.showIntervalList(this.intervals)
-        view.showNumberOfRounds(this.numberOfRounds)
+        updateView(view)
     }
 
     override fun detachView() {
@@ -75,20 +73,21 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
         this.timer = timer
         this.timerName = timer.name
         this.numberOfRounds = timer.numberOfRounds
-        this.intervals.apply {
-            clear()
-            addAll(timer.intervals)
-        }
-        view!!.showTimerName(timerName)
-        view!!.showNumberOfRounds(numberOfRounds)
-        view!!.showIntervalList(intervals)
+        this.intervals.clear()
+        this.intervals.addAll(timer.intervals)
+        updateView(view!!)
     }
 
     override fun onStartButtonClick() {
-        if (timer != null) {
+        if (timer == null) {
+            timer = getNewTimer()
+        } else {
+            timer!!.name = timerName!!
+            timer!!.numberOfRounds = numberOfRounds
+            timer!!.intervals = intervals
+        }
+        if (timer!!.intervals.isNotEmpty()) {
             intervalsSectionEventListener.onStartTimerClick(timer!!)
-        } else if (intervals.isNotEmpty()) {
-            intervalsSectionEventListener.onStartTimerClick(Timer(null, timerName!!, numberOfRounds, intervals, null, null))
         }
     }
 
@@ -97,10 +96,21 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     }
 
     override fun onRightButtonClick() {
+        timerName = view!!.getTimerName()
         if (timer == null) {
-            intervalsSectionEventListener.onSaveTimerClick(Timer(null, timerName!!, numberOfRounds, intervals, null, null))
+            intervalsSectionEventListener.onSaveTimerClick(getNewTimer())
         } else {
-            intervalsSectionEventListener.onSaveTimerClick(Timer(timer!!.id, timerName!!, numberOfRounds, intervals, timer!!.createdTime, null))
+            intervalsSectionEventListener.onSaveTimerClick(timer!!.copy(name = timerName!!, numberOfRounds = numberOfRounds, intervals = intervals))
         }
+    }
+
+    private fun getNewTimer(): Timer {
+        return Timer(null, timerName!!, numberOfRounds, intervals, null, null)
+    }
+
+    private fun updateView(view: IntervalSectionContract.View) {
+        view.showTimerName(timerName)
+        view.showIntervalList(intervals)
+        view.showNumberOfRounds(numberOfRounds)
     }
 }

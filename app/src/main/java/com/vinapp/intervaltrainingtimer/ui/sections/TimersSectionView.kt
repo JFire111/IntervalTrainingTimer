@@ -30,7 +30,7 @@ class TimersSectionView(timersSectionEventListener: TimersSectionEventListener):
     val timerListOutput: TimerListOutput
         get() = presenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTimerListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         initTimerRecyclerView()
