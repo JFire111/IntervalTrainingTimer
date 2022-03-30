@@ -10,8 +10,6 @@ interface IntervalsSectionEventListener {
 
     fun onAddIntervalClick(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener)
 
-    fun onClearTimerClick()
-
     fun onSaveTimerClick(timer: Timer)
 
     fun onStartTimerClick(timer: Timer)

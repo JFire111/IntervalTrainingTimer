@@ -88,7 +88,8 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     }
 
     override fun onLeftButtonClick() {
-        intervalsSectionEventListener.onClearTimerClick()
+        clearTimer()
+        updateView(view!!)
     }
 
     override fun onRightButtonClick() {
@@ -98,6 +99,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
         } else {
             intervalsSectionEventListener.onSaveTimerClick(timer!!.copy(name = timerName!!, numberOfRounds = numberOfRounds, intervals = intervals))
         }
+        clearTimer()
     }
 
     private fun getNewTimer(): Timer {
@@ -109,5 +111,12 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
         view.showTimerName(timerName)
         view.showIntervalList(intervals)
         view.showNumberOfRounds(numberOfRounds)
+    }
+
+    private fun clearTimer() {
+        timer = null
+        timerName = null
+        numberOfRounds = 1
+        intervals.clear()
     }
 }

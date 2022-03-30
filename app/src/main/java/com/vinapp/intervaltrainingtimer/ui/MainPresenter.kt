@@ -87,9 +87,6 @@ class MainPresenter(
         timerListInput.deleteTimer(timerId)
     }
 
-    override fun onClearTimerClick() {
-    }
-
     override fun onSaveTimerClick(timer: Timer) {
         timerEditingInput.saveTimer(timer)
         timerListInput.getTimerList()
