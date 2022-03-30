@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
     private val binding
         get() = _binding!!
     private var presenter = IntervalsSectionPresenter(intervalsSectionEventListener)
-    private lateinit var timerNameTextView: TextView
+    private lateinit var timerNameTextView: EditText
     private lateinit var numberOfRoundsTextView: TextView
     private lateinit var addRoundButton: FloatingActionButton
     private lateinit var removeRoundButton: FloatingActionButton
@@ -51,10 +52,9 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
 
     override fun showTimerName(name: String?) {
         if (name != null) {
-            timerNameTextView.text = name
+            timerNameTextView.setText(name)
         } else {
-            timerNameTextView.text = "Timer"
-            presenter.onNameChanged(timerNameTextView.text.toString())
+            timerNameTextView.setText("Timer")
         }
     }
 
@@ -114,7 +114,6 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
         timerNameTextView.setOnFocusChangeListener { view, hasFocus ->
             (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
                 hideSoftInputFromWindow(view?.windowToken, 0)
-                presenter.onNameChanged(timerNameTextView.text.toString())
             }
         }
     }

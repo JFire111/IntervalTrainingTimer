@@ -22,8 +22,6 @@ interface IntervalSectionContract {
 
         abstract val intervalsSectionEventListener: IntervalsSectionEventListener
 
-        abstract fun onNameChanged(name: String)
-
         abstract fun addRound()
 
         abstract fun removeRound()

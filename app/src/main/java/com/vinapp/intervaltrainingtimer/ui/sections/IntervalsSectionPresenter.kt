@@ -14,10 +14,6 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     private var numberOfRounds: Int = 1
     private var intervals: ArrayList<Interval> = arrayListOf()
 
-    override fun onNameChanged(name: String) {
-        timerName = name
-    }
-
     override fun addRound() {
         numberOfRounds++
         view!!.showNumberOfRounds(numberOfRounds)
@@ -105,6 +101,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     }
 
     private fun getNewTimer(): Timer {
+        timerName = view!!.getTimerName()
         return Timer(null, timerName!!, numberOfRounds, intervals, null, null)
     }
 
