@@ -9,6 +9,8 @@ interface IntervalKeyboardContract {
 
         fun showIntervalName(name: String)
 
+        fun getIntervalName(): String
+
         fun showTimeValue(timeValue: String, valuesArray: Array<Int?>)
 
         fun showSelectedType(intervalType: IntervalType)
@@ -23,8 +25,6 @@ interface IntervalKeyboardContract {
         abstract fun onRestButtonClick()
 
         abstract fun onWorkButtonClick()
-
-        abstract fun onNameChanged(name: String)
 
         abstract fun onOkButtonClick()
 

@@ -1,13 +1,14 @@
-package com.vinapp.intervaltrainingtimer.ui
+package com.vinapp.intervaltrainingtimer.ui.interval_keyboard
 
 import com.vinapp.intervaltrainingtimer.common.IntervalType
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
+import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
 
 class IntervalKeyboardPresenter(
-        private val eventHandler: SectionsEventHandler,
-        private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener,
-        private val interval: Interval?,
+    private val eventHandler: SectionsEventHandler,
+    private val onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener,
+    private val interval: Interval?,
         ): IntervalKeyboardContract.Presenter() {
 
     private val valueLength = 4
@@ -46,6 +47,7 @@ class IntervalKeyboardPresenter(
 
     override fun onRestButtonClick() {
         intervalType = IntervalType.REST
+        intervalName = view!!.getIntervalName()
         if (intervalName.equals(IntervalType.WORK.toString())) {
             intervalName = IntervalType.REST.toString()
             view!!.showIntervalName(intervalName)
@@ -55,6 +57,7 @@ class IntervalKeyboardPresenter(
 
     override fun onWorkButtonClick() {
         intervalType = IntervalType.WORK
+        intervalName = view!!.getIntervalName()
         if (intervalName.equals(IntervalType.REST.toString())) {
             intervalName = IntervalType.WORK.toString()
             view!!.showIntervalName(intervalName)
@@ -62,11 +65,8 @@ class IntervalKeyboardPresenter(
         view!!.showSelectedType(intervalType)
     }
 
-    override fun onNameChanged(name: String) {
-        intervalName = name
-    }
-
     override fun onOkButtonClick() {
+        intervalName = view!!.getIntervalName()
         val interval = Interval(intervalName, convertToSeconds(timeValue), intervalType)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()

@@ -19,6 +19,7 @@
         android:maxLength="32"
         android:textAlignment="center"
         android:background="@drawable/edit_text_shape"
+        android:inputType="textNoSuggestions"
         app:layout_constraintBottom_toTopOf="@+id/displayTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

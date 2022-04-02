@@ -19,6 +19,8 @@ import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
+import com.vinapp.intervaltrainingtimer.ui.interval_keyboard.IntervalKeyboardPresenter
+import com.vinapp.intervaltrainingtimer.ui.interval_keyboard.IntervalKeyboardView
 import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
 import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
 import com.vinapp.intervaltrainingtimer.ui.timer.TimerView

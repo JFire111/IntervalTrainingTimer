@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui
+package com.vinapp.intervaltrainingtimer.ui.interval_keyboard
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -26,7 +27,7 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
     private var _binding: FragmentKeyboardBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var intervalNameTextView: TextView
+    private lateinit var intervalNameTextView: EditText
     private lateinit var displayTextView: TextView
     private lateinit var keyboardGridLayout: GridLayout
     private lateinit var restButton: Button
@@ -52,7 +53,11 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
     }
 
     override fun showIntervalName(name: String) {
-        intervalNameTextView.text = name
+        intervalNameTextView.setText(name)
+    }
+
+    override fun getIntervalName(): String {
+        return intervalNameTextView.text.toString()
     }
 
     override fun showTimeValue(timeValue: String, valuesArray: Array<Int?>) {
@@ -100,7 +105,6 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
         intervalNameTextView.setOnFocusChangeListener { view, hasFocus ->
             (activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
                 hideSoftInputFromWindow(view?.windowToken, 0)
-                intervalKeyboardPresenter.onNameChanged(intervalNameTextView.text.toString())
             }
         }
     }
