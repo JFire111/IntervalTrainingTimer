@@ -24,6 +24,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/add_interval_item.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/add_timer_item.xml" value="0.3609375" />
+        <entry key="app/src/main/res/layout/dialog_fragment_save_timer.xml" value="0.42346014492753625" />
         <entry key="app/src/main/res/layout/fragment_interval_keyboard.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/fragment_interval_list.xml" value="0.578689528475199" />
         <entry key="app/src/main/res/layout/fragment_keyboard.xml" value="0.31979166666666664" />
