@@ -11,11 +11,13 @@
     <string name="finishInfo">Finish</string>
     <!-- Default values General -->
     <string name="numberOfRoundsButtonDefaultValue">0</string>
+    <string name="defaultTimerName">Timer</string>
 
-    <!-- Main Activity -->
-    <string name="saveTimerSettingsButton">Save</string>
-    <string name="deleteTimerSettingsButton">Delete</string>
-    <string name="loadTimerSettingsButton">Load</string>
+    <!-- Main buttons -->
+    <string name="saveButton">Save</string>
+    <string name="clearButton">Clear</string>
+    <string name="deleteButton">Delete</string>
+    <string name="editButton">Edit</string>
 
     <!-- Settings Activity -->
     <string name="settingsTitle">Settings</string>
@@ -29,7 +31,8 @@
     <string name="prefKeySoundOn">KEY_SOUND_ON</string>
 
     <!-- Tab Layout -->
-    <string name="oneExerciseTabItem">One\nexercise</string>
+    <string name="timerSettingsSection">Timer settings</string>
+    <string name="timerListSection">Timer list</string>
     <string name="someExercisesTabItem">Some\nexercises</string>
     <string name="savedTimersTabItem">Saved\ntimers</string>
 

@@ -12,16 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentIntervalListBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingOutput
 import com.vinapp.intervaltrainingtimer.mvp.IntervalSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
-class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventListener): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
+class IntervalsSectionView(override val title: String, intervalsSectionEventListener: IntervalsSectionEventListener): Fragment(), IntervalSectionContract.View, IntervalsSectionAdapter.OnIntervalClickListener {
 
-    override val title: String
-        get() = "TimerSettingsSection"
     override val sectionFragment: Fragment
         get() = this
     override val onActionButtonsClickListener: OnActionButtonsClickListener
@@ -54,7 +53,7 @@ class IntervalsSectionView(intervalsSectionEventListener: IntervalsSectionEventL
         if (name != null) {
             timerNameTextView.setText(name)
         } else {
-            timerNameTextView.setText("Timer")
+            timerNameTextView.setText(getString(R.string.defaultTimerName))
         }
     }
 

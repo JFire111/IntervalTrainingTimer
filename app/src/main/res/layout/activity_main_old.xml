@@ -37,7 +37,7 @@
                 android:id="@+id/oneExerciseTabItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/oneExerciseTabItem" />
+                android:text="@string/timerSettingsSection" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/someExerciseTabItem"
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:onClick="onSaveTimerSettingsButtonClick"
-        android:text="@string/saveTimerSettingsButton"
+        android:text="@string/saveButton"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:onClick="onLoadTimerSettingsButtonClick"
-        android:text="@string/loadTimerSettingsButton"
+        android:text="@string/editButton"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:onClick="onDeleteTimerSettingsButtonClick"
-        android:text="@string/deleteTimerSettingsButton"
+        android:text="@string/deleteButton"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/startButton"

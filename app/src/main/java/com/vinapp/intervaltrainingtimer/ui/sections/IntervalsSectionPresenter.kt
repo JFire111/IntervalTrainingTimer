@@ -25,6 +25,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     }
 
     override fun onIntervalClick(position: Int) {
+        timerName = view!!.getTimerName()
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
                 intervals[position] = interval
@@ -37,6 +38,7 @@ class IntervalsSectionPresenter(override val intervalsSectionEventListener: Inte
     }
 
     override fun onAddIntervalClick() {
+        timerName = view!!.getTimerName()
         val onIntervalKeyboardListener = object : SectionsEventHandler.OnIntervalKeyboardListener {
             override fun onSave(interval: Interval) {
                 intervals.add(interval)

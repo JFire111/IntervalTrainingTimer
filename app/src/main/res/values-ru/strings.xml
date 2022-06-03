@@ -10,11 +10,13 @@
     <string name="finishInfo">Финиш</string>
     <!-- Default values General -->
     <string name="numberOfRoundsButtonDefaultValue">0</string>
+    <string name="defaultTimerName">Таймер</string>
 
-    <!-- Main Activity -->
-    <string name="saveTimerSettingsButton">Сохранить</string>
-    <string name="deleteTimerSettingsButton">Удалить</string>
-    <string name="loadTimerSettingsButton">Загрузить</string>
+    <!-- Main buttons -->
+    <string name="saveButton">Сохранить</string>
+    <string name="clearButton">Очистить</string>
+    <string name="deleteButton">Удалить</string>
+    <string name="editButton">Редактировать</string>
 
     <!-- Settings Activity -->
     <string name="settingsTitle">Настройки</string>
@@ -28,7 +30,8 @@
     <string name="prefKeySoundOn">KEY_SOUND_ON</string>
 
     <!-- Tab Layout -->
-    <string name="oneExerciseTabItem">Одно\nупражнение</string>
+    <string name="timerSettingsSection">Настройка таймера</string>
+    <string name="timerListSection">Список таймеров</string>
     <string name="someExercisesTabItem">Несколько\nупражнений</string>
     <string name="savedTimersTabItem">Сохраненные\nтаймеры</string>
 

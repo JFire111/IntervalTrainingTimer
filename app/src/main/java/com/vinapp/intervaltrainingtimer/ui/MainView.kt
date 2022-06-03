@@ -48,8 +48,8 @@ class MainView : Fragment(), MainContract.View {
         val timerEditingInteractor = app.timerEditingInteractor
         val timerListInteractor = app.timerListInteractor
         presenter = MainPresenter(0, timerEditingInteractor!!, timerListInteractor!!, app.serviceController!!)
-        intervalsSectionView = IntervalsSectionView(presenter)
-        timersSectionView = TimersSectionView(presenter)
+        intervalsSectionView = IntervalsSectionView(getString(R.string.timerSettingsSection), presenter)
+        timersSectionView = TimersSectionView(getString(R.string.timerListSection), presenter)
         timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
         timerListInteractor.registerOutput(timersSectionView.timerListOutput)
         sections = listOf<SectionView>(
@@ -118,7 +118,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showClearButton() {
-        leftButton.text = "Clear"
+        leftButton.text = getString(R.string.clearButton)
         leftButton.visibility = View.VISIBLE
     }
 
@@ -129,7 +129,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showSaveButton() {
-        rightButton.text = "Save"
+        rightButton.text = getString(R.string.saveButton)
         rightButton.visibility = View.VISIBLE
     }
 
@@ -140,7 +140,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showEditButton() {
-        leftButton.text = "Edit"
+        leftButton.text = getString(R.string.editButton)
         leftButton.visibility = View.VISIBLE
     }
 

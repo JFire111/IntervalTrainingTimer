@@ -13,10 +13,8 @@ import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListOutput
 import com.vinapp.intervaltrainingtimer.mvp.TimerSectionContract
 import com.vinapp.intervaltrainingtimer.ui.OnActionButtonsClickListener
 
-class TimersSectionView(timersSectionEventListener: TimersSectionEventListener): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
+class TimersSectionView(override val title: String, timersSectionEventListener: TimersSectionEventListener): Fragment(), TimerSectionContract.View, TimersSectionAdapter.OnTimerClickListener {
 
-    override val title: String
-        get() = "TimerListSection"
     override val sectionFragment: Fragment
         get() = this
     override val onActionButtonsClickListener: OnActionButtonsClickListener
