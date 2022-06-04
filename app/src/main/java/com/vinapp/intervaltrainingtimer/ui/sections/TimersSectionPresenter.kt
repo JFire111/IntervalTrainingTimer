@@ -11,7 +11,11 @@ class TimersSectionPresenter(override val timersSectionEventListener: TimersSect
     var timers: ArrayList<Timer> = arrayListOf()
 
     override fun onTimerItemClick(position: Int) {
-        selectedTimerPosition = position
+        if (position != selectedTimerPosition) {
+            selectedTimerPosition = position
+        } else {
+            selectedTimerPosition = null
+        }
     }
 
     override fun onAddTimerClick() {
