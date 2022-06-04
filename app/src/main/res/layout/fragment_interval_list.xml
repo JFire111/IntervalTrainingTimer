@@ -27,11 +27,11 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:maxLength="32"
-        android:text="Name"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerNameTitleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/timerNameTitleTextView"
+        tools:text="Name" />
 
     <TextView
         android:id="@+id/numberOfRoundTitleTextView"

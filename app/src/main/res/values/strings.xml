@@ -6,11 +6,8 @@
     <string name="timerName">Timer name</string>
     <string name="startButton">Start</string>
     <string name="timeToStartInfo">Start in</string>
-    <string name="delaySeekBarText">Start in</string>
-    <string name="delaySeekBarTextSecondSymbol">s</string>
     <string name="finishInfo">Finish</string>
     <!-- Default values General -->
-    <string name="numberOfRoundsButtonDefaultValue">0</string>
     <string name="defaultTimerName">Timer</string>
 
     <!-- Main buttons -->
@@ -26,66 +23,15 @@
     <string name="darkThemeSwitch">Dark theme</string>
     <string name="timeFormatList">Time format</string>
     <string name="soundOnSwitch">Sound on</string>
-    <!-- Settings Activity Keys -->
-    <string name="prefKeyDarkThemeOn">KEY_DARK_THEME_ON</string>
-    <string name="prefKeySoundOn">KEY_SOUND_ON</string>
 
     <!-- Tab Layout -->
     <string name="timerSettingsSection">Timer settings</string>
     <string name="timerListSection">Timer list</string>
-    <string name="someExercisesTabItem">Some\nexercises</string>
-    <string name="savedTimersTabItem">Saved\ntimers</string>
-
-    <!-- Fragment One Exercise -->
-    <string name="timeOfWorkText">Time of work</string>
-    <string name="timeOfRestText">Time of rest</string>
-    <string name="additionalOptions">Additional options</string>
-    <string name="startFromRestSwitchText">Start from rest</string>
-    <!-- Default values One Exercise -->
-    <string name="timeOfWorkButtonDefaultValue">00:00</string>
-    <string name="timeOfRestButtonDefaultValue">00:00</string>
-
-    <!-- Fragment Some Exercises -->
-    <string name="numberOfExercisesText">Number of exercises</string>
-    <string name="timeOfRestBetweenExercisesText">Time of rest between exercises</string>
-    <string name="timeOfRestBetweenRoundsText">Time of rest between rounds</string>
-    <!-- Default values Some Exercises -->
-    <string name="numberOfExercisesButtonDefaultValue">0</string>
-    <string name="timeOfRestBetweenExercisesButtonDefaultValue">00:00</string>
-    <string name="timeOfRestBetweenRoundsButtonDefaultValue">00:00</string>
 
     <!-- Fragment Saved Timers -->
     <string name="totalTimeText">Total time</string>
     <string name="typeOneExercise">One exercise</string>
     <string name="typeSomeExercise">Some exercise</string>
-
-    <!-- DialogFragmentZeroValueAlert strings -->
-    <string name="zeroValueAlertTitle">Attention</string>
-    <string name="zeroValueAlertMessage">Please enter non-zero values</string>
-    <string name="zeroValueAlertOkButton">Ok</string>
-
-    <!-- DialogFragmentZeroValueAlert strings -->
-    <string name="savedTimersLimitAlertTitle">Attention</string>
-    <string name="savedTimersLimitAlertMessage">Reached the limit of saved timers.\nThe limit is 3.\n</string>
-    <string name="savedTimersLimitAlertOkButton">Ok</string>
-
-    <!-- DialogFragmentSaveTimer strings -->
-    <string name="saveTimerDialogTitle">Save timer</string>
-    <string name="saveTimerDialogMessage">Enter name of timer</string>
-    <string name="saveTimerDialogOkButton">Save</string>
-    <string name="saveTimerDialogCancelButton">Cancel</string>
-
-    <!-- DialogFragmentDeleteTimer strings -->
-    <string name="deleteTimerDialogTitle">Delete timer</string>
-    <string name="deleteTimerDialogMessage">Do you want to delete this timer?</string>
-    <string name="deleteTimerDialogOkButton">Delete</string>
-    <string name="deleteTimerDialogCancelButton">Cancel</string>
-
-    <!--DialogFragmentCloseActionActivity -->
-    <string name="closeActionActivityDialogTitle">Close timer</string>
-    <string name="closeActionActivityDialogMessage">You want to close this timer and return to main menu?</string>
-    <string name="closeActionActivityDialogYesButton">Yes</string>>
-    <string name="closeActionActivityDialogNoButton">No</string>
 
     <!-- Menu -->
     <string name="menuSettingsItem">Settings</string>
