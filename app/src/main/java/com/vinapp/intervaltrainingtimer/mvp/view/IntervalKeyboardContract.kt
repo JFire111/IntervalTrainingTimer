@@ -7,6 +7,8 @@ interface IntervalKeyboardContract {
 
     interface View: MVPView {
 
+        fun showDefaultIntervalName()
+
         fun showIntervalName(name: String)
 
         fun getIntervalName(): String

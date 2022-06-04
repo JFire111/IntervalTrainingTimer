@@ -52,6 +52,10 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
         return view
     }
 
+    override fun showDefaultIntervalName() {
+        intervalNameTextView.setText(getString(R.string.work))
+    }
+
     override fun showIntervalName(name: String) {
         intervalNameTextView.setText(name)
     }

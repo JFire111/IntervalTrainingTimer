@@ -90,6 +90,8 @@
     <string name="menuSettingsItem">Настройки</string>
 
     <!-- Keyboard -->
+    <string name="rest">Отдых</string>
+    <string name="work">Упражнение</string>
     <string name="keyboardButton0">0</string>
     <string name="keyboardButton1">1</string>
     <string name="keyboardButton2">2</string>

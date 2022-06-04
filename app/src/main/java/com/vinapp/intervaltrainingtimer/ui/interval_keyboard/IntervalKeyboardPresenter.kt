@@ -13,16 +13,14 @@ class IntervalKeyboardPresenter(
 
     private val valueLength = 4
     private val timeValue: Array<Int?>
-    private var intervalName: String = ""
+    private var intervalName: String? = interval?.name
     private var selectedNumberIndex = 0
     private var intervalType = IntervalType.WORK
 
     init {
         if (interval != null) {
-            intervalName = interval.name
             timeValue = convertToArray(interval.duration)
         } else {
-            intervalName = intervalType.toString()
             timeValue = arrayOfNulls(valueLength)
         }
     }
@@ -47,27 +45,17 @@ class IntervalKeyboardPresenter(
 
     override fun onRestButtonClick() {
         intervalType = IntervalType.REST
-        intervalName = view!!.getIntervalName()
-        if (intervalName.equals(IntervalType.WORK.toString())) {
-            intervalName = IntervalType.REST.toString()
-            view!!.showIntervalName(intervalName)
-        }
         view!!.showSelectedType(intervalType)
     }
 
     override fun onWorkButtonClick() {
         intervalType = IntervalType.WORK
-        intervalName = view!!.getIntervalName()
-        if (intervalName.equals(IntervalType.REST.toString())) {
-            intervalName = IntervalType.WORK.toString()
-            view!!.showIntervalName(intervalName)
-        }
         view!!.showSelectedType(intervalType)
     }
 
     override fun onOkButtonClick() {
         intervalName = view!!.getIntervalName()
-        val interval = Interval(intervalName, convertToSeconds(timeValue), intervalType)
+        val interval = Interval(intervalName!!, convertToSeconds(timeValue), intervalType)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()
     }
@@ -81,7 +69,11 @@ class IntervalKeyboardPresenter(
         super.attachView(view)
         setSelectedNumberIndex()
         setIntervalType()
-        view.showIntervalName(intervalName)
+        if (intervalName != null) {
+            view.showIntervalName(intervalName!!)
+        } else {
+            view.showDefaultIntervalName()
+        }
         view.showTimeValue(getTimeValueString(), timeValue)
         view.showSelectedType(intervalType)
     }
