@@ -48,12 +48,14 @@ class TimersSectionPresenter(override val timersSectionEventListener: TimersSect
         selectedTimerPosition?.let {
             timersSectionEventListener.onStartTimerClick(timers[it])
         }
+        selectedTimerPosition = null
     }
 
     override fun onLeftButtonClick() {
         selectedTimerPosition?.let {
             timersSectionEventListener.onEditTimerClick(timers[it])
         }
+        selectedTimerPosition = null
     }
 
     override fun onRightButtonClick() {
