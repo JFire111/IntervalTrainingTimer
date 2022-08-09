@@ -67,7 +67,7 @@ class TimerServiceController(private val applicationContext: Context) {
     fun start(timer: Timer) {
         timerService?.start(timer, intervalTimer!!)
         output?.provideState(TimerState.IN_PROGRESS)
-        output?.provideTime(timer.getDurationInMillis())
+        output?.provideTime(timer.getDurationInMillis(), timer.intervals.first().getDurationInMillis())
     }
 
     fun pause() {
@@ -96,8 +96,8 @@ class TimerServiceController(private val applicationContext: Context) {
                 output?.provideDelay(delay)
             }
 
-            override fun onTick(time: Long) {
-                output?.provideTime(time)
+            override fun onTick(remainingTime: Long, remainingIntervalTime: Long) {
+                output?.provideTime(remainingTime, remainingIntervalTime)
             }
 
             override fun onIntervalStart(intervalIndex: Int) {

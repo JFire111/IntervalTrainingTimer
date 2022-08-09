@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalType
+import com.vinapp.intervaltrainingtimer.components.ProgressCircle
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
 import com.vinapp.intervaltrainingtimer.entities.Timer
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
@@ -27,6 +28,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
     private lateinit var delaySeekBar: SeekBar
     private lateinit var timeTextView: TextView
     private lateinit var timerActionButton: FloatingActionButton
+    private lateinit var progressCircle: ProgressCircle
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         presenter = TimerPresenter(timer, serviceController)
@@ -34,6 +36,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
         val view = binding.root
         infoTextView = binding.infoTextView
         timeTextView = binding.timeTextView
+        progressCircle = binding.timeProgressCircle
         initTimerActionButton()
         initDelaySeekBar()
         return view
@@ -81,6 +84,11 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
             timeTextView.visibility = View.VISIBLE
         }
         timeTextView.text = time
+    }
+
+    override fun showProgress(timerProgress: Int, intervalProgress: Int) {
+        progressCircle.setInnerProgressInPercent(intervalProgress)
+        progressCircle.setOuterInnerProgressInPercent(timerProgress)
     }
 
     override fun hideTime() {

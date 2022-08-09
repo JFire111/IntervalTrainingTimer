@@ -38,18 +38,26 @@
         app:layout_constraintVertical_bias="0.15"
         app:tickMarkTint="@color/darkGray" />
 
+    <com.vinapp.intervaltrainingtimer.components.ProgressCircle
+        android:id="@+id/timeProgressCircle"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textColor="@color/darkGray"
         android:textSize="100sp"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/timeProgressCircle"
+        app:layout_constraintEnd_toEndOf="@+id/timeProgressCircle"
+        app:layout_constraintStart_toStartOf="@+id/timeProgressCircle"
+        app:layout_constraintTop_toTopOf="@+id/timeProgressCircle"
         tools:text="00:00" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

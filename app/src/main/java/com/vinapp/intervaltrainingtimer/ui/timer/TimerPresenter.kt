@@ -12,7 +12,10 @@ import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
     private var delay: Long = 3000L
+    private var timerProgress: Int = 0 // 0 is min, 100 is max
+    private var intervalProgress: Int = 0 // 0 is min, 100 is max
     private var remainingTime: Long = timer.getDurationInMillis()
+    private var remainingIntervalTime: Long? = null
     private var timerState: TimerState = TimerState.STOPPED
     private var currentInterval: Interval? = null
 
@@ -74,9 +77,15 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
         }
     }
 
-    override fun provideTime(time: Long) {
-        remainingTime = time
-        view!!.showTime(convertTimeToString(remainingTime))
+    override fun provideTime(remainingTime: Long, remainingIntervalTime: Long) {
+        this.remainingTime = remainingTime
+        this.remainingIntervalTime = remainingIntervalTime
+        view!!.showTime(convertTimeToString(this.remainingTime))
+        this.timerProgress = computeProgressInPercent(timer.getDurationInMillis(), this.remainingTime)
+        currentInterval?.let {
+            this.intervalProgress = computeProgressInPercent(currentInterval!!.getDurationInMillis(), this.remainingIntervalTime!!)
+        }
+        view!!.showProgress(this.timerProgress, this.intervalProgress)
     }
 
     override fun provideCurrentInterval(intervalIndex: Int) {
@@ -112,5 +121,14 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
         val minutes = timeInSeconds / 60
         val seconds = timeInSeconds - minutes * 60
         return "${minutes / 10}${minutes % 10}:${seconds / 10}${seconds%10}"
+    }
+
+    private fun computeProgressInPercent(fullValue: Long, currentValue: Long): Int {
+        val progress = 100 - (((currentValue) * 100) / fullValue).toInt()
+        return if (progress <= 100) {
+            progress
+        } else {
+            100
+        }
     }
 }

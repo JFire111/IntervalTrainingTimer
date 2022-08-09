@@ -53,7 +53,7 @@ abstract class IntervalTimer {
 
     abstract fun onDelayTick(delay: Long)
 
-    abstract fun onTick(time: Long)
+    abstract fun onTick(remainingTime: Long, remainingIntervalTime: Long)
 
     abstract fun onIntervalStart(intervalIndex: Int)
 
@@ -85,7 +85,7 @@ abstract class IntervalTimer {
                     var difference = computeTimeDifference()
                     remainingIntervalTime -= difference
                     remainingTime -= difference
-                    onTick(remainingTime)
+                    onTick(remainingTime, remainingIntervalTime)
                 }
                 onIntervalEnd(currentIntervalIndex)
                 currentIntervalIndex++

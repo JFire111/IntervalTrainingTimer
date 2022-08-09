@@ -22,6 +22,8 @@ interface TimerContract {
 
         fun showTime(time: String)
 
+        fun showProgress(timerProgress: Int, intervalProgress: Int)
+
         fun hideTime()
 
         fun setColorByIntervalType(type: IntervalType)

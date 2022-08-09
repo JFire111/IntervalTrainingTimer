@@ -6,7 +6,7 @@ interface TimerOutput {
 
     fun provideDelay(delay: Long)
 
-    fun provideTime(remainingTime: Long)
+    fun provideTime(remainingTime: Long, remainingIntervalTime: Long)
 
     fun provideCurrentInterval(intervalIndex: Int)
 }
