@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toStartOf="@+id/numberOfRoundsTextView"
         app:layout_constraintRight_toLeftOf="@id/numberOfRoundsTextView"
         app:layout_constraintTop_toTopOf="@+id/numberOfRoundsTextView"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/ic_minus" />
 
     <TextView
         android:id="@+id/numberOfRoundsTextView"
@@ -88,7 +88,7 @@
         app:layout_constraintLeft_toRightOf="@id/numberOfRoundsTextView"
         app:layout_constraintStart_toEndOf="@+id/numberOfRoundsTextView"
         app:layout_constraintTop_toTopOf="@+id/numberOfRoundsTextView"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/ic_plus" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/intervalsRecyclerView"

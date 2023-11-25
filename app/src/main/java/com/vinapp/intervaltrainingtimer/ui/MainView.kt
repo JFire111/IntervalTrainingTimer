@@ -15,15 +15,12 @@ import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.databinding.FragmentMainBinding
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.mvp.view.sections.SectionView
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
-import com.vinapp.intervaltrainingtimer.ui.interval_keyboard.IntervalKeyboardPresenter
-import com.vinapp.intervaltrainingtimer.ui.interval_keyboard.IntervalKeyboardView
-import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
-import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
-import com.vinapp.intervaltrainingtimer.ui.timer.TimerView
+//import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionView
+//import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionView
 
 class MainView : Fragment(), MainContract.View {
 
@@ -39,8 +36,8 @@ class MainView : Fragment(), MainContract.View {
     private lateinit var leftButton: Button
     private lateinit var rightButton: Button
     private lateinit var sections: List<SectionView>
-    private lateinit var intervalsSectionView: IntervalsSectionView
-    private lateinit var timersSectionView: TimersSectionView
+//    private lateinit var intervalsSectionView: IntervalsSectionView
+//    private lateinit var timersSectionView: TimersSectionView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +45,14 @@ class MainView : Fragment(), MainContract.View {
         val timerEditingInteractor = app.timerEditingInteractor
         val timerListInteractor = app.timerListInteractor
         presenter = MainPresenter(0, timerEditingInteractor!!, timerListInteractor!!, app.serviceController!!)
-        intervalsSectionView = IntervalsSectionView(getString(R.string.timerSettingsSection), presenter)
-        timersSectionView = TimersSectionView(getString(R.string.timerListSection), presenter)
-        timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
-        timerListInteractor.registerOutput(timersSectionView.timerListOutput)
-        sections = listOf<SectionView>(
-                intervalsSectionView,
-                timersSectionView
-        )
+//        intervalsSectionView = IntervalsSectionView(getString(R.string.timerSettingsSection), presenter)
+//        timersSectionView = TimersSectionView(getString(R.string.timerListSection), presenter)
+//        timerEditingInteractor.registerOutput(intervalsSectionView.timerEditingOutput)
+//        timerListInteractor.registerOutput(timersSectionView.timerListOutput)
+//        sections = listOf<SectionView>(
+//                intervalsSectionView,
+//                timersSectionView
+//        )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -95,18 +92,18 @@ class MainView : Fragment(), MainContract.View {
         sectionsViewPager.currentItem = position
     }
 
-    override fun showTimerScreen(timer: Timer, serviceController: TimerServiceController) {
-        val transition = fragmentManager!!.beginTransaction()
-        transition.replace(R.id.mainFragmentContainer, TimerView(timer, serviceController)).addToBackStack("TIMER_SCREEN").commit()
+    override fun showTimerScreen(timer: TimerEntity, serviceController: TimerServiceController) {
+//        val transition = fragmentManager!!.beginTransaction()
+//        transition.replace(R.id.mainFragmentContainer, TimerView(timer, serviceController)).addToBackStack("TIMER_SCREEN").commit()
     }
 
     override fun showIntervalKeyboard(interval: Interval?, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(presenter, onIntervalKeyboardListener, interval))
-        fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("INTERVAL_KEYBOARD_SCREEN").attach(intervalKeyboardView).commit()
+//        val intervalKeyboardView = IntervalKeyboardView(IntervalKeyboardPresenter(presenter, onIntervalKeyboardListener, interval))
+//        fragmentManager!!.beginTransaction().replace(R.id.mainFragmentContainer, intervalKeyboardView).addToBackStack("INTERVAL_KEYBOARD_SCREEN").attach(intervalKeyboardView).commit()
     }
 
     override fun hideIntervalKeyboard() {
-        fragmentManager!!.popBackStack()
+//        fragmentManager!!.popBackStack()
     }
 
     override fun showStartButton() {
@@ -118,7 +115,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showClearButton() {
-        leftButton.text = getString(R.string.clearButton)
+        leftButton.text = getString(R.string.clear)
         leftButton.visibility = View.VISIBLE
     }
 
@@ -129,7 +126,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showSaveButton() {
-        rightButton.text = getString(R.string.saveButton)
+        rightButton.text = getString(R.string.save)
         rightButton.visibility = View.VISIBLE
     }
 
@@ -140,7 +137,7 @@ class MainView : Fragment(), MainContract.View {
     }
 
     override fun showEditButton() {
-        leftButton.text = getString(R.string.editButton)
+        leftButton.text = getString(R.string.edit)
         leftButton.visibility = View.VISIBLE
     }
 

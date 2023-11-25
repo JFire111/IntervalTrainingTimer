@@ -1,18 +1,18 @@
 package com.vinapp.intervaltrainingtimer.ui.timer
 
-import com.vinapp.intervaltrainingtimer.common.IntervalType
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerOutput
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerService
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
-class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
+class TimerPresenter(private val timer: TimerEntity, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
     private var delay: Long = 3000L
-    private var remainingTime: Long = timer.getDurationInMillis()
+    private var remainingTime: Long = 0L // timer.getDurationInMillis()
     private var timerState: TimerState = TimerState.STOPPED
     private var currentInterval: Interval? = null
 
@@ -80,26 +80,30 @@ class TimerPresenter(private val timer: Timer, private val serviceController: Ti
     }
 
     override fun provideCurrentInterval(intervalIndex: Int) {
-        currentInterval = timer.intervals[intervalIndex]
-        view!!.showMessage(timer.intervals[intervalIndex].name)
-        view!!.setColorByIntervalType(timer.intervals[intervalIndex].type)
-        view!!.setActionButtonIconByState(getActionButtonState())
+//        currentInterval = timer.duration[intervalIndex]
+//        view!!.showMessage(timer.duration[intervalIndex].name)
+//        view!!.setColorByIntervalType(timer.duration[intervalIndex].type)
+//        view!!.setActionButtonIconByState(getActionButtonState())
     }
 
     private fun getActionButtonState(): TimerActionButtonState {
         var state: TimerActionButtonState = TimerActionButtonState.PLAY_WHITE
         if (currentInterval != null) {
             when (currentInterval!!.type) {
-                IntervalType.WORK -> {
+                IntervalColor.RED -> {
                     when (timerState) {
                         TimerState.IN_PROGRESS -> state = TimerActionButtonState.PAUSE_RED
                         TimerState.PAUSED -> state = TimerActionButtonState.PLAY_RED
+                        TimerState.STOPPED -> TODO()
+                        TimerState.FINISHED -> TODO()
                     }
                 }
-                IntervalType.REST -> {
+                IntervalColor.GREEN -> {
                     when (timerState) {
                         TimerState.IN_PROGRESS -> state = TimerActionButtonState.PAUSE_GREEN
                         TimerState.PAUSED -> state = TimerActionButtonState.PLAY_GREEN
+                        TimerState.STOPPED -> TODO()
+                        TimerState.FINISHED -> TODO()
                     }
                 }
             }

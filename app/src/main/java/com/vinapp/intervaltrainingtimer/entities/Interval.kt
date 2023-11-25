@@ -1,10 +1,8 @@
 package com.vinapp.intervaltrainingtimer.entities
 
-import com.vinapp.intervaltrainingtimer.common.IntervalType
-import kotlinx.serialization.Serializable
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 
-@Serializable
-data class Interval(val name: String, val duration: Int, val type: IntervalType) {
+data class Interval(val name: String, val duration: Int, val type: IntervalColor) {
 
     fun getDurationInMillis(): Long {
         return (duration * 1000).toLong()

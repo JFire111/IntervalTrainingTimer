@@ -1,13 +1,13 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.logic.timer_list.TimerListInput
 import com.vinapp.intervaltrainingtimer.logic.timer_editing.TimerEditingInput
 import com.vinapp.intervaltrainingtimer.mvp.MainContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
-import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionEventListener
-import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionEventListener
+//import com.vinapp.intervaltrainingtimer.ui.sections.IntervalsSectionEventListener
+//import com.vinapp.intervaltrainingtimer.ui.sections.TimersSectionEventListener
 
 class MainPresenter(
     override var currentSection: Int,
@@ -15,9 +15,10 @@ class MainPresenter(
     private val timerListInput: TimerListInput,
     private val serviceController: TimerServiceController
     ) : MainContract.Presenter(),
-    OnActionButtonsClickListener,
-    IntervalsSectionEventListener,
-    TimersSectionEventListener {
+    OnActionButtonsClickListener
+//    IntervalsSectionEventListener,
+//    TimersSectionEventListener
+{
 
     var onActionButtonsClickListener: OnActionButtonsClickListener? = null
 
@@ -62,38 +63,38 @@ class MainPresenter(
     override fun destroy() {
     }
 
-    override fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        view!!.showIntervalKeyboard(interval, onIntervalKeyboardListener)
-    }
-
-    override fun onAddIntervalClick(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
-        view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
-    }
+//    override fun onIntervalClick(interval: Interval, onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+//        view!!.showIntervalKeyboard(interval, onIntervalKeyboardListener)
+//    }
+//
+//    override fun onAddIntervalClick(onIntervalKeyboardListener: SectionsEventHandler.OnIntervalKeyboardListener) {
+//        view!!.showIntervalKeyboard(null, onIntervalKeyboardListener)
+//    }
 
     override fun onCloseIntervalKeyboard() {
         view!!.hideIntervalKeyboard()
     }
 
-    override fun onAddTimerClick() {
-        view!!.showSection(0)
-    }
-
-    override fun onEditTimerClick(timer: Timer) {
-        timerEditingInput.setTimer(timer)
-        view!!.showSection(0)
-    }
-
-    override fun onDeleteTimerClick(timerId: Int) {
-        timerListInput.deleteTimer(timerId)
-    }
-
-    override fun onSaveTimerClick(timer: Timer) {
-        timerEditingInput.saveTimer(timer)
-        timerListInput.getTimerList()
-        view!!.showSection(1)
-    }
-
-    override fun onStartTimerClick(timer: Timer) {
-        view!!.showTimerScreen(timer, serviceController)
-    }
+//    override fun onAddTimerClick() {
+//        view!!.showSection(0)
+//    }
+//
+//    override fun onEditTimerClick(timer: TimerEntity) {
+//        timerEditingInput.setTimer(timer)
+//        view!!.showSection(0)
+//    }
+//
+//    override fun onDeleteTimerClick(timerId: Int) {
+//        timerListInput.deleteTimer(timerId)
+//    }
+//
+//    override fun onSaveTimerClick(timer: TimerEntity) {
+//        timerEditingInput.saveTimer(timer)
+//        timerListInput.getTimerList()
+//        view!!.showSection(1)
+//    }
+//
+//    override fun onStartTimerClick(timer: TimerEntity) {
+//        view!!.showTimerScreen(timer, serviceController)
+//    }
 }

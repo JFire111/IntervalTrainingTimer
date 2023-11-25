@@ -12,7 +12,7 @@ import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.vinapp.intervaltrainingtimer.R
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerOutput
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
 import com.vinapp.intervaltrainingtimer.utils.IntervalTimer
@@ -64,10 +64,10 @@ class TimerServiceController(private val applicationContext: Context) {
         intervalTimer!!.setStartDelay(delay)
     }
 
-    fun start(timer: Timer) {
+    fun start(timer: TimerEntity) {
         timerService?.start(timer, intervalTimer!!)
         output?.provideState(TimerState.IN_PROGRESS)
-        output?.provideTime(timer.getDurationInMillis())
+//        output?.provideTime(timer.getDurationInMillis())
     }
 
     fun pause() {
@@ -126,7 +126,7 @@ class TimerServiceController(private val applicationContext: Context) {
             val channel = NotificationChannel(notificationChannelId, "TimerNotificationChannel", NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(channel)
         }
-        notificationManager.notify(notificationId, createNotification())
+//        notificationManager.notify(notificationId, createNotification())
     }
 
     private fun closeNotification() {

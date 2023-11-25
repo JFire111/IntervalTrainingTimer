@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="@+id/timeTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6"
-        tools:text="@string/timeToStartInfo" />
+        tools:text="@string/delayBeforeStart" />
 
     <SeekBar
         android:id="@+id/delaySeekBar"

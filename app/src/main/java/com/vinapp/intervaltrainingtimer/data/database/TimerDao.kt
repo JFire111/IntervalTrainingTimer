@@ -1,23 +1,27 @@
 package com.vinapp.intervaltrainingtimer.data.database
 
 import androidx.room.*
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TimerDao {
 
     @Insert
-    fun insert(timer: Timer)
+    fun insert(timer: TimerEntity)
 
     @Update
-    fun update(timer: Timer)
+    fun update(timer: TimerEntity)
 
     @Query("DELETE FROM timer WHERE id = :timerId")
     fun delete(timerId: Int)
 
-    @Query("SELECT * FROM timer ORDER BY createdTime")
-    fun getAll(): List<Timer>
+    @Query("SELECT * FROM timer ORDER BY created_time")
+    fun getAllTimersFlow(): Flow<List<TimerEntity>>
 
     @Query("SELECT * FROM timer WHERE id = :id")
-    fun getById(id: Int): Timer?
+    fun getTimerById(id: String): TimerEntity?
+
+    @Query("SELECT * FROM timer WHERE id = :id")
+    fun getTimerByIdFlow(id: String): Flow<TimerEntity?>
 }

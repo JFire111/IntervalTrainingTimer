@@ -1,7 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.Timer
 
 interface SectionsEventHandler {
 

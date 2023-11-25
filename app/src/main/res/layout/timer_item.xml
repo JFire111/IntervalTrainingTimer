@@ -44,6 +44,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete_timer" />
+        app:srcCompat="@drawable/ic_delete_timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,13 +11,13 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
-import com.vinapp.intervaltrainingtimer.common.IntervalType
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
-class TimerView(private val timer: Timer, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
+class TimerView(private val timer: TimerEntity, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
 
     private var presenter: TimerPresenter? = null
     private var _binding: FragmentTimerBinding? = null
@@ -60,7 +60,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
     }
 
     override fun showDelay(delay: Int) {
-        infoTextView.text = "${getString(R.string.timeToStartInfo)}: $delay"
+        infoTextView.text = "${getString(R.string.delayBeforeStart)}: $delay"
         delaySeekBar.progress = delay
     }
 
@@ -87,11 +87,11 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
         timeTextView.visibility = View.INVISIBLE
     }
 
-    override fun setColorByIntervalType(type: IntervalType) {
+    override fun setColorByIntervalType(type: IntervalColor) {
         context?.let {
             when (type) {
-                IntervalType.WORK -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.red))
-                IntervalType.REST -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.green))
+                IntervalColor.RED -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.red))
+                IntervalColor.GREEN -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.green))
             }
         }
     }

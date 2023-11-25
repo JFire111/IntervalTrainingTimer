@@ -18,7 +18,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
-import com.vinapp.intervaltrainingtimer.common.IntervalType
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.databinding.FragmentKeyboardBinding
 import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
 
@@ -53,7 +53,7 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
     }
 
     override fun showDefaultIntervalName() {
-        intervalNameTextView.setText(getString(R.string.work))
+        intervalNameTextView.setText(getString(R.string.red))
     }
 
     override fun showIntervalName(name: String) {
@@ -68,13 +68,13 @@ class IntervalKeyboardView(private val intervalKeyboardPresenter: IntervalKeyboa
         displayTextView.text = textColoring(timeValue, valuesArray)
     }
 
-    override fun showSelectedType(intervalType: IntervalType) {
-        when(intervalType) {
-            IntervalType.REST -> {
+    override fun showSelectedType(intervalColor: IntervalColor) {
+        when(intervalColor) {
+            IntervalColor.GREEN -> {
                 restButton.setTextColor(ContextCompat.getColor(context!!, R.color.green))
                 workButton.setTextColor(ContextCompat.getColor(context!!, R.color.inactiveGray))
             }
-            IntervalType.WORK -> {
+            IntervalColor.RED -> {
                 restButton.setTextColor(ContextCompat.getColor(context!!, R.color.inactiveGray))
                 workButton.setTextColor(ContextCompat.getColor(context!!, R.color.red))
             }

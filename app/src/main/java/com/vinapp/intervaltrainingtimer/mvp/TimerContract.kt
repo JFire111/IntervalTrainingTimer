@@ -1,7 +1,6 @@
 package com.vinapp.intervaltrainingtimer.mvp
 
-import com.vinapp.intervaltrainingtimer.common.IntervalType
-import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.mvp.presenter.MVPPresenter
 import com.vinapp.intervaltrainingtimer.mvp.view.MVPView
 import com.vinapp.intervaltrainingtimer.ui.timer.TimerActionButtonState
@@ -24,7 +23,7 @@ interface TimerContract {
 
         fun hideTime()
 
-        fun setColorByIntervalType(type: IntervalType)
+        fun setColorByIntervalType(type: IntervalColor)
 
         fun setDefaultColor()
 

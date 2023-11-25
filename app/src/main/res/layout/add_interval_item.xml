@@ -13,5 +13,5 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/add"/>
+        app:srcCompat="@drawable/ic_add"/>
 </FrameLayout>

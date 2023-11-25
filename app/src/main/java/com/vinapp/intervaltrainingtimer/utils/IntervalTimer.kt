@@ -1,16 +1,17 @@
 package com.vinapp.intervaltrainingtimer.utils
 
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import kotlinx.coroutines.*
 
 abstract class IntervalTimer {
 
-    private var timer: Timer? = null
+    private var timer: TimerEntity? = null
     private var startDelay: Long = 0L
     private var stepInMillis: Long = 100
     private var timerJob: Job? = null
     private var isPaused: Boolean = false
+    private var remainingDelayTime: Long = 0L
     private var remainingTime: Long = 0L
     private var remainingRounds: Int = 0
     private var currentIntervalIndex: Int = 0
@@ -20,13 +21,14 @@ abstract class IntervalTimer {
         this.startDelay = delay
     }
 
-    fun start(timer: Timer, stepInMillis: Long = 100) {
+    fun start(timer: TimerEntity, stepInMillis: Long = 100) {
         this.timer = timer
         this.stepInMillis = stepInMillis
         isPaused = false
-        remainingTime = this.timer!!.getDurationInMillis()
+//        remainingTime = this.timer!!.getDurationInMillis()
         remainingRounds = this.timer!!.numberOfRounds
         timerJob = MainScope().launch {
+            runDelay()
             runTimer()
         }
     }
@@ -37,7 +39,11 @@ abstract class IntervalTimer {
     }
 
     fun resume() {
+        isPaused = false
         timerJob = MainScope().launch {
+            if (remainingDelayTime > 0L) {
+                runDelay()
+            }
             runTimer()
         }
     }
@@ -45,7 +51,7 @@ abstract class IntervalTimer {
     fun stop() {
         timerJob!!.cancel()
         isPaused = false
-        remainingTime = timer!!.getDurationInMillis()
+//        remainingTime = timer!!.getDurationInMillis()
         remainingRounds = timer!!.numberOfRounds
         currentIntervalIndex = 0
         remainingIntervalTime = 0L
@@ -66,7 +72,7 @@ abstract class IntervalTimer {
     abstract fun onFinish()
 
     private suspend fun runDelay() {
-        var remainingDelayTime = startDelay
+        remainingDelayTime = startDelay
         while (remainingDelayTime > 0L) {
             remainingDelayTime -= computeTimeDifference()
             onDelayTick(remainingDelayTime)
@@ -74,7 +80,6 @@ abstract class IntervalTimer {
     }
 
     private suspend fun runTimer() {
-        runDelay()
         while (remainingRounds > 0) {
             onRoundStart(remainingRounds)
             var intervals = getIntervals()
@@ -103,12 +108,13 @@ abstract class IntervalTimer {
     }
 
     private fun getIntervals(): List<Interval> {
-        return if (isPaused) {
-            timer!!.intervals.asSequence().drop(currentIntervalIndex).toList()
-        } else {
-            currentIntervalIndex = 0
-            timer!!.intervals
-        }
+        return listOf()
+//        if (isPaused) {
+//            timer!!.duration.asSequence().drop(currentIntervalIndex).toList()
+//        } else {
+//            currentIntervalIndex = 0
+//            timer!!.duration
+//        }
     }
 
     private fun getRemainingTime(currentInterval: Interval): Long {

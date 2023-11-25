@@ -1,6 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui.interval_keyboard
 
-import com.vinapp.intervaltrainingtimer.common.IntervalType
+import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.mvp.view.IntervalKeyboardContract
 import com.vinapp.intervaltrainingtimer.ui.SectionsEventHandler
@@ -15,7 +15,7 @@ class IntervalKeyboardPresenter(
     private val timeValue: Array<Int?>
     private var intervalName: String? = interval?.name
     private var selectedNumberIndex = 0
-    private var intervalType = IntervalType.WORK
+    private var intervalColor = IntervalColor.RED
 
     init {
         if (interval != null) {
@@ -44,18 +44,18 @@ class IntervalKeyboardPresenter(
     }
 
     override fun onRestButtonClick() {
-        intervalType = IntervalType.REST
-        view!!.showSelectedType(intervalType)
+        intervalColor = IntervalColor.GREEN
+        view!!.showSelectedType(intervalColor)
     }
 
     override fun onWorkButtonClick() {
-        intervalType = IntervalType.WORK
-        view!!.showSelectedType(intervalType)
+        intervalColor = IntervalColor.RED
+        view!!.showSelectedType(intervalColor)
     }
 
     override fun onOkButtonClick() {
         intervalName = view!!.getIntervalName()
-        val interval = Interval(intervalName!!, convertToSeconds(timeValue), intervalType)
+        val interval = Interval(intervalName!!, convertToSeconds(timeValue), intervalColor)
         onIntervalKeyboardListener.onSave(interval)
         eventHandler.onCloseIntervalKeyboard()
     }
@@ -75,7 +75,7 @@ class IntervalKeyboardPresenter(
             view.showDefaultIntervalName()
         }
         view.showTimeValue(getTimeValueString(), timeValue)
-        view.showSelectedType(intervalType)
+        view.showSelectedType(intervalColor)
     }
 
     override fun destroy() {
@@ -103,7 +103,7 @@ class IntervalKeyboardPresenter(
     }
 
     private fun setIntervalType() {
-        intervalType = interval?.type ?: IntervalType.WORK
+        intervalColor = interval?.type ?: IntervalColor.RED
     }
 
     private fun convertToSeconds(values: Array<Int?>): Int {

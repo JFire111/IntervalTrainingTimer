@@ -7,13 +7,13 @@ import android.media.SoundPool
 import android.os.Binder
 import android.os.IBinder
 import com.vinapp.intervaltrainingtimer.R
-import com.vinapp.intervaltrainingtimer.entities.Timer
+import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.utils.IntervalTimer
 
 class TimerService: Service() {
 
     private val binder = TimerBinder()
-    private var timer: Timer? = null
+    private var timer: TimerEntity? = null
     private var intervalTimer: IntervalTimer? = null
     private var soundPool: SoundPool? = null
     private var soundId: Int? = null
@@ -41,7 +41,7 @@ class TimerService: Service() {
         super.onDestroy()
     }
 
-    fun start(timer: Timer, intervalTimer: IntervalTimer) {
+    fun start(timer: TimerEntity, intervalTimer: IntervalTimer) {
         this.timer = timer
         this.intervalTimer = intervalTimer
         intervalTimer.start(timer)
