@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreen
 import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreen
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
@@ -26,18 +27,23 @@ class MainActivity: ComponentActivity() {
                         route = Screen.TimerListScreen.route
                     ) {
                         TimerListScreen(
-                            navigateToTimerEditorScreen = {
+                            navigateToTimerEditorScreen = { timerId ->
                                 navController.navigate(
-                                    route = Screen.TimerEditorScreen.route
+                                    route = "${Screen.TimerEditorScreen.route}/?timerId=$timerId"
                                 )
                             }
                         )
                     }
                     composable(
-                        route = Screen.TimerEditorScreen.route
+                        route = "${Screen.TimerEditorScreen.route}/?timerId={timerId}",
+                        arguments = listOf(navArgument("timerId") {
+                            nullable = true
+                        })
                     ) {
                         TimerEditorScreen(
-                            timerId = null
+                            timerId = it.arguments?.getString("timerId"),
+                            navigateToTimerScreen = {},
+                            navigateBack = navController::popBackStack
                         )
                     }
                 }

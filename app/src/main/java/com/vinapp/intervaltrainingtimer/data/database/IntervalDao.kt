@@ -14,6 +14,9 @@ interface IntervalDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertInterval(interval: IntervalEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertIntervalList(intervalList: List<IntervalEntity>)
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateInterval(interval: IntervalEntity)
 

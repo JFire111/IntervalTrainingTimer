@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.utils
 
 import com.vinapp.intervaltrainingtimer.domain.Interval
-import com.vinapp.intervaltrainingtimer.ui_components.TimeDigits
+import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 
 object TimeConverter {
     fun getTimeString(timeInSeconds: Long): String {

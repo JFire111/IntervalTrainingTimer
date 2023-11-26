@@ -22,26 +22,34 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
-import com.vinapp.intervaltrainingtimer.ui_components.TimeDigits
-import com.vinapp.intervaltrainingtimer.ui_components.TimeText
-import com.vinapp.intervaltrainingtimer.ui_components.TopBar
+import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateBack
+import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
+import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeText
+import com.vinapp.intervaltrainingtimer.ui_components.topbar.TopBar
 import com.vinapp.intervaltrainingtimer.ui_components.add_item.AddItem
+import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.BottomButtonsContainer
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItem
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItemData
 import com.vinapp.intervaltrainingtimer.ui_components.name_text_field.NameTextField
 import com.vinapp.intervaltrainingtimer.ui_components.round_picker.TimePicker
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun TimerEditorScreen(
-    timerId: String?
+    timerId: String?,
+    navigateToTimerScreen: (timerId: String) -> Unit,
+    navigateBack: () -> Unit
 ) {
     val viewModel: TimerEditorViewModel = viewModel(
         factory = TimerEditorViewModel.Factory
@@ -49,12 +57,22 @@ fun TimerEditorScreen(
     val state by viewModel.screenStateFlow.collectAsState()
     val focusManager = LocalFocusManager.current
 
+    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     LaunchedEffect(Unit) {
+        lifecycleScope.launch {
+            viewModel.screenActionFlow.collect { action ->
+                when (action) {
+                    is NavigateToTimerScreen -> navigateToTimerScreen(action.timerId)
+                    NavigateBack -> navigateBack()
+                }
+            }
+        }
         viewModel.loadTimerById(timerId)
     }
 
     TimerEditorScreenContent(
         state = state,
+        onTimerNameChanged = viewModel::onTimerNameChanged,
         onIncreaseRoundsClick = {
             focusManager.clearFocus()
             viewModel.onIncreaseRoundsClick()
@@ -95,12 +113,25 @@ fun TimerEditorScreen(
             focusManager.clearFocus()
             viewModel.closeDialog()
         },
+        onLeftBottomButtonClick = {
+            focusManager.clearFocus()
+            viewModel.onDeleteTimerClick()
+        },
+        onCenterBottomButtonClick = {
+            focusManager.clearFocus()
+            viewModel.onStartTimerClick()
+        },
+        onRightBottomButtonClick = {
+            focusManager.clearFocus()
+            viewModel.onSaveTimerClick()
+        },
     )
 }
 
 @Composable
 private fun TimerEditorScreenContent(
     state: TimerEditorScreenState,
+    onTimerNameChanged: (name: String) -> Unit,
     onIncreaseRoundsClick: () -> Unit,
     onDecreaseRoundsClick: () -> Unit,
     onIncreaseStartDelayClick: () -> Unit,
@@ -111,98 +142,112 @@ private fun TimerEditorScreenContent(
     onAddIntervalClick: () -> Unit,
     onIntervalDialogConfirmClick: (name: String, duration: Long, color: IntervalColor) -> Unit,
     onIntervalDialogCancelClick: () -> Unit,
+    onLeftBottomButtonClick: () -> Unit,
+    onCenterBottomButtonClick: () -> Unit,
+    onRightBottomButtonClick: () -> Unit,
 ) {
-    Scaffold(
-        backgroundColor = AppTheme.colors.darkGray,
-        topBar = {
-            TopBar(
-                modifier = Modifier
-                    .padding(
-                        top = 8.dp,
-                    ),
-                content = {
-                    NameTextField(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        value = "",
-                        isError = false,
-                        placeholderText = stringResource(R.string.timerName),
-                        onValueChange = {}
-                    )
-                },
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-        ) {
+
+    BottomButtonsContainer(
+        leftButtonText = stringResource(R.string.delete),
+        rightButtonText = stringResource(R.string.save),
+        showLeftButton = state.showDeleteButton,
+        showCenterButton = true,
+        onLeftButtonClick = onLeftBottomButtonClick,
+        onCenterButtonClick = onCenterBottomButtonClick,
+        onRightButtonClick = onRightBottomButtonClick
+    ) {
+        Scaffold(
+            backgroundColor = AppTheme.colors.darkGray,
+            topBar = {
+                TopBar(
+                    modifier = Modifier
+                        .padding(
+                            top = 8.dp,
+                        ),
+                    content = {
+                        NameTextField(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            value = state.timerName ?: "",
+                            isError = state.isTimerNameError,
+                            placeholderText = stringResource(R.string.timerName),
+                            onValueChange = onTimerNameChanged
+                        )
+                    },
+                )
+            },
+        ) { paddingValues ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 14.dp,
-                        top = 10.dp,
-                        end = 10.dp,
-                        bottom = 16.dp,
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 14.dp,
+                            top = 10.dp,
+                            end = 10.dp,
+                            bottom = 16.dp,
+                        ),
+                ) {
+                    TotalTimeRow(
+                        timeDigits = state.totalTimeDigits
+                    )
+                    NumberOfRoundsRow(
+                        numberOfRounds = state.numberOfRounds,
+                        onIncreaseClick = onIncreaseRoundsClick,
+                        onDecreaseClick = onDecreaseRoundsClick
+                    )
+                    StartDelayRow(
+                        startDelay = state.startDelay,
+                        onIncreaseClick = onIncreaseStartDelayClick,
+                        onDecreaseClick = onDecreaseStartDelayClick
+                    )
+                    TimeBetweenRoundsRow(
+                        timeBetweenRounds = state.timeBetweenRounds,
+                        onIncreaseClick = onIncreaseTimeBetweenRoundsClick,
+                        onDecreaseClick = onDecreaseTimeBetweenRoundsClick
+                    )
+                }
+                Divider(
+                    color = AppTheme.colors.mediumGray
+                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .background(AppTheme.colors.lightGray),
+                    contentPadding = PaddingValues(
+                        horizontal = 14.dp,
+                        vertical = 8.dp
                     ),
-            ) {
-                TotalTimeRow(
-                    timeDigits = state.totalTimeDigits
-                )
-                NumberOfRoundsRow(
-                    numberOfRounds = state.numberOfRounds,
-                    onIncreaseClick = onIncreaseRoundsClick,
-                    onDecreaseClick = onDecreaseRoundsClick
-                )
-                StartDelayRow(
-                    startDelay = state.startDelay,
-                    onIncreaseClick = onIncreaseStartDelayClick,
-                    onDecreaseClick = onDecreaseStartDelayClick
-                )
-                TimeBetweenRoundsRow(
-                    timeBetweenRounds = state.timeBetweenRounds,
-                    onIncreaseClick = onIncreaseTimeBetweenRoundsClick,
-                    onDecreaseClick = onDecreaseTimeBetweenRoundsClick
-                )
-            }
-            Divider(
-                color = AppTheme.colors.mediumGray
-            )
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .background(AppTheme.colors.lightGray),
-                contentPadding = PaddingValues(
-                    horizontal = 14.dp,
-                    vertical = 8.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                state.intervalList?.let { intervals ->
-                    itemsIndexed(intervals) { index, interval ->
-                        IntervalItem(
-                            intervalItemData = interval,
-                            onClick = {
-                                onIntervalClick(index)
-                            }
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    state.intervalList?.let { intervals ->
+                        itemsIndexed(intervals) { index, interval ->
+                            IntervalItem(
+                                intervalItemData = interval,
+                                onClick = {
+                                    onIntervalClick(index)
+                                }
+                            )
+                        }
+                    }
+                    item {
+                        AddItem(
+                            onClick = onAddIntervalClick
                         )
                     }
                 }
-                item {
-                    AddItem(
-                        onClick = onAddIntervalClick
-                    )
-                }
             }
-        }
-        if (state.showIntervalDialog) {
-            IntervalDialog(
-                interval = state.selectedInterval,
-                onConfirmClick = onIntervalDialogConfirmClick,
-                onCancelClick = onIntervalDialogCancelClick
-            )
+            if (state.showIntervalDialog) {
+                IntervalDialog(
+                    interval = state.selectedInterval,
+                    onConfirmClick = onIntervalDialogConfirmClick,
+                    onCancelClick = onIntervalDialogCancelClick
+                )
+            }
         }
     }
 }
@@ -326,6 +371,7 @@ private fun TimerEditorScreenPreview() {
                 ),
                 numberOfRounds = 4
             ),
+            onTimerNameChanged = {},
             onIncreaseRoundsClick = {},
             onDecreaseRoundsClick = {},
             onIncreaseStartDelayClick = {},
@@ -336,6 +382,9 @@ private fun TimerEditorScreenPreview() {
             onAddIntervalClick = {},
             onIntervalDialogConfirmClick = { _, _, _ -> },
             onIntervalDialogCancelClick = {},
+            onLeftBottomButtonClick = {},
+            onCenterBottomButtonClick = {},
+            onRightBottomButtonClick = {}
         )
     }
 }

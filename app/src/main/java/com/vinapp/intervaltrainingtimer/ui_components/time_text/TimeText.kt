@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui_components
+package com.vinapp.intervaltrainingtimer.ui_components.time_text
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

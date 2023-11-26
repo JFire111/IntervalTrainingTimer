@@ -14,9 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.domain.Interval
-import com.vinapp.intervaltrainingtimer.ui_components.TimeDigits
-import com.vinapp.intervaltrainingtimer.ui_components.TimeText
+import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
+import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeText
 import com.vinapp.intervaltrainingtimer.ui_components.dialog.AppDialog
 import com.vinapp.intervaltrainingtimer.ui_components.dialog.DialogButton
 import com.vinapp.intervaltrainingtimer.ui_components.name_text_field.NameTextField

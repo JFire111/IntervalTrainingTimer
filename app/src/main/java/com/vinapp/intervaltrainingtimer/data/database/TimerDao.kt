@@ -14,7 +14,7 @@ interface TimerDao {
     fun update(timer: TimerEntity)
 
     @Query("DELETE FROM timer WHERE id = :timerId")
-    fun delete(timerId: Int)
+    fun delete(timerId: String)
 
     @Query("SELECT * FROM timer ORDER BY created_time")
     fun getAllTimersFlow(): Flow<List<TimerEntity>>

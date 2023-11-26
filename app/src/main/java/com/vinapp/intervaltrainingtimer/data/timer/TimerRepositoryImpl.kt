@@ -2,9 +2,10 @@ package com.vinapp.intervaltrainingtimer.data.timer
 
 import com.vinapp.intervaltrainingtimer.data.database.IntervalDao
 import com.vinapp.intervaltrainingtimer.data.database.TimerDao
-import com.vinapp.intervaltrainingtimer.domain.Interval
 import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.mapping.TimerMapper.mapTimerEntityToTimer
+import com.vinapp.intervaltrainingtimer.mapping.TimerMapper.mapTimerToTimerEntity
+import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalToIntervalEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -12,6 +13,11 @@ class TimerRepositoryImpl(
     private val timerDao: TimerDao,
     private val intervalDao: IntervalDao,
 ) : TimerRepository {
+
+    override suspend fun saveTimer(timer: Timer) {
+        timerDao.insert(mapTimerToTimerEntity(timer))
+        intervalDao.insertIntervalList(timer.intervalList.map(::mapIntervalToIntervalEntity))
+    }
 
     override fun getTimerListFlow(): Flow<List<Timer>> {
         return timerDao.getAllTimersFlow().map {
@@ -42,5 +48,9 @@ class TimerRepositoryImpl(
                 )
             }
         }
+    }
+
+    override suspend fun deleteTimer(timerId: String) {
+        timerDao.delete(timerId)
     }
 }

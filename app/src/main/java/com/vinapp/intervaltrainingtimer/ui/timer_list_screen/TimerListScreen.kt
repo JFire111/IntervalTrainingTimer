@@ -39,6 +39,7 @@ fun TimerListScreen(
                 }
             }
         }
+        viewModel.loadTimerList()
     }
 
     Scaffold(

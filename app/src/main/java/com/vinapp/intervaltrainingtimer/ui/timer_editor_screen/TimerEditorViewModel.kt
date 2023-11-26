@@ -14,10 +14,13 @@ import com.vinapp.intervaltrainingtimer.domain.Interval
 import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalToIntervalItemData
 import com.vinapp.intervaltrainingtimer.utils.TimeConverter
+import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateBack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 private const val MIN_NUMBER_OF_ROUNDS = 1
 private const val MAX_NUMBER_OF_ROUNDS = 100
@@ -53,16 +56,26 @@ class TimerEditorViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 timer = timerRepository.getTimerById(timerId)
                 timer?.let {
+                    intervalList = it.intervalList.toMutableList()
                     updateState(
                         currentScreenState.copy(
                             timerName = it.name,
                             intervalList = it.intervalList.map(::mapIntervalToIntervalItemData),
                             numberOfRounds = it.numberOfRounds,
+                            showDeleteButton = true,
                         )
                     )
                 }
             }
         }
+    }
+
+    fun onTimerNameChanged(name: String) {
+        updateState(
+            currentScreenState.copy(
+                timerName = name
+            )
+        )
     }
 
     fun onIncreaseRoundsClick() {
@@ -212,9 +225,85 @@ class TimerEditorViewModel(
         )
     }
 
+    fun onDeleteTimerClick() {
+        timer?.let { timer ->
+            viewModelScope.launch(Dispatchers.IO) {
+                timerRepository.deleteTimer(timer.id)
+            }
+            sendAction(NavigateBack)
+        }
+    }
+
+    fun onStartTimerClick() {
+        validateTimerName(
+            name = currentScreenState.timerName,
+            onValid = { name ->
+                val timer = buildTimer(name)
+                saveTimer(timer)
+                sendAction(
+                    NavigateToTimerScreen(timerId = timer.id)
+                )
+            },
+            onInvalid = { _ ->
+                updateState(
+                    currentScreenState.copy(
+                        isTimerNameError = true
+                    )
+                )
+            }
+        )
+    }
+
+    fun onSaveTimerClick() {
+        validateTimerName(
+            name = currentScreenState.timerName,
+            onValid = { name ->
+                saveTimer(buildTimer(name))
+            },
+            onInvalid = { _ ->
+                updateState(
+                    currentScreenState.copy(
+                        isTimerNameError = true
+                    )
+                )
+            }
+        )
+    }
+
     private fun getNewIntervalId(): Int {
         return intervalList.maxByOrNull { it.id }?.let {
             it.id + 1
         } ?: 0
+    }
+
+    private fun saveTimer(timer: Timer) {
+        viewModelScope.launch(Dispatchers.IO) {
+            timerRepository.saveTimer(timer)
+        }
+    }
+
+    private fun validateTimerName(
+        name: String?,
+        onValid: (name: String) -> Unit,
+        onInvalid: (name: String?) -> Unit
+    ) {
+        if (name.isNullOrBlank()) {
+            onInvalid(name)
+        } else {
+            onValid(name)
+        }
+    }
+
+    private fun buildTimer(timerName: String): Timer {
+        return Timer(
+            id = timer?.id ?: UUID.randomUUID().toString(),
+            name = timerName,
+            intervalList = intervalList,
+            numberOfRounds = currentScreenState.numberOfRounds,
+            startDelay = currentScreenState.startDelay,
+            timeBetweenRounds = currentScreenState.timeBetweenRounds,
+            createdTime = timer?.createdTime ?: 0L,
+            updatedTime = 0L,
+        )
     }
 }
