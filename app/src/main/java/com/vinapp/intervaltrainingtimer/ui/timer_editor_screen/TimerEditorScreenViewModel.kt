@@ -245,11 +245,13 @@ class TimerEditorScreenViewModel(
         validateTimerName(
             name = currentScreenState.timerName,
             onValid = { name ->
-                val timer = buildTimer(name)
-                saveTimer(timer)
-                sendAction(
-                    NavigateToTimerScreen(timerId = timer.id)
-                )
+                timer = buildTimer(name)
+                timer?.let {
+                    saveTimer(it)
+                    sendAction(
+                        NavigateToTimerScreen(timerId = it.id)
+                    )
+                }
             },
             onInvalid = { _ ->
                 updateState(
@@ -265,7 +267,10 @@ class TimerEditorScreenViewModel(
         validateTimerName(
             name = currentScreenState.timerName,
             onValid = { name ->
-                saveTimer(buildTimer(name))
+                timer = buildTimer(name)
+                timer?.let {
+                    saveTimer(it)
+                }
             },
             onInvalid = { _ ->
                 updateState(
@@ -287,6 +292,11 @@ class TimerEditorScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             timerRepository.saveTimer(timer)
         }
+        updateState(
+            currentScreenState.copy(
+                showDeleteButton = true
+            )
+        )
     }
 
     private fun validateTimerName(

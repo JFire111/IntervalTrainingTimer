@@ -24,11 +24,11 @@ import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 
 @Composable
 fun BottomButtonsContainer(
-    showLeftButton: Boolean = true,
+    showLeftButton: Boolean = false,
     leftButtonText: String? = null,
-    showCenterButton: Boolean = true,
+    showCenterButton: Boolean = false,
     @DrawableRes centerButtonIcon: Int? = null,
-    showRightButton: Boolean = true,
+    showRightButton: Boolean = false,
     rightButtonText: String? = null,
     onLeftButtonClick: () -> Unit = {},
     onCenterButtonClick: () -> Unit = {},
@@ -134,8 +134,11 @@ private fun RowScope.SideButton(
 private fun BottomButtonsContainerPreview() {
     AppTheme {
         BottomButtonsContainer(
+            showLeftButton = true,
             leftButtonText = "Left",
+            showCenterButton = true,
             centerButtonIcon = R.drawable.ic_play,
+            showRightButton = true,
             rightButtonText = "Right"
         ) {
             Scaffold(

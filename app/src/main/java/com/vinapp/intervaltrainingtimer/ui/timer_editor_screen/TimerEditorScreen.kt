@@ -22,12 +22,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
@@ -112,15 +110,15 @@ fun TimerEditorScreen(
             focusManager.clearFocus()
             viewModel.closeDialog()
         },
-        onLeftBottomButtonClick = {
+        onDeleteClick = {
             focusManager.clearFocus()
             viewModel.onDeleteTimerClick()
         },
-        onCenterBottomButtonClick = {
+        onStartClick = {
             focusManager.clearFocus()
             viewModel.onStartTimerClick()
         },
-        onRightBottomButtonClick = {
+        onSaveClick = {
             focusManager.clearFocus()
             viewModel.onSaveTimerClick()
         },
@@ -141,20 +139,21 @@ private fun TimerEditorScreenContent(
     onAddIntervalClick: () -> Unit,
     onIntervalDialogConfirmClick: (name: String, duration: Long, color: IntervalColor) -> Unit,
     onIntervalDialogCancelClick: () -> Unit,
-    onLeftBottomButtonClick: () -> Unit,
-    onCenterBottomButtonClick: () -> Unit,
-    onRightBottomButtonClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onStartClick: () -> Unit,
+    onSaveClick: () -> Unit,
 ) {
 
     BottomButtonsContainer(
+        showRightButton = true,
         leftButtonText = stringResource(R.string.delete),
         rightButtonText = stringResource(R.string.save),
         showLeftButton = state.showDeleteButton,
         showCenterButton = true,
         centerButtonIcon = R.drawable.ic_play,
-        onLeftButtonClick = onLeftBottomButtonClick,
-        onCenterButtonClick = onCenterBottomButtonClick,
-        onRightButtonClick = onRightBottomButtonClick
+        onLeftButtonClick = onDeleteClick,
+        onCenterButtonClick = onStartClick,
+        onRightButtonClick = onSaveClick
     ) {
         Scaffold(
             backgroundColor = AppTheme.colors.darkGray,
@@ -219,8 +218,10 @@ private fun TimerEditorScreenContent(
                         .fillMaxHeight()
                         .background(AppTheme.colors.lightGray),
                     contentPadding = PaddingValues(
-                        horizontal = 14.dp,
-                        vertical = 8.dp
+                        start = 14.dp,
+                        top = 8.dp,
+                        end = 14.dp,
+                        bottom = 128.dp
                     ),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -382,9 +383,9 @@ private fun TimerEditorScreenPreview() {
             onAddIntervalClick = {},
             onIntervalDialogConfirmClick = { _, _, _ -> },
             onIntervalDialogCancelClick = {},
-            onLeftBottomButtonClick = {},
-            onCenterBottomButtonClick = {},
-            onRightBottomButtonClick = {}
+            onDeleteClick = {},
+            onStartClick = {},
+            onSaveClick = {}
         )
     }
 }

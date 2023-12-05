@@ -6,4 +6,7 @@ sealed interface TimerListScreenAction : ScreenAction {
     data class NavigateToTimerEditorScreen(
         val timerId: String?
     ) : TimerListScreenAction
+    data class NavigateToTimerScreen(
+        val timerId: String
+    ) : TimerListScreenAction
 }

@@ -1,7 +1,9 @@
 package com.vinapp.intervaltrainingtimer.ui_components.timer_item
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,14 +20,27 @@ import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 @Composable
 fun TimerItem(
     timerItemData: TimerItemData,
+    isSelected: Boolean,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(16.dp)
     Card(
         modifier = Modifier
             .height(110.dp),
-        backgroundColor = AppTheme.colors.darkGray,
+        backgroundColor = if (isSelected) {
+            AppTheme.colors.mediumGray
+        } else {
+            AppTheme.colors.darkGray
+        },
         shape = shape,
+        border = if (isSelected) {
+            BorderStroke(
+                width = 1.5.dp,
+                color = AppTheme.colors.red
+            )
+        } else {
+            null
+        }
     ) {
         Column(
             modifier = Modifier
@@ -68,13 +83,27 @@ data class TimerItemData(
 @Composable
 private fun TimerItemPreview() {
     AppTheme {
-        TimerItem(
-            timerItemData = TimerItemData(
-                id = "",
-                name = "Timer name",
-                duration = "15:00"
-            ),
-            onClick = {}
-        )
+        Column {
+            TimerItem(
+                timerItemData = TimerItemData(
+                    id = "",
+                    name = "Timer name",
+                    duration = "15:00"
+                ),
+                isSelected = false,
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            TimerItem(
+                timerItemData = TimerItemData(
+                    id = "",
+                    name = "Timer name",
+                    duration = "15:00"
+                ),
+                isSelected = true,
+                onClick = {}
+            )
+        }
+
     }
 }

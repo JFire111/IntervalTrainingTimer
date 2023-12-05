@@ -33,7 +33,12 @@ class MainActivity: ComponentActivity() {
                                 navController.navigate(
                                     route = "${Screen.TimerEditorScreen.route}/?timerId=$timerId"
                                 )
-                            }
+                            },
+                            navigateToTimerScreen = { timerId ->
+                                navController.navigate(
+                                    route = "${Screen.TimerScreen.route}/$timerId"
+                                )
+                            },
                         )
                     }
                     composable(
