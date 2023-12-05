@@ -1,6 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui.timer
 
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
+import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.entities.Interval
 import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerOutput
@@ -9,7 +10,7 @@ import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerService
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
-class TimerPresenter(private val timer: TimerEntity, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
+class TimerPresenter(private val timer: Timer, private val serviceController: TimerServiceController): TimerContract.Presenter(), TimerOutput {
 
     private var delay: Long = 3000L
     private var remainingTime: Long = 0L // timer.getDurationInMillis()
@@ -27,6 +28,10 @@ class TimerPresenter(private val timer: TimerEntity, private val serviceControll
 
     override fun onTimerActionButtonClick() {
         when (timerState) {
+            TimerState.INITIALIZED -> {
+                serviceController.setDelay(delay)
+                serviceController.start(timer)
+            }
             TimerState.STOPPED -> {
                 serviceController.setDelay(delay)
                 serviceController.start(timer)
@@ -96,6 +101,7 @@ class TimerPresenter(private val timer: TimerEntity, private val serviceControll
                         TimerState.PAUSED -> state = TimerActionButtonState.PLAY_RED
                         TimerState.STOPPED -> TODO()
                         TimerState.FINISHED -> TODO()
+                        TimerState.INITIALIZED -> TODO()
                     }
                 }
                 IntervalColor.GREEN -> {
@@ -104,8 +110,11 @@ class TimerPresenter(private val timer: TimerEntity, private val serviceControll
                         TimerState.PAUSED -> state = TimerActionButtonState.PLAY_GREEN
                         TimerState.STOPPED -> TODO()
                         TimerState.FINISHED -> TODO()
+                        TimerState.INITIALIZED -> TODO()
                     }
                 }
+                IntervalColor.YELLOW -> TODO()
+                IntervalColor.WHITE -> TODO()
             }
         }
         return state

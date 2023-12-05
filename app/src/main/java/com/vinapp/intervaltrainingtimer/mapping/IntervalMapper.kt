@@ -12,7 +12,7 @@ object IntervalMapper {
             id = interval.id,
             timerId = interval.timerId,
             name = interval.name,
-            duration = interval.duration,
+            duration = interval.durationInSeconds,
             color = interval.color
         )
     }
@@ -22,7 +22,7 @@ object IntervalMapper {
             id = intervalEntity.id,
             timerId = intervalEntity.timerId,
             name = intervalEntity.name,
-            duration = intervalEntity.duration,
+            durationInSeconds = intervalEntity.duration,
             color = intervalEntity.color
         )
     }
@@ -31,7 +31,7 @@ object IntervalMapper {
         return IntervalItemData(
             id = interval.id,
             name = interval.name,
-            duration = TimeConverter.getTimeString(interval.duration),
+            duration = TimeConverter.getTimeStringFromSeconds(interval.durationInSeconds),
             color = interval.color
         )
     }

@@ -21,6 +21,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         whiteFontColor = Color(0xFFFFFFFF),
         lightGrayFontColor = Color(0xFFC1C1C1),
         grayFontColor = Color(0xFF646464),
+        darkGrayFontColor = Color(0xFF212121),
     )
     val typography = AppTypography(
         small = TextStyle(
@@ -38,6 +39,9 @@ fun AppTheme(content: @Composable () -> Unit) {
         large = TextStyle(
             fontSize = 36.sp
         ),
+        extraLarge = TextStyle(
+            fontSize = 64.sp
+        )
     )
     CompositionLocalProvider(
         LocalAppColors provides colors,
@@ -61,6 +65,7 @@ data class AppTypography(
     val medium: TextStyle,
     val title: TextStyle,
     val large: TextStyle,
+    val extraLarge: TextStyle,
 )
 
 data class AppColors(
@@ -75,6 +80,7 @@ data class AppColors(
     val whiteFontColor: Color,
     val lightGrayFontColor: Color,
     val grayFontColor: Color,
+    val darkGrayFontColor: Color,
 )
 
 private val LocalAppColors = staticCompositionLocalOf {
@@ -90,6 +96,7 @@ private val LocalAppColors = staticCompositionLocalOf {
         whiteFontColor = Color.Unspecified,
         lightGrayFontColor = Color.Unspecified,
         grayFontColor = Color.Unspecified,
+        darkGrayFontColor = Color.Unspecified,
     )
 }
 
@@ -100,5 +107,6 @@ private val LocalAppTypography = staticCompositionLocalOf {
         medium = TextStyle.Default,
         title = TextStyle.Default,
         large = TextStyle.Default,
+        extraLarge = TextStyle.Default
     )
 }

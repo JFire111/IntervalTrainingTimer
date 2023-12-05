@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +37,8 @@ fun BottomButtonsContainer(
     onLeftButtonClick: () -> Unit = {},
     onCenterButtonClick: () -> Unit = {},
     onRightButtonClick: () -> Unit = {},
+    centerButtonBaseColor: Color = AppTheme.colors.red,
+    centerButtonIconColor: Color = AppTheme.colors.mediumGray,
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -61,6 +64,8 @@ fun BottomButtonsContainer(
             )
             if (showCenterButton) {
                 CenterButton(
+                    baseColor = centerButtonBaseColor,
+                    iconColor = centerButtonIconColor,
                     onClick = onCenterButtonClick
                 )
             }
@@ -76,6 +81,8 @@ fun BottomButtonsContainer(
 
 @Composable
 private fun RowScope.CenterButton(
+    baseColor: Color,
+    iconColor: Color,
     onClick: () -> Unit
 ) {
     Box(
@@ -83,24 +90,11 @@ private fun RowScope.CenterButton(
             .weight(1F),
         contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(AppTheme.colors.red)
-                .size(64.dp)
-                .clickable(
-                    onClick = onClick
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(24.dp),
-                painter = painterResource(R.drawable.ic_play),
-                contentDescription = null,
-                tint = AppTheme.colors.mediumGray
-            )
-        }
+        CenterActionButton(
+            baseColor = baseColor,
+            iconColor = iconColor,
+            onClick = onClick
+        )
     }
 }
 

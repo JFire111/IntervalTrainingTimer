@@ -6,6 +6,6 @@ data class Interval(
     val id: Int,
     val timerId: String,
     val name: String,
-    val duration: Long,
+    val durationInSeconds: Long,
     val color: IntervalColor
 )

@@ -30,9 +30,8 @@ fun TimerListScreen(
     )
     val state by viewModel.screenStateFlow.collectAsState()
 
-    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     LaunchedEffect(Unit) {
-        lifecycleScope.launch {
+        launch {
             viewModel.screenActionFlow.collect { action ->
                 when (action) {
                     is NavigateToTimerEditorScreen -> navigateToTimerEditorScreen(action.timerId)

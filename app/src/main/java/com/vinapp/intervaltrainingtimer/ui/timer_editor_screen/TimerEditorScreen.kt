@@ -51,15 +51,14 @@ fun TimerEditorScreen(
     navigateToTimerScreen: (timerId: String) -> Unit,
     navigateBack: () -> Unit
 ) {
-    val viewModel: TimerEditorViewModel = viewModel(
-        factory = TimerEditorViewModel.Factory
+    val viewModel: TimerEditorScreenViewModel = viewModel(
+        factory = TimerEditorScreenViewModel.Factory
     )
     val state by viewModel.screenStateFlow.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     LaunchedEffect(Unit) {
-        lifecycleScope.launch {
+        launch {
             viewModel.screenActionFlow.collect { action ->
                 when (action) {
                     is NavigateToTimerScreen -> navigateToTimerScreen(action.timerId)

@@ -28,7 +28,7 @@ private const val MIN_START_DELAY = 0
 private const val MAX_START_DELAY = 60
 private const val MIN_TIME_BETWEEN_ROUNDS = 0
 
-class TimerEditorViewModel(
+class TimerEditorScreenViewModel(
     val intervalRepository: IntervalRepository,
     val timerRepository: TimerRepository,
 ) : BaseViewModel<TimerEditorScreenState, TimerEditorScreenAction>() {
@@ -43,7 +43,7 @@ class TimerEditorViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val app = this[APPLICATION_KEY] as App
-                TimerEditorViewModel(
+                TimerEditorScreenViewModel(
                     intervalRepository = app.container.intervalRepository,
                     timerRepository = app.container.timerRepository
                 )
@@ -60,8 +60,15 @@ class TimerEditorViewModel(
                     updateState(
                         currentScreenState.copy(
                             timerName = it.name,
+                            totalTimeDigits = TimeConverter.getTimeDigits(
+                                numberOfRounds = it.numberOfRounds,
+                                intervalList = it.intervalList,
+                                timeBetweenRounds = it.timeBetweenRounds
+                            ),
                             intervalList = it.intervalList.map(::mapIntervalToIntervalItemData),
                             numberOfRounds = it.numberOfRounds,
+                            startDelay = it.startDelay,
+                            timeBetweenRounds = it.timeBetweenRounds,
                             showDeleteButton = true,
                         )
                     )
@@ -189,7 +196,7 @@ class TimerEditorViewModel(
         if (selectedInterval != null) {
             intervalList[intervalList.indexOf(selectedInterval)] = selectedInterval.copy(
                 name = name,
-                duration = duration,
+                durationInSeconds = duration,
                 color = color
             )
         } else {
@@ -198,7 +205,7 @@ class TimerEditorViewModel(
                     id = getNewIntervalId(),
                     timerId = "",
                     name = name,
-                    duration = duration,
+                    durationInSeconds = duration,
                     color = color,
                 )
             )
@@ -295,10 +302,13 @@ class TimerEditorViewModel(
     }
 
     private fun buildTimer(timerName: String): Timer {
+        val timerId = timer?.id ?: UUID.randomUUID().toString()
         return Timer(
-            id = timer?.id ?: UUID.randomUUID().toString(),
+            id = timerId,
             name = timerName,
-            intervalList = intervalList,
+            intervalList = intervalList.map {
+                it.copy(timerId = timerId)
+            },
             numberOfRounds = currentScreenState.numberOfRounds,
             startDelay = currentScreenState.startDelay,
             timeBetweenRounds = currentScreenState.timeBetweenRounds,

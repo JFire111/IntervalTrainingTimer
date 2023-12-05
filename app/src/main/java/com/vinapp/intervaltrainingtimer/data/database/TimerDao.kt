@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TimerDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(timer: TimerEntity)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(timer: TimerEntity)
 
     @Query("DELETE FROM timer WHERE id = :timerId")

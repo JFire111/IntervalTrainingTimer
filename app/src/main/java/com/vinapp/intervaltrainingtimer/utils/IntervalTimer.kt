@@ -1,12 +1,12 @@
 package com.vinapp.intervaltrainingtimer.utils
 
+import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.entities.Interval
-import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import kotlinx.coroutines.*
 
 abstract class IntervalTimer {
 
-    private var timer: TimerEntity? = null
+    private var timer: Timer? = null
     private var startDelay: Long = 0L
     private var stepInMillis: Long = 100
     private var timerJob: Job? = null
@@ -21,11 +21,16 @@ abstract class IntervalTimer {
         this.startDelay = delay
     }
 
-    fun start(timer: TimerEntity, stepInMillis: Long = 100) {
+    fun start(timer: Timer, stepInMillis: Long = 100) {
         this.timer = timer
         this.stepInMillis = stepInMillis
+        this.startDelay = timer.startDelay.toLong()
         isPaused = false
-//        remainingTime = this.timer!!.getDurationInMillis()
+        remainingTime = TimeConverter.getTimeInSeconds(
+            numberOfRounds = this.timer!!.numberOfRounds,
+            intervalList = this.timer!!.intervalList,
+            timeBetweenRounds = this.timer!!.timeBetweenRounds
+        )
         remainingRounds = this.timer!!.numberOfRounds
         timerJob = MainScope().launch {
             runDelay()
@@ -51,7 +56,11 @@ abstract class IntervalTimer {
     fun stop() {
         timerJob!!.cancel()
         isPaused = false
-//        remainingTime = timer!!.getDurationInMillis()
+        remainingTime = TimeConverter.getTimeInSeconds(
+            numberOfRounds = this.timer!!.numberOfRounds,
+            intervalList = this.timer!!.intervalList,
+            timeBetweenRounds = this.timer!!.timeBetweenRounds
+        )
         remainingRounds = timer!!.numberOfRounds
         currentIntervalIndex = 0
         remainingIntervalTime = 0L

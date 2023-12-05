@@ -59,6 +59,8 @@ fun IntervalItem(
                 color = when (intervalItemData.color) {
                     IntervalColor.GREEN -> AppTheme.colors.green
                     IntervalColor.RED -> AppTheme.colors.red
+                    IntervalColor.YELLOW -> AppTheme.colors.yellow
+                    IntervalColor.WHITE -> AppTheme.colors.white
                 }
             )
         }

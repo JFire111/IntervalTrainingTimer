@@ -56,7 +56,7 @@ fun IntervalDialog(
     var timeInputDigits by remember(interval) {
         mutableStateOf(
             if (interval != null) {
-                TimeConverter.getTimeDigits(interval.duration)
+                TimeConverter.getTimeDigits(interval.durationInSeconds)
             } else {
                 TimeDigits()
             }
@@ -79,7 +79,7 @@ fun IntervalDialog(
                 } else {
                     onConfirmClick(
                         intervalName,
-                        TimeConverter.getTimeLong(timeInputDigits),
+                        TimeConverter.getTimeInSeconds(timeInputDigits),
                         intervalColor,
                     )
                 }
@@ -311,7 +311,7 @@ private fun IntervalDialogPreview() {
                     id = 0,
                     timerId = "",
                     name = "Interval name",
-                    duration = 900,
+                    durationInSeconds = 900,
                     color = IntervalColor.RED
                 ),
                 onConfirmClick = { _, _, _ -> },

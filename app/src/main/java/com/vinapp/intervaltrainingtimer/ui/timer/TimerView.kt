@@ -13,11 +13,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
+import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
-class TimerView(private val timer: TimerEntity, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
+class TimerView(private val timer: Timer, private val serviceController: TimerServiceController): Fragment(), TimerContract.View {
 
     private var presenter: TimerPresenter? = null
     private var _binding: FragmentTimerBinding? = null
@@ -90,15 +91,16 @@ class TimerView(private val timer: TimerEntity, private val serviceController: T
     override fun setColorByIntervalType(type: IntervalColor) {
         context?.let {
             when (type) {
-                IntervalColor.RED -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.red))
-                IntervalColor.GREEN -> view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.green))
+                IntervalColor.RED -> requireView().setBackgroundColor(ContextCompat.getColor(it, R.color.red))
+                IntervalColor.GREEN -> requireView().setBackgroundColor(ContextCompat.getColor(it, R.color.green))
+                else -> {}
             }
         }
     }
 
     override fun setDefaultColor() {
         context?.let {
-            view!!.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
+            requireView().setBackgroundColor(ContextCompat.getColor(it, R.color.white))
         }
     }
 
