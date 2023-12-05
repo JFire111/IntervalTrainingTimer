@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,17 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,6 +27,7 @@ fun BottomButtonsContainer(
     showLeftButton: Boolean = true,
     leftButtonText: String? = null,
     showCenterButton: Boolean = true,
+    @DrawableRes centerButtonIcon: Int? = null,
     showRightButton: Boolean = true,
     rightButtonText: String? = null,
     onLeftButtonClick: () -> Unit = {},
@@ -62,13 +58,13 @@ fun BottomButtonsContainer(
                 onClick = onLeftButtonClick,
                 alignment = Alignment.CenterEnd
             )
-            if (showCenterButton) {
-                CenterButton(
-                    baseColor = centerButtonBaseColor,
-                    iconColor = centerButtonIconColor,
-                    onClick = onCenterButtonClick
-                )
-            }
+            CenterButton(
+                isDisplayed = showCenterButton,
+                baseColor = centerButtonBaseColor,
+                icon = centerButtonIcon,
+                iconColor = centerButtonIconColor,
+                onClick = onCenterButtonClick
+            )
             SideButton(
                 isDisplayed = showRightButton,
                 text = rightButtonText,
@@ -81,7 +77,9 @@ fun BottomButtonsContainer(
 
 @Composable
 private fun RowScope.CenterButton(
+    isDisplayed: Boolean,
     baseColor: Color,
+    @DrawableRes icon: Int?,
     iconColor: Color,
     onClick: () -> Unit
 ) {
@@ -90,11 +88,14 @@ private fun RowScope.CenterButton(
             .weight(1F),
         contentAlignment = Alignment.Center
     ) {
-        CenterActionButton(
-            baseColor = baseColor,
-            iconColor = iconColor,
-            onClick = onClick
-        )
+        if (isDisplayed) {
+            CenterActionButton(
+                baseColor = baseColor,
+                icon = icon,
+                iconColor = iconColor,
+                onClick = onClick
+            )
+        }
     }
 }
 
@@ -134,12 +135,11 @@ private fun BottomButtonsContainerPreview() {
     AppTheme {
         BottomButtonsContainer(
             leftButtonText = "Left",
+            centerButtonIcon = R.drawable.ic_play,
             rightButtonText = "Right"
         ) {
             Scaffold(
-                bottomBar = {
-
-                },
+                bottomBar = {},
                 backgroundColor = AppTheme.colors.lightGray
             ) {}
         }

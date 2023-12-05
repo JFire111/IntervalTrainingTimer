@@ -14,9 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
+import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
 import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.BottomButtonsContainer
-import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItemData
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -51,6 +52,10 @@ private fun TimerScreenContent(
 ) {
     BottomButtonsContainer(
         onCenterButtonClick = onCenterActionButtonClick,
+        centerButtonIcon = when (state.timerState) {
+            TimerState.IN_PROGRESS -> R.drawable.ic_pause
+            else -> R.drawable.ic_play
+        },
         centerButtonBaseColor = AppTheme.colors.mediumGray,
         centerButtonIconColor = when (state.backgroundColor) {
             IntervalColor.GREEN -> AppTheme.colors.green

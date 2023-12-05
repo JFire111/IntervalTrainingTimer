@@ -151,6 +151,7 @@ private fun TimerEditorScreenContent(
         rightButtonText = stringResource(R.string.save),
         showLeftButton = state.showDeleteButton,
         showCenterButton = true,
+        centerButtonIcon = R.drawable.ic_play,
         onLeftButtonClick = onLeftBottomButtonClick,
         onCenterButtonClick = onCenterBottomButtonClick,
         onRightButtonClick = onRightBottomButtonClick

@@ -66,11 +66,66 @@ class TimerScreenViewModel(
 
     fun onCenterActionButtonClick() {
         when (currentScreenState.timerState) {
-            TimerState.INITIALIZED -> intervalTimer?.start()
-            TimerState.IN_PROGRESS -> intervalTimer?.pause()
-            TimerState.PAUSED -> intervalTimer?.resume()
-            TimerState.STOPPED -> intervalTimer?.stop()
-            TimerState.FINISHED -> intervalTimer?.restart()
+            TimerState.INITIALIZED -> startTimer()
+            TimerState.IN_PROGRESS -> pauseTimer()
+            TimerState.PAUSED -> resumeTimer()
+            TimerState.STOPPED -> stopTimer()
+            TimerState.FINISHED -> restartTimer()
+        }
+    }
+
+    private fun startTimer() {
+        intervalTimer?.let {
+            updateState(
+                currentScreenState.copy(
+                    timerState = TimerState.IN_PROGRESS
+                )
+            )
+            it.start()
+        }
+    }
+
+    private fun pauseTimer() {
+        intervalTimer?.let {
+            updateState(
+                currentScreenState.copy(
+                    timerState = TimerState.PAUSED
+                )
+            )
+            it.pause()
+        }
+    }
+
+    private fun resumeTimer() {
+        intervalTimer?.let {
+            updateState(
+                currentScreenState.copy(
+                    timerState = TimerState.IN_PROGRESS
+                )
+            )
+            it.resume()
+        }
+    }
+
+    private fun stopTimer() {
+        intervalTimer?.let {
+            updateState(
+                currentScreenState.copy(
+                    timerState = TimerState.STOPPED
+                )
+            )
+            it.stop()
+        }
+    }
+
+    private fun restartTimer() {
+        intervalTimer?.let {
+            updateState(
+                currentScreenState.copy(
+                    timerState = TimerState.IN_PROGRESS
+                )
+            )
+            it.restart()
         }
     }
 
@@ -114,7 +169,8 @@ class TimerScreenViewModel(
                 updateState(
                     currentScreenState.copy(
                         backgroundColor = IntervalColor.WHITE,
-                        remainingTime = "00:00"
+                        remainingTime = "00:00",
+                        timerState = TimerState.FINISHED
                     )
                 )
             }

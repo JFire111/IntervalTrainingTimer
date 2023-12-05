@@ -1,5 +1,6 @@
 package com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,8 +21,9 @@ import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 @Composable
 fun CenterActionButton(
     baseColor: Color,
+    @DrawableRes icon: Int?,
     iconColor: Color,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -33,13 +35,15 @@ fun CenterActionButton(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            modifier = Modifier
-                .size(24.dp),
-            painter = painterResource(R.drawable.ic_play),
-            contentDescription = null,
-            tint = iconColor
-        )
+        icon?.let {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp),
+                painter = painterResource(it),
+                contentDescription = null,
+                tint = iconColor
+            )
+        }
     }
 }
 
@@ -49,6 +53,7 @@ private fun CenterActionButtonPreview() {
     AppTheme {
         CenterActionButton(
             baseColor = AppTheme.colors.red,
+            icon = R.drawable.ic_play,
             iconColor = AppTheme.colors.mediumGray,
         ) {}
     }

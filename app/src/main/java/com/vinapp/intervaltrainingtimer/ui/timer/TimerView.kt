@@ -14,7 +14,6 @@ import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.databinding.FragmentTimerBinding
 import com.vinapp.intervaltrainingtimer.domain.Timer
-import com.vinapp.intervaltrainingtimer.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.mvp.TimerContract
 import com.vinapp.intervaltrainingtimer.services.TimerServiceController
 
@@ -106,7 +105,7 @@ class TimerView(private val timer: Timer, private val serviceController: TimerSe
 
     override fun setActionButtonIconByState(state: TimerActionButtonState) {
         when (state) {
-            TimerActionButtonState.PAUSE_WHITE -> timerActionButton.setImageResource(R.drawable.pause_white)
+            TimerActionButtonState.PAUSE_WHITE -> timerActionButton.setImageResource(R.drawable.ic_pause)
             TimerActionButtonState.PAUSE_RED -> timerActionButton.setImageResource(R.drawable.pause_red)
             TimerActionButtonState.PAUSE_GREEN -> timerActionButton.setImageResource(R.drawable.pause_green)
             TimerActionButtonState.PLAY_WHITE -> timerActionButton.setImageResource(R.drawable.play_white)
