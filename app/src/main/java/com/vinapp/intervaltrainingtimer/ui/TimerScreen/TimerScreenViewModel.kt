@@ -8,13 +8,12 @@ import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.data.timer.TimerRepository
-import com.vinapp.intervaltrainingtimer.domain.Interval
 import com.vinapp.intervaltrainingtimer.domain.Timer
 import com.vinapp.intervaltrainingtimer.logic.timer.TimerState
-import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalToIntervalItemData
 import com.vinapp.intervaltrainingtimer.utils.IntervalTimerControl
 import com.vinapp.intervaltrainingtimer.utils.IntervalTimerNew
 import com.vinapp.intervaltrainingtimer.utils.IntervalTimerNewImpl
+import com.vinapp.intervaltrainingtimer.utils.SoundPlayer
 import com.vinapp.intervaltrainingtimer.utils.TimeConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +21,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class TimerScreenViewModel(
-    private val timerRepository: TimerRepository
+    private val timerRepository: TimerRepository,
+    private val soundPlayer: SoundPlayer,
 ) : BaseViewModel<TimerScreenState, TimerScreenAction>() {
 
     override val mutableScreenStateFlow = MutableStateFlow(TimerScreenState())
@@ -37,7 +37,8 @@ class TimerScreenViewModel(
             initializer {
                 val app = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as App
                 TimerScreenViewModel(
-                    timerRepository = app.container.timerRepository
+                    timerRepository = app.container.timerRepository,
+                    soundPlayer = app.container.soundPlayer,
                 )
             }
         }
@@ -154,6 +155,7 @@ class TimerScreenViewModel(
             }
 
             override fun onIntervalChanged(intervalIndex: Int?) {
+                soundPlayer.play()
                 updateState(
                     currentScreenState.copy(
                         backgroundColor = intervalIndex?.let {
@@ -166,6 +168,7 @@ class TimerScreenViewModel(
             override fun onRoundChanged(currentRound: Int) {}
 
             override fun onFinish() {
+                soundPlayer.play(loops = 2)
                 updateState(
                     currentScreenState.copy(
                         backgroundColor = IntervalColor.WHITE,
@@ -175,5 +178,10 @@ class TimerScreenViewModel(
                 )
             }
         }
+    }
+
+    override fun onCleared() {
+        intervalTimer?.stop()
+        super.onCleared()
     }
 }

@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.vinapp.intervaltrainingtimer.data.database.Database
 import com.vinapp.intervaltrainingtimer.data.interval.IntervalRepositoryImpl
 import com.vinapp.intervaltrainingtimer.data.timer.TimerRepositoryImpl
+import com.vinapp.intervaltrainingtimer.utils.SoundPlayer
+import com.vinapp.intervaltrainingtimer.utils.SoundPlayerImpl
 
 class AppContainer(context: Context) {
 
@@ -15,5 +17,8 @@ class AppContainer(context: Context) {
     )
     val intervalRepository = IntervalRepositoryImpl(
         intervalDao = database.intervalDao()
+    )
+    val soundPlayer = SoundPlayerImpl(
+        context = context
     )
 }

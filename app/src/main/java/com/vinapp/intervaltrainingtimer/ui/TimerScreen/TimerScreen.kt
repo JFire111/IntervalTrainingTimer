@@ -51,6 +51,7 @@ private fun TimerScreenContent(
     onCenterActionButtonClick: () -> Unit
 ) {
     BottomButtonsContainer(
+        showCenterButton = true,
         onCenterButtonClick = onCenterActionButtonClick,
         centerButtonIcon = when (state.timerState) {
             TimerState.IN_PROGRESS -> R.drawable.ic_pause
