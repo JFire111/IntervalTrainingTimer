@@ -1,8 +1,8 @@
 package com.vinapp.intervaltrainingtimer.mapping
 
-import com.vinapp.intervaltrainingtimer.domain.Timer
-import com.vinapp.intervaltrainingtimer.entities.IntervalEntity
-import com.vinapp.intervaltrainingtimer.entities.TimerEntity
+import com.vinapp.intervaltrainingtimer.domain.entities.Timer
+import com.vinapp.intervaltrainingtimer.data.entities.IntervalEntity
+import com.vinapp.intervaltrainingtimer.data.entities.TimerEntity
 import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalEntityToInterval
 import com.vinapp.intervaltrainingtimer.ui_components.timer_item.TimerItemData
 import com.vinapp.intervaltrainingtimer.utils.TimeConverter

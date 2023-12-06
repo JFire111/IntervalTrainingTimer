@@ -8,10 +8,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
-import com.vinapp.intervaltrainingtimer.data.interval.IntervalRepository
-import com.vinapp.intervaltrainingtimer.data.timer.TimerRepository
-import com.vinapp.intervaltrainingtimer.domain.Interval
-import com.vinapp.intervaltrainingtimer.domain.Timer
+import com.vinapp.intervaltrainingtimer.data.source.interval.IntervalRepository
+import com.vinapp.intervaltrainingtimer.data.source.timer.TimerRepository
+import com.vinapp.intervaltrainingtimer.domain.entities.Interval
+import com.vinapp.intervaltrainingtimer.domain.entities.Timer
 import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalToIntervalItemData
 import com.vinapp.intervaltrainingtimer.utils.TimeConverter
 import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen

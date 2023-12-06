@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
-import com.vinapp.intervaltrainingtimer.data.timer.TimerRepository
+import com.vinapp.intervaltrainingtimer.data.source.timer.TimerRepository
 import com.vinapp.intervaltrainingtimer.mapping.TimerMapper.mapTimerToTimerItemData
 import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
 import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen

@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.utils
 
-import com.vinapp.intervaltrainingtimer.domain.Interval
-import com.vinapp.intervaltrainingtimer.domain.Timer
+import com.vinapp.intervaltrainingtimer.domain.entities.Interval
+import com.vinapp.intervaltrainingtimer.domain.entities.Timer
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 import kotlin.math.ceil
 

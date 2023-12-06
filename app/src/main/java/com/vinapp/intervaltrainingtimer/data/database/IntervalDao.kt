@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.vinapp.intervaltrainingtimer.entities.IntervalEntity
+import com.vinapp.intervaltrainingtimer.data.entities.IntervalEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

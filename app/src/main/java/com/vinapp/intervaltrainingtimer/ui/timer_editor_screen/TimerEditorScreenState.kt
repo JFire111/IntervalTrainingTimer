@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.ui.timer_editor_screen
 
 import com.vinapp.intervaltrainingtimer.base.presentation.ScreenState
-import com.vinapp.intervaltrainingtimer.domain.Interval
+import com.vinapp.intervaltrainingtimer.domain.entities.Interval
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItemData
 

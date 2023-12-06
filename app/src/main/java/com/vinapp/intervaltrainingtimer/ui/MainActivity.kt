@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.vinapp.intervaltrainingtimer.ui.TimerScreen.TimerScreen
+import com.vinapp.intervaltrainingtimer.ui.timer_screen.TimerScreen
 import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreen
 import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreen
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme

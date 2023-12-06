@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
-import com.vinapp.intervaltrainingtimer.domain.Interval
+import com.vinapp.intervaltrainingtimer.domain.entities.Interval
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeText
 import com.vinapp.intervaltrainingtimer.ui_components.dialog.AppDialog

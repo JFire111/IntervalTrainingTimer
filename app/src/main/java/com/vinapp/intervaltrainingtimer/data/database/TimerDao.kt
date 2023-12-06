@@ -1,7 +1,7 @@
 package com.vinapp.intervaltrainingtimer.data.database
 
 import androidx.room.*
-import com.vinapp.intervaltrainingtimer.entities.TimerEntity
+import com.vinapp.intervaltrainingtimer.data.entities.TimerEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
