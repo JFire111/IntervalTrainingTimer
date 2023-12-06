@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

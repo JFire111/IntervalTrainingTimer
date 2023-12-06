@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_editor_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -8,14 +8,13 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
-import com.vinapp.intervaltrainingtimer.data.source.interval.IntervalRepository
 import com.vinapp.intervaltrainingtimer.data.source.timer.TimerRepository
 import com.vinapp.intervaltrainingtimer.domain.entities.Interval
 import com.vinapp.intervaltrainingtimer.domain.entities.Timer
 import com.vinapp.intervaltrainingtimer.mapping.IntervalMapper.mapIntervalToIntervalItemData
 import com.vinapp.intervaltrainingtimer.utils.TimeConverter
-import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
-import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateBack
+import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateBack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +28,6 @@ private const val MAX_START_DELAY = 60
 private const val MIN_TIME_BETWEEN_ROUNDS = 0
 
 class TimerEditorScreenViewModel(
-    val intervalRepository: IntervalRepository,
     val timerRepository: TimerRepository,
 ) : BaseViewModel<TimerEditorScreenState, TimerEditorScreenAction>() {
 
@@ -44,7 +42,6 @@ class TimerEditorScreenViewModel(
             initializer {
                 val app = this[APPLICATION_KEY] as App
                 TimerEditorScreenViewModel(
-                    intervalRepository = app.container.intervalRepository,
                     timerRepository = app.container.timerRepository
                 )
             }
@@ -242,43 +239,21 @@ class TimerEditorScreenViewModel(
     }
 
     fun onStartTimerClick() {
-        validateTimerName(
-            name = currentScreenState.timerName,
-            onValid = { name ->
-                timer = buildTimer(name)
-                timer?.let {
-                    saveTimer(it)
-                    sendAction(
-                        NavigateToTimerScreen(timerId = it.id)
-                    )
-                }
-            },
-            onInvalid = { _ ->
-                updateState(
-                    currentScreenState.copy(
-                        isTimerNameError = true
-                    )
+        validateTimerData(
+            onValid = { timer ->
+                saveTimer(timer)
+                sendAction(
+                    NavigateToTimerScreen(timerId = timer.id)
                 )
-            }
+            },
         )
     }
 
     fun onSaveTimerClick() {
-        validateTimerName(
-            name = currentScreenState.timerName,
-            onValid = { name ->
-                timer = buildTimer(name)
-                timer?.let {
-                    saveTimer(it)
-                }
+        validateTimerData(
+            onValid = { timer ->
+                saveTimer(timer)
             },
-            onInvalid = { _ ->
-                updateState(
-                    currentScreenState.copy(
-                        isTimerNameError = true
-                    )
-                )
-            }
         )
     }
 
@@ -299,15 +274,25 @@ class TimerEditorScreenViewModel(
         )
     }
 
-    private fun validateTimerName(
-        name: String?,
-        onValid: (name: String) -> Unit,
-        onInvalid: (name: String?) -> Unit
+    private fun validateTimerData(
+        onValid: (timer: Timer) -> Unit,
     ) {
-        if (name.isNullOrBlank()) {
-            onInvalid(name)
+        val name = currentScreenState.timerName ?: ""
+        val isNameValid = name.isNotBlank()
+        val isDurationValid = TimeConverter.getTimeInSeconds(
+            numberOfRounds = currentScreenState.numberOfRounds,
+            intervalList = intervalList,
+            timeBetweenRounds = currentScreenState.timeBetweenRounds,
+        ) > 0
+        if (isNameValid && isDurationValid) {
+            onValid(buildTimer(name))
         } else {
-            onValid(name)
+            updateState(
+                currentScreenState.copy(
+                    isTimerNameError = !isNameValid,
+                    isDurationError = !isDurationValid
+                )
+            )
         }
     }
 

@@ -14,6 +14,7 @@
     <string name="timerEditing">Редактирование таймера</string>
     <string name="increase">Увеличить</string>
     <string name="decrease">Уменьшить</string>
+    <string name="totalTimeError">Общее время должно быть больше 0</string>
     <!-- Default values General -->
     <string name="defaultTimerName">Таймер</string>
 

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_editor_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen
 
 import com.vinapp.intervaltrainingtimer.base.presentation.ScreenState
 import com.vinapp.intervaltrainingtimer.domain.entities.Interval
@@ -8,6 +8,7 @@ import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItem
 data class TimerEditorScreenState(
     val timerName: String? = null,
     val isTimerNameError: Boolean = false,
+    val isDurationError: Boolean = false,
     val totalTimeDigits: TimeDigits = TimeDigits(),
     val intervalList: List<IntervalItemData>? = null,
     val numberOfRounds: Int = 1,

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.theme
+package com.vinapp.intervaltrainingtimer.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_list_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_list_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,8 +18,8 @@ import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.ui_components.add_item.AddItem
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 import com.vinapp.intervaltrainingtimer.ui_components.timer_item.TimerItem
-import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
-import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen
 import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.BottomButtonsContainer
 import kotlinx.coroutines.launch
 

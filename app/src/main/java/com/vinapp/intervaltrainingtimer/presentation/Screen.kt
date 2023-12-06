@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui
+package com.vinapp.intervaltrainingtimer.presentation
 
 sealed class Screen(val route: String) {
     object TimerListScreen : Screen("timer_list_screen")

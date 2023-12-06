@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_screen
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope

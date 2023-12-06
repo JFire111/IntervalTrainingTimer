@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_list_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_list_screen
 
 import com.vinapp.intervaltrainingtimer.base.presentation.ScreenAction
 

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_list_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_list_screen
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -9,8 +9,8 @@ import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
 import com.vinapp.intervaltrainingtimer.data.source.timer.TimerRepository
 import com.vinapp.intervaltrainingtimer.mapping.TimerMapper.mapTimerToTimerItemData
-import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
-import com.vinapp.intervaltrainingtimer.ui.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

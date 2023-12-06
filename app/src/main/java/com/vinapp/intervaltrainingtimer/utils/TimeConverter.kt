@@ -73,6 +73,14 @@ object TimeConverter {
         return ceil(timeInMillis.toDouble() / 1000).toLong()
     }
 
+    fun getTimeInSeconds(timer: Timer): Long {
+        return getTimeInSeconds(
+            numberOfRounds = timer.numberOfRounds,
+            intervalList = timer.intervalList,
+            timeBetweenRounds = timer.timeBetweenRounds
+        )
+    }
+
     fun getTimeInMillis(timeInSeconds: Long): Long {
         return timeInSeconds * 1000L
     }

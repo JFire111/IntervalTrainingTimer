@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_editor_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui.timer_editor_screen
+package com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,13 +14,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -29,8 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
-import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
-import com.vinapp.intervaltrainingtimer.ui.timer_editor_screen.TimerEditorScreenAction.NavigateBack
+import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateBack
+import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.ShowDurationErrorSnackbar
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeText
 import com.vinapp.intervaltrainingtimer.ui_components.topbar.TopBar
@@ -54,6 +58,8 @@ fun TimerEditorScreen(
     )
     val state by viewModel.screenStateFlow.collectAsState()
     val focusManager = LocalFocusManager.current
+    val scaffoldState = rememberScaffoldState()
+    val snackbarMessage = stringResource(id = R.string.totalTimeError)
 
     LaunchedEffect(Unit) {
         launch {
@@ -61,6 +67,9 @@ fun TimerEditorScreen(
                 when (action) {
                     is NavigateToTimerScreen -> navigateToTimerScreen(action.timerId)
                     NavigateBack -> navigateBack()
+                    ShowDurationErrorSnackbar -> scaffoldState.snackbarHostState.showSnackbar(
+                        message = snackbarMessage
+                    )
                 }
             }
         }
@@ -69,6 +78,7 @@ fun TimerEditorScreen(
 
     TimerEditorScreenContent(
         state = state,
+        scaffoldState = scaffoldState,
         onTimerNameChanged = viewModel::onTimerNameChanged,
         onIncreaseRoundsClick = {
             focusManager.clearFocus()
@@ -128,6 +138,7 @@ fun TimerEditorScreen(
 @Composable
 private fun TimerEditorScreenContent(
     state: TimerEditorScreenState,
+    scaffoldState: ScaffoldState,
     onTimerNameChanged: (name: String) -> Unit,
     onIncreaseRoundsClick: () -> Unit,
     onDecreaseRoundsClick: () -> Unit,
@@ -156,6 +167,7 @@ private fun TimerEditorScreenContent(
         onRightButtonClick = onSaveClick
     ) {
         Scaffold(
+            scaffoldState = scaffoldState,
             backgroundColor = AppTheme.colors.darkGray,
             topBar = {
                 TopBar(
@@ -192,7 +204,8 @@ private fun TimerEditorScreenContent(
                         ),
                 ) {
                     TotalTimeRow(
-                        timeDigits = state.totalTimeDigits
+                        timeDigits = state.totalTimeDigits,
+                        hasError = state.isDurationError
                     )
                     NumberOfRoundsRow(
                         numberOfRounds = state.numberOfRounds,
@@ -256,6 +269,7 @@ private fun TimerEditorScreenContent(
 @Composable
 private fun SettingsRow(
     title: String,
+    hasError: Boolean = false,
     content: @Composable () -> Unit
 ) {
     Row(
@@ -270,7 +284,11 @@ private fun SettingsRow(
             text = "$title:",
             textAlign = TextAlign.End,
             style = AppTheme.typography.title.copy(
-                color = AppTheme.colors.grayFontColor
+                color = if (hasError) {
+                    AppTheme.colors.red
+                } else {
+                    AppTheme.colors.grayFontColor
+                }
             )
         )
         Box(
@@ -287,9 +305,11 @@ private fun SettingsRow(
 @Composable
 private fun TotalTimeRow(
     timeDigits: TimeDigits,
+    hasError: Boolean
 ) {
     SettingsRow(
-        title = stringResource(R.string.totalTimeText)
+        title = stringResource(R.string.totalTimeText),
+        hasError = hasError
     ) {
         TimeText(
             timeDigits = timeDigits,
@@ -372,6 +392,7 @@ private fun TimerEditorScreenPreview() {
                 ),
                 numberOfRounds = 4
             ),
+            scaffoldState = rememberScaffoldState(),
             onTimerNameChanged = {},
             onIncreaseRoundsClick = {},
             onDecreaseRoundsClick = {},
