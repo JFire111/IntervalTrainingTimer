@@ -221,7 +221,7 @@ private fun ColorSwitch(
                 .clip(shape)
                 .background(AppTheme.colors.lightGray)
                 .clickable {
-                    onColorClick(IntervalColor.GREEN)
+                    onColorClick(IntervalColor.RED)
                 }
                 .padding(
                     horizontal = 6.dp,
