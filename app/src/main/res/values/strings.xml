@@ -2,7 +2,7 @@
 
     <!-- General -->
     <string name="app_name">Interval Training Timer</string>
-    <string name="numberOfRoundsText">Number of rounds</string>
+    <string name="numberOfCyclesText">Number of cycles</string>
     <string name="timerName">Timer name</string>
     <string name="startButton">Start</string>
     <string name="delayBeforeStart">Delay before start</string>
@@ -16,6 +16,7 @@
     <string name="increase">Increase</string>
     <string name="decrease">Decrease</string>
     <string name="totalTimeError">Total time must be greater than 0</string>
+    <string name="intervalList">Interval list:</string>
     <!-- Default values General -->
     <string name="defaultTimerName">Timer</string>
 

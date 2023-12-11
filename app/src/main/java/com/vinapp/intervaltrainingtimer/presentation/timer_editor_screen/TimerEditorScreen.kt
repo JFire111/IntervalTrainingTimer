@@ -23,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +42,7 @@ import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.B
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItem
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItemData
 import com.vinapp.intervaltrainingtimer.ui_components.name_text_field.NameTextField
-import com.vinapp.intervaltrainingtimer.ui_components.round_picker.TimePicker
+import com.vinapp.intervaltrainingtimer.ui_components.count_picker.TimePicker
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -192,6 +191,7 @@ private fun TimerEditorScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Column(
                     modifier = Modifier
@@ -200,8 +200,9 @@ private fun TimerEditorScreenContent(
                             start = 14.dp,
                             top = 10.dp,
                             end = 10.dp,
-                            bottom = 16.dp,
+                            bottom = 8.dp,
                         ),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TotalTimeRow(
                         timeDigits = state.totalTimeDigits,
@@ -223,6 +224,19 @@ private fun TimerEditorScreenContent(
                         onDecreaseClick = onDecreaseTimeBetweenRoundsClick
                     )
                 }
+                Divider(
+                    color = AppTheme.colors.mediumGray
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp
+                        ),
+                    text = stringResource(R.string.intervalList),
+                    style = AppTheme.typography.regular.copy(
+                        color = AppTheme.colors.grayFontColor
+                    )
+                )
                 Divider(
                     color = AppTheme.colors.mediumGray
                 )
@@ -325,7 +339,7 @@ private fun NumberOfRoundsRow(
     onDecreaseClick: () -> Unit,
 ) {
     SettingsRow(
-        title = stringResource(R.string.numberOfRoundsText)
+        title = stringResource(R.string.numberOfCyclesText)
     ) {
         TimePicker(
             value = numberOfRounds,

@@ -1,4 +1,4 @@
-package com.vinapp.intervaltrainingtimer.ui_components.round_picker
+package com.vinapp.intervaltrainingtimer.ui_components.count_picker
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

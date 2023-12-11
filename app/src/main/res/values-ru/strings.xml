@@ -2,7 +2,7 @@
 
     <!-- General -->
     <string name="app_name">Interval Training Timer</string>
-    <string name="numberOfRoundsText">Количество кругов</string>
+    <string name="numberOfCyclesText">Количество кругов</string>
     <string name="startButton">Старт</string>
     <string name="delayBeforeStart">Задержка перед стартом</string>
     <string name="timeBetweenRounds">Время между кругами</string>
@@ -15,6 +15,7 @@
     <string name="increase">Увеличить</string>
     <string name="decrease">Уменьшить</string>
     <string name="totalTimeError">Общее время должно быть больше 0</string>
+    <string name="intervalList">Список интервалов:</string>
     <!-- Default values General -->
     <string name="defaultTimerName">Таймер</string>
 

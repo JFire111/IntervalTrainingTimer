@@ -1,15 +1,22 @@
 package com.vinapp.intervaltrainingtimer.ui_components.time_text
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.vinapp.intervaltrainingtimer.R
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 
 @Composable
@@ -20,58 +27,151 @@ fun TimeText(
     unfilledColor: Color = AppTheme.colors.lightGrayFontColor,
     forceColored: Boolean = false,
 ) {
-    Text(
-        modifier = modifier,
-        text = buildAnnotatedString {
-            coloredDigit(
-                digit = timeDigits.first,
-                filledColor = filledColor,
-                unfilledColor = unfilledColor,
-                forceColored = forceColored,
+    Row(
+        modifier = modifier
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = buildAnnotatedString {
+                    coloredDigit(
+                        digit = timeDigits.first,
+                        filledColor = filledColor,
+                        unfilledColor = unfilledColor,
+                        forceColored = forceColored,
+                    )
+                    coloredDigit(
+                        digit = timeDigits.second,
+                        filledColor = filledColor,
+                        unfilledColor = unfilledColor,
+                        forceColored = forceColored,
+                    )
+                },
+                textAlign = TextAlign.Center,
+                style = AppTheme.typography.large.copy(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Bottom,
+                        trim = LineHeightStyle.Trim.Both
+                    ),
+                )
             )
-            coloredDigit(
-                digit = timeDigits.second,
-                filledColor = filledColor,
-                unfilledColor = unfilledColor,
-                forceColored = forceColored,
+            Text(
+                modifier = Modifier,
+                text = stringResource(R.string.hintMinutes),
+                style = AppTheme.typography.small.copy(
+                    color = AppTheme.colors.grayFontColor,
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Top,
+                        trim = LineHeightStyle.Trim.Both
+                    )
+                )
             )
-            coloredDigit(
-                digit = timeDigits.third,
-                prefix = ":",
-                filledColor = filledColor,
-                unfilledColor = unfilledColor,
-                forceColored = forceColored,
+        }
+        Text(
+            text = buildAnnotatedString {
+                coloredText(
+                    text = ":",
+                    filledColor = filledColor,
+                    unfilledColor = unfilledColor,
+                    forceColored = forceColored,
+                )
+            },
+            textAlign = TextAlign.Center,
+            style = AppTheme.typography.large.copy(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                ),
+                lineHeightStyle = LineHeightStyle(
+                    alignment = LineHeightStyle.Alignment.Bottom,
+                    trim = LineHeightStyle.Trim.Both
+                )
             )
-            coloredDigit(
-                digit = timeDigits.fourth,
-                filledColor = filledColor,
-                unfilledColor = unfilledColor,
-                forceColored = forceColored,
+        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = buildAnnotatedString {
+                    coloredDigit(
+                        digit = timeDigits.third,
+                        filledColor = filledColor,
+                        unfilledColor = unfilledColor,
+                        forceColored = forceColored,
+                    )
+                    coloredDigit(
+                        digit = timeDigits.fourth,
+                        filledColor = filledColor,
+                        unfilledColor = unfilledColor,
+                        forceColored = forceColored,
+                    )
+                },
+                textAlign = TextAlign.Center,
+                style = AppTheme.typography.large.copy(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Bottom,
+                        trim = LineHeightStyle.Trim.Both
+                    )
+                )
             )
-        },
-        textAlign = TextAlign.Center,
-        style = AppTheme.typography.large
-    )
+            Text(
+                modifier = Modifier,
+                text = stringResource(R.string.hintSeconds),
+                style = AppTheme.typography.small.copy(
+                    color = AppTheme.colors.grayFontColor,
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Top,
+                        trim = LineHeightStyle.Trim.Both
+                    )
+                )
+            )
+        }
+    }
 }
 
 private fun AnnotatedString.Builder.coloredDigit(
     digit: Int?,
-    prefix: String? = null,
+    filledColor: Color,
+    unfilledColor: Color,
+    forceColored: Boolean,
+) {
+    coloredText(
+        text = "${digit ?: 0}",
+        filledColor = filledColor,
+        unfilledColor = unfilledColor,
+        forceColored = forceColored
+    )
+}
+
+
+private fun AnnotatedString.Builder.coloredText(
+    text: String?,
     filledColor: Color,
     unfilledColor: Color,
     forceColored: Boolean,
 ) {
     withStyle(
         style = SpanStyle(
-            color = if (digit != null || forceColored) {
+            color = if (text != null || forceColored) {
                 filledColor
             } else {
                 unfilledColor
-            }
+            },
         )
     ) {
-        prefix?.let { append(it) }
-        append("${digit ?: 0}")
+        append(text)
     }
 }
 
