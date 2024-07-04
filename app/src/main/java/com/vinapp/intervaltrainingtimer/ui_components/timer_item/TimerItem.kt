@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.vinapp.intervaltrainingtimer.stubs.timerItemDataStub
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 
 @Composable
@@ -85,21 +86,13 @@ private fun TimerItemPreview() {
     AppTheme {
         Column {
             TimerItem(
-                timerItemData = TimerItemData(
-                    id = "",
-                    name = "Timer name",
-                    duration = "15:00"
-                ),
+                timerItemData = timerItemDataStub,
                 isSelected = false,
                 onClick = {}
             )
             Spacer(modifier = Modifier.height(32.dp))
             TimerItem(
-                timerItemData = TimerItemData(
-                    id = "",
-                    name = "Timer name",
-                    duration = "15:00"
-                ),
+                timerItemData = timerItemDataStub,
                 isSelected = true,
                 onClick = {}
             )

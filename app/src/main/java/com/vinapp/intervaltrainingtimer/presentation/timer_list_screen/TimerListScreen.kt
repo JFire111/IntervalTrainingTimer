@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vinapp.intervaltrainingtimer.R
@@ -20,6 +21,7 @@ import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
 import com.vinapp.intervaltrainingtimer.ui_components.timer_item.TimerItem
 import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerEditorScreen
 import com.vinapp.intervaltrainingtimer.presentation.timer_list_screen.TimerListScreenAction.NavigateToTimerScreen
+import com.vinapp.intervaltrainingtimer.stubs.timerItemDataListStub
 import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.BottomButtonsContainer
 import kotlinx.coroutines.launch
 
@@ -106,5 +108,22 @@ private fun TimerListScreenContent(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TimerListScreenContentPreview() {
+    AppTheme {
+        TimerListScreenContent(
+            state = TimerListScreenState(
+                timerList = timerItemDataListStub
+            ),
+            onTimerClick = {},
+            onAddTimerClick = {},
+            onDeleteClick = {},
+            onStartClick = {},
+            onEditClick = {}
+        )
     }
 }

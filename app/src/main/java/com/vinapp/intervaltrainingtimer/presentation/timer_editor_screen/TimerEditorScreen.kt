@@ -34,13 +34,13 @@ import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateToTimerScreen
 import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.NavigateBack
 import com.vinapp.intervaltrainingtimer.presentation.timer_editor_screen.TimerEditorScreenAction.ShowDurationErrorSnackbar
+import com.vinapp.intervaltrainingtimer.stubs.intervalItemDataListStub
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeDigits
 import com.vinapp.intervaltrainingtimer.ui_components.time_text.TimeText
 import com.vinapp.intervaltrainingtimer.ui_components.topbar.TopBar
 import com.vinapp.intervaltrainingtimer.ui_components.add_item.AddItem
 import com.vinapp.intervaltrainingtimer.ui_components.bottom_buttons_container.BottomButtonsContainer
 import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItem
-import com.vinapp.intervaltrainingtimer.ui_components.interval_item.IntervalItemData
 import com.vinapp.intervaltrainingtimer.ui_components.name_text_field.NameTextField
 import com.vinapp.intervaltrainingtimer.ui_components.count_picker.TimePicker
 import com.vinapp.intervaltrainingtimer.ui_components.theme.AppTheme
@@ -390,20 +390,7 @@ private fun TimerEditorScreenPreview() {
         TimerEditorScreenContent(
             state = TimerEditorScreenState(
                 timerName = "Timer name",
-                intervalList = listOf(
-                    IntervalItemData(
-                        id = 0,
-                        name = "Interval name",
-                        duration = "15:00",
-                        color = IntervalColor.RED
-                    ),
-                    IntervalItemData(
-                        id = 0,
-                        name = "Interval name",
-                        duration = "15:00",
-                        color = IntervalColor.RED
-                    )
-                ),
+                intervalList = intervalItemDataListStub,
                 numberOfRounds = 4
             ),
             scaffoldState = rememberScaffoldState(),
