@@ -8,6 +8,7 @@ import com.vinapp.intervaltrainingtimer.App
 import com.vinapp.intervaltrainingtimer.base.presentation.BaseViewModel
 import com.vinapp.intervaltrainingtimer.common.IntervalColor
 import com.vinapp.intervaltrainingtimer.data.source.timer.TimerRepository
+import com.vinapp.intervaltrainingtimer.domain.entities.Interval
 import com.vinapp.intervaltrainingtimer.domain.entities.Timer
 import com.vinapp.intervaltrainingtimer.domain.timer.IntervalTimerControl
 import com.vinapp.intervaltrainingtimer.domain.timer.IntervalTimerNew
@@ -32,6 +33,8 @@ class TimerScreenViewModel(
     private var intervalTimer: IntervalTimerNew? = null
     private var timerControl: IntervalTimerControl? = null
 
+    private var currentInterval: Interval? = null
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -51,11 +54,7 @@ class TimerScreenViewModel(
                 updateState(
                     currentScreenState.copy(
                         timerName = timer.name,
-                        remainingTime = TimeConverter.getTimeString(
-                            numberOfRounds = timer.numberOfRounds,
-                            intervalList = timer.intervalList,
-                            timeBetweenRounds = timer.timeBetweenRounds
-                        )
+                        remainingTimeFlow = MutableStateFlow(TimeConverter.getTimeInSeconds(timer))
                     )
                 )
                 if (intervalTimer == null) {
@@ -146,21 +145,28 @@ class TimerScreenViewModel(
 
     private fun initTimerControl(timer: Timer) {
         timerControl = object : IntervalTimerControl {
-            override fun onTick(time: Long) {
-                updateState(
-                    currentScreenState.copy(
-                        remainingTime = TimeConverter.getTimeStringFromMillis(time)
+            override fun onTick(remainingTimerTime: Long, remainingIntervalTime: Long) {
+                viewModelScope.launch {
+                    (currentScreenState.intervalProgressFlow as MutableStateFlow).emit(
+                        // compute percents
+                        currentInterval?.let {
+                            (remainingIntervalTime.toFloat() / (it.durationInSeconds * 1000).toFloat()) * 100
+                        } ?: ((remainingIntervalTime.toFloat() / (timer.timeBetweenRounds * 1000).toFloat()) * 100)
                     )
-                )
+                    (currentScreenState.remainingTimeFlow as MutableStateFlow).emit(remainingTimerTime)
+                }
             }
 
             override fun onIntervalChanged(intervalIndex: Int?) {
                 soundPlayer.play()
+                currentInterval = if (intervalIndex != null) {
+                    timer.intervalList[intervalIndex]
+                } else {
+                    null
+                }
                 updateState(
                     currentScreenState.copy(
-                        backgroundColor = intervalIndex?.let {
-                            timer.intervalList[it].color
-                        } ?: IntervalColor.YELLOW
+                        backgroundColor = currentInterval?.color ?: IntervalColor.YELLOW
                     )
                 )
             }
@@ -169,10 +175,13 @@ class TimerScreenViewModel(
 
             override fun onFinish() {
                 soundPlayer.play(loops = 2)
+                viewModelScope.launch {
+                    (currentScreenState.intervalProgressFlow as MutableStateFlow).emit(0F)
+                    (currentScreenState.remainingTimeFlow as MutableStateFlow).emit(0L)
+                }
                 updateState(
                     currentScreenState.copy(
                         backgroundColor = IntervalColor.WHITE,
-                        remainingTime = "00:00",
                         timerState = TimerState.FINISHED
                     )
                 )

@@ -89,7 +89,7 @@ class IntervalTimerNewImpl(
                 if (remainingDelayTime <= 0) {
                     stopTicker()
                 }
-                control.onTick(remainingDelayTime)
+                control.onTick(remainingDelayTime, remainingDelayTime)
             }
         )
     }
@@ -100,7 +100,7 @@ class IntervalTimerNewImpl(
                 remainingTime -= it
                 remainingIntervalTime -= it
                 if (remainingTime > 0) {
-                    control.onTick(remainingTime)
+                    control.onTick(remainingTime, remainingIntervalTime)
                     if (remainingIntervalTime <= 0) {
                         updateCurrentInterval()
                     }
