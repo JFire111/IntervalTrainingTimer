@@ -264,14 +264,11 @@ class TimerEditorScreenViewModel(
     }
 
     private fun saveTimer(timer: Timer) {
+        this.timer = timer
         viewModelScope.launch(Dispatchers.IO) {
             timerRepository.saveTimer(timer)
         }
-        updateState(
-            currentScreenState.copy(
-                showDeleteButton = true
-            )
-        )
+        sendAction(NavigateBack)
     }
 
     private fun validateTimerData(

@@ -78,6 +78,7 @@ fun TimeText(
             text = buildAnnotatedString {
                 coloredText(
                     text = ":",
+                    isFilled = true,
                     filledColor = filledColor,
                     unfilledColor = unfilledColor,
                     forceColored = forceColored,
@@ -149,6 +150,7 @@ private fun AnnotatedString.Builder.coloredDigit(
 ) {
     coloredText(
         text = "${digit ?: 0}",
+        isFilled = digit != null,
         filledColor = filledColor,
         unfilledColor = unfilledColor,
         forceColored = forceColored
@@ -158,13 +160,14 @@ private fun AnnotatedString.Builder.coloredDigit(
 
 private fun AnnotatedString.Builder.coloredText(
     text: String?,
+    isFilled: Boolean,
     filledColor: Color,
     unfilledColor: Color,
     forceColored: Boolean,
 ) {
     withStyle(
         style = SpanStyle(
-            color = if (text != null || forceColored) {
+            color = if (isFilled || forceColored) {
                 filledColor
             } else {
                 unfilledColor

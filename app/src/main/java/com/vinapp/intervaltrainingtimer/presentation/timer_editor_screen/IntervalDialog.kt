@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -100,6 +101,10 @@ fun IntervalDialog(
         )
         TimeRow(
             digits = timeInputDigits,
+            color = when (intervalColor) {
+                IntervalColor.GREEN -> AppTheme.colors.green
+                else -> AppTheme.colors.red
+            },
             onClearClick = {
                 timeInputDigits = if (timeInputDigits.fourth != null) {
                     timeInputDigits.copy(fourth = null)
@@ -141,12 +146,13 @@ fun IntervalDialog(
 @Composable
 private fun TimeRow(
     digits: TimeDigits,
+    color: Color = AppTheme.colors.red,
     onClearClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .padding(top = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.Center
     ) {
         Spacer(
@@ -154,10 +160,12 @@ private fun TimeRow(
                 .size(32.dp)
         )
         TimeText(
-            timeDigits = digits
+            timeDigits = digits,
+            filledColor = color
         )
         Box(
             modifier = Modifier
+                .padding(top = 4.dp)
                 .size(32.dp)
                 .clip(CircleShape)
                 .clickable(
