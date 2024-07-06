@@ -38,7 +38,7 @@ class IntervalTimerNewImpl(
             if (remainingDelayTime > 0) {
                 startTimerDelay()
             }
-            control.onRoundChanged(++currentRound)
+            control.onRoundEnded(++currentRound)
             control.onIntervalChanged(currentIntervalIndex)
             startTimer()
         }
@@ -144,11 +144,11 @@ class IntervalTimerNewImpl(
     }
 
     private fun setTimeBetweenRoundsInterval() {
+        control.onRoundEnded(++currentRound)
         isTimeBetweenRoundsInterval = true
         remainingIntervalTime = TimeConverter.getTimeInMillis(
             timeInSeconds = timer.timeBetweenRounds
         )
-        control.onIntervalChanged(null)
     }
 
     private fun setInterval() {
@@ -161,7 +161,6 @@ class IntervalTimerNewImpl(
 
     private fun setNextRound() {
         currentIntervalIndex = 0
-        control.onRoundChanged(++currentRound)
         setInterval()
     }
 
